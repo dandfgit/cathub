@@ -338,10 +338,10 @@ local TextService: TextService = cloneref(game:GetService('TextService'));
 local RunService: RunService = cloneref(game:GetService('RunService'));
 local Players: Players = cloneref(game:GetService('Players'));
 local HttpService: HttpService = cloneref(game:GetService('HttpService'));
-local LocalPlayer: Player = Players.LocalPlayer;
-local CoreGui: PlayerGui = (gethui and gethui()) or (get_hidden_gui and get_hidden_gui()) or cloneref(game:FindFirstChild('CoreGui')) or cloneref(LocalPlayer.PlayerGui);
-local Mouse: Mouse = LocalPlayer:GetMouse();
-local CurrentCamera: Camera? = cloneref(workspace.CurrentCamera);
+local LocalPlayer: Player? = Players.LocalPlayer;
+local CoreGui: PlayerGui? = (gethui and gethui()) or (get_hidden_gui and get_hidden_gui()) or cloneref(game:FindFirstChild('CoreGui')) or (LocalPlayer and cloneref(LocalPlayer.PlayerGui)) or nil;
+local Mouse: Mouse? = LocalPlayer and LocalPlayer.GetMouse and LocalPlayer:GetMouse() or nil;
+local CurrentCamera: Camera? = cloneref(workspace and workspace.CurrentCamera or nil);
 
 local Compkiller = {
 	Version = '2.6',
@@ -360,16 +360,14 @@ local Compkiller = {
 	ProtectGui = protect_gui or protectgui or (syn and syn.protect_gui) or function(s) return s; end,
 };
 
--- When PerformanceMode is enabled, avoid spawning background threads for animations/updates.
-do
-	local _orig_task_spawn = task.spawn;
-	task.spawn = function(fn, ...)
-		if Compkiller and Compkiller.PerformanceMode then
-			return nil
-		end
-
-		return _orig_task_spawn(fn, ...)
+-- Provide a safe spawn wrapper used by the library. Do NOT override global `task.spawn`.
+-- `Compkiller._spawn` will respect `PerformanceMode` when deciding to start threads.
+Compkiller._spawn = function(fn, ...)
+	local sp = (task and task.spawn) or spawn
+	if Compkiller and Compkiller.PerformanceMode then
+		return nil
 	end
+	return sp(fn, ...)
 end
 
 Compkiller.Colors = {
@@ -10666,6 +10664,29 @@ function Compkiller.newNotify()
 	};
 
 	return Compkiller.NOTIFY_CACHE;
+end;
+
+Compkiller.NilFolder.Name = "Nil-Instances";
+
+-- Ensure safe fallbacks in case a trimmed/small build omits these helpers.
+Compkiller.newNotify = Compkiller.newNotify or function()
+	return {
+		new = function(_) end,
+	};
+end;
+
+Compkiller.ConfigManager = Compkiller.ConfigManager or function(_)
+	return {
+		Directory = "",
+		Config = "",
+		WriteConfig = function() end,
+		ReadInfo = function() return nil end,
+		DeleteConfig = function() end,
+		LoadConfig = function() end,
+		GetConfigs = function() return {} end,
+		GetConfigCount = function() return 0 end,
+		GetFullConfigs = function() return {} end,
+	};
 end;
 
 Compkiller.NilFolder.Name = "Nil-Instances";
