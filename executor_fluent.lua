@@ -88,8 +88,8 @@ print("[CatHub] Available themes: " .. table.concat(Fluent.Themes or {}, ", "))
 -- CREATE WINDOW
 -- ═══════════════════════════════════════════
 local Window = Fluent:CreateWindow({
-    Title = "CatHub",
-    SubTitle = "v1.0",
+    Title = "🐱 <font color='rgb(255,165,80)'>Cat</font><font color='rgb(255,255,255)'><b>Hub</b></font>",
+    SubTitle = "<font color='rgb(120,120,120)'>•</font> <font color='rgb(255,165,80)'><b>v1.0</b></font>",
     TabWidth = 80,
     Size = UDim2.fromOffset(480, 360),
     Acrylic = true,
