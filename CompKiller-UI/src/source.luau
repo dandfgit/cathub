@@ -373,8 +373,8 @@ Compkiller._spawn = function(fn, ...)
 end
 
 Compkiller.Colors = {
-	Highlight = Color3.fromRGB(17, 238, 253),
-	Toggle = Color3.fromRGB(14, 203, 213),
+	Highlight = Color3.fromRGB(230, 140, 80),
+	Toggle = Color3.fromRGB(205, 110, 55),
 	Risky = Color3.fromRGB(251, 255, 39),
 	BGDBColor = Color3.fromRGB(22, 24, 29),
 	BlockColor = Color3.fromRGB(28, 29, 34),
@@ -6188,8 +6188,8 @@ function Compkiller:SetTheme(name)
 		};
 	elseif name == "Default" then
 		Compkiller.Colors = {
-			Highlight = Color3.fromRGB(17, 238, 253),
-			Toggle = Color3.fromRGB(14, 203, 213),
+			Highlight = Color3.fromRGB(230, 140, 80),
+			Toggle = Color3.fromRGB(205, 110, 55),
 			Risky = Color3.fromRGB(251, 255, 39),
 			BGDBColor = Color3.fromRGB(22, 24, 29),
 			BlockColor = Color3.fromRGB(28, 29, 34),
@@ -6461,8 +6461,8 @@ function Compkiller.new(Config : Window)
 	TabFrame.BorderColor3 = Color3.fromRGB(0, 0, 0)
 	TabFrame.BorderSizePixel = 0
 	TabFrame.ClipsDescendants = true
-	TabFrame.Position = UDim2.new(0, 25, 0, 0)
-	TabFrame.Size = UDim2.new(0, 85, 1, 0)
+	TabFrame.Position = UDim2.new(0, 18, 0, 0)
+	TabFrame.Size = UDim2.new(0, 64, 1, 0)
 
 	UICorner_2.Parent = TabFrame
 
@@ -6486,8 +6486,8 @@ function Compkiller.new(Config : Window)
 	CompLogo.BackgroundTransparency = 1.000
 	CompLogo.BorderColor3 = Color3.fromRGB(0, 0, 0)
 	CompLogo.BorderSizePixel = 0
-	CompLogo.Position = UDim2.new(0, 9, 0, 7)
-	CompLogo.Size = UDim2.new(0, 45, 0, 45)
+	CompLogo.Position = UDim2.new(0, 6, 0, 6)
+	CompLogo.Size = UDim2.new(0, 36, 0, 36)
 	-- Use a lightweight emoji label for the logo (cat) to avoid external asset fetches
 	CompLogo.Image = ""
 	local CompLogoEmoji = Instance.new("TextLabel")
@@ -6495,7 +6495,7 @@ function Compkiller.new(Config : Window)
 	CompLogoEmoji.Parent = CompLogo
 	CompLogoEmoji.BackgroundTransparency = 1
 	CompLogoEmoji.Size = UDim2.fromScale(1,1)
-	CompLogoEmoji.Position = UDim2.fromOffset(0,0)
+	CompLogoEmoji.Position = UDim2.fromScale(0.5,0.5)
 	CompLogoEmoji.AnchorPoint = Vector2.new(0.5,0.5)
 	CompLogoEmoji.Font = Enum.Font.GothamBold
 	CompLogoEmoji.Text = "🐱"
@@ -6517,8 +6517,8 @@ function Compkiller.new(Config : Window)
 	WindowLabel.BackgroundTransparency = 1.000
 	WindowLabel.BorderColor3 = Color3.fromRGB(0, 0, 0)
 	WindowLabel.BorderSizePixel = 0
-	WindowLabel.Position = UDim2.new(0, 60, 0, 17)
-	WindowLabel.Size = UDim2.new(0, 200, 0, 25)
+	WindowLabel.Position = UDim2.new(0, 48, 0, 15)
+	WindowLabel.Size = UDim2.new(0, 160, 0, 22)
 	WindowLabel.Font = Enum.Font.GothamBold
 	WindowLabel.Text = Config.Name
 	WindowLabel.TextColor3 = Compkiller.Colors.SwitchColor
@@ -6535,8 +6535,8 @@ function Compkiller.new(Config : Window)
 	TabButtons.BackgroundTransparency = 1.000
 	TabButtons.BorderColor3 = Color3.fromRGB(0, 0, 0)
 	TabButtons.BorderSizePixel = 0
-	TabButtons.Position = UDim2.new(0, 0, 0, 60)
-	TabButtons.Size = UDim2.new(1, -25, 1, -125)
+	TabButtons.Position = UDim2.new(0, 0, 0, 54)
+	TabButtons.Size = UDim2.new(1, -12, 1, -110)
 
 	SelectionFrame.Name = Compkiller:_RandomString()
 	SelectionFrame.Parent = TabButtons
@@ -6687,6 +6687,93 @@ function Compkiller.new(Config : Window)
 		Compkiller:_AddDragBlacklist(TabButtons);
 	end;
 
+	-- Create MovementFrame and control buttons synchronously so they exist
+	-- even when PerformanceMode disables background spawns.
+	local MovementFrame = Instance.new("Frame")
+	MovementFrame.Name = Compkiller:_RandomString()
+	MovementFrame.Parent = MainFrame
+	MovementFrame.Active = true
+	MovementFrame.AnchorPoint = Vector2.new(1, 0.5)
+	MovementFrame.BackgroundTransparency = 1.000
+	MovementFrame.BorderColor3 = Color3.fromRGB(0, 0, 0)
+	MovementFrame.BorderSizePixel = 0
+	MovementFrame.Position = UDim2.new(1, 0, 0.5, 0)
+	MovementFrame.Size = UDim2.new(1, 0, 1, 0)
+	MovementFrame.ZIndex = 9
+
+	-- ensure drag works: first try library drag, then fallback manual handler
+	pcall(function() Compkiller:Drag(MovementFrame,MainFrame,0.1) end)
+
+	-- Minimize button
+	local MinimizeBtn = Instance.new('TextButton')
+	MinimizeBtn.Name = Compkiller:_RandomString()
+	MinimizeBtn.Parent = MainFrame
+	MinimizeBtn.BackgroundTransparency = 1
+	MinimizeBtn.BorderSizePixel = 0
+	MinimizeBtn.Text = "–"
+	MinimizeBtn.Font = Enum.Font.GothamBold
+	MinimizeBtn.TextSize = 20
+	MinimizeBtn.Size = UDim2.new(0, 28, 0, 22)
+	MinimizeBtn.Position = UDim2.new(1, -90, 0, 8)
+	MinimizeBtn.ZIndex = MainFrame.ZIndex + 50
+	MinimizeBtn.TextColor3 = Compkiller.Colors.SwitchColor
+
+	MinimizeBtn.MouseButton1Click:Connect(function()
+		if TabMainFrame then
+			TabMainFrame.Visible = not TabMainFrame.Visible
+		end
+	end)
+
+	-- Close button
+	local ForceCloseBtn = Instance.new('TextButton')
+	ForceCloseBtn.Name = Compkiller:_RandomString()
+	ForceCloseBtn.Parent = MainFrame
+	ForceCloseBtn.BackgroundTransparency = 1
+	ForceCloseBtn.BorderSizePixel = 0
+	ForceCloseBtn.Text = "✕"
+	ForceCloseBtn.Font = Enum.Font.GothamBold
+	ForceCloseBtn.TextSize = 18
+	ForceCloseBtn.Size = UDim2.new(0, 28, 0, 22)
+	ForceCloseBtn.Position = UDim2.new(1, -58, 0, 8)
+	ForceCloseBtn.ZIndex = MainFrame.ZIndex + 50
+	ForceCloseBtn.TextColor3 = Color3.fromRGB(200,200,200)
+
+	ForceCloseBtn.MouseButton1Click:Connect(function()
+		MainFrame.Visible = false
+		WindowArgs.IsOpen = false
+		WindowOpen:Fire(false)
+	end)
+
+	-- Manual drag fallback: update position while dragging
+	do
+		local dragging = false
+		local dragStart = Vector2.new(0,0)
+		local startPos = MainFrame.Position
+
+		MovementFrame.InputBegan:Connect(function(input)
+			if input.UserInputType == Enum.UserInputType.MouseButton1 then
+				dragging = true
+				dragStart = Vector2.new(input.Position.X, input.Position.Y)
+				startPos = MainFrame.Position
+			end
+		end)
+
+		MovementFrame.InputEnded:Connect(function(input)
+			if input.UserInputType == Enum.UserInputType.MouseButton1 then
+				dragging = false
+			end
+		end)
+
+		UserInputService.InputChanged:Connect(function(input)
+			if dragging and input.UserInputType == Enum.UserInputType.MouseMovement then
+				local delta = Vector2.new(input.Position.X, input.Position.Y) - dragStart
+				local newXOff = startPos.X.Offset + delta.X
+				local newYOff = startPos.Y.Offset + delta.Y
+				MainFrame.Position = UDim2.new(startPos.X.Scale, newXOff, startPos.Y.Scale, newYOff)
+			end
+		end)
+	end
+
 	WindowOpen:Connect(function(v)
 		if WindowArgs.PerformanceMode then
 			MainFrame.BackgroundTransparency = (v and 0) or 1;
@@ -6783,35 +6870,35 @@ function Compkiller.new(Config : Window)
 
 		if value then
 			Compkiller:_Animation(TabFrame , Style , {
-				Size = UDim2.new(0, 185,1, 0)
+				Size = UDim2.new(0, 160,1, 0)
 			});
 
 			Compkiller:_Animation(WindowLabel , Style , {
-				Position = UDim2.new(0, 60,0, 17),
+				Position = UDim2.new(0, 48,0, 17),
 				TextTransparency = 0
 			});
 
 			Compkiller:_Animation(UserText , Style , {
-				Position = UDim2.new(0, 55,0, 8),
+				Position = UDim2.new(0, 43,0, 8),
 				TextTransparency = 0.1
 			});
 
 			Compkiller:_Animation(ExpireText , Style , {
-				Position = UDim2.new(0, 55,0, 25),
+				Position = UDim2.new(0, 43,0, 25),
 				TextTransparency = 0.5
 			});
 		else
 			Compkiller:_Animation(TabFrame , Style , {
-				Size = UDim2.new(0, 85,1, 0)
+				Size = UDim2.new(0, 64,1, 0)
 			});
 
 			Compkiller:_Animation(WindowLabel , Style , {
-				Position = UDim2.new(0, 60 + 25,0, 17),
+				Position = UDim2.new(0, 48 + 16,0, 17),
 				TextTransparency = 1
 			});
 
 			Compkiller:_Animation(UserText , Style , {
-				Position = UDim2.new(0, 55 + 25,0, 8),
+				Position = UDim2.new(0, 43 + 16,0, 8),
 				TextTransparency = 1
 			});
 
@@ -7115,8 +7202,8 @@ function Compkiller.new(Config : Window)
 		Icon.BackgroundTransparency = 1.000
 		Icon.BorderColor3 = Color3.fromRGB(0, 0, 0)
 		Icon.BorderSizePixel = 0
-		Icon.Position = UDim2.new(0, 15, 0.5, 0)
-		Icon.Size = UDim2.new(0, 15, 0, 15)
+		Icon.Position = UDim2.new(0, 10, 0.5, 0)
+		Icon.Size = UDim2.new(0, 14, 0, 14)
 		Icon.ZIndex = 3
 		Icon.Image = Compkiller:_GetIcon(TabConfig.Icon);
 		Icon.ImageColor3 = Compkiller.Colors.Highlight
@@ -7132,8 +7219,8 @@ function Compkiller.new(Config : Window)
 		TabNameLabel.BackgroundTransparency = 1.000
 		TabNameLabel.BorderColor3 = Color3.fromRGB(0, 0, 0)
 		TabNameLabel.BorderSizePixel = 0
-		TabNameLabel.Position = UDim2.new(0, 43, 0.5, 0)
-		TabNameLabel.Size = UDim2.new(0, 200, 0, 25)
+		TabNameLabel.Position = UDim2.new(0, 34, 0.5, 0)
+		TabNameLabel.Size = UDim2.new(0, 180, 0, 22)
 		TabNameLabel.ZIndex = 3
 		TabNameLabel.Font = Enum.Font.GothamMedium
 		TabNameLabel.Text = TabConfig.Name;
@@ -7154,7 +7241,7 @@ function Compkiller.new(Config : Window)
 		Highlight.BorderColor3 = Color3.fromRGB(0, 0, 0)
 		Highlight.BorderSizePixel = 0
 		Highlight.Position = UDim2.new(0.5, 0, 0.5, 0)
-		Highlight.Size = UDim2.new(1, -17, 1, 0)
+		Highlight.Size = UDim2.new(1, -10, 1, 0)
 		Highlight.ZIndex = 2
 
 		UICorner.CornerRadius = UDim.new(0, 4)
@@ -9983,60 +10070,7 @@ function Compkiller.new(Config : Window)
 
 		Compkiller:_Blur(BlurElement , WindowOpen);
 
-		local MovementFrame = Instance.new("Frame")
-
-		MovementFrame.Name = Compkiller:_RandomString()
-		MovementFrame.Parent = MainFrame
-		MovementFrame.AnchorPoint = Vector2.new(1, 0.5)
-		MovementFrame.BackgroundTransparency = 1.000
-		MovementFrame.BorderColor3 = Color3.fromRGB(0, 0, 0)
-		MovementFrame.BorderSizePixel = 0
-		MovementFrame.Position = UDim2.new(1, 0, 0.5, 0)
-		MovementFrame.Size = UDim2.new(1, 0, 1, 0)
-		MovementFrame.ZIndex = 9
-
-		Compkiller:Drag(MovementFrame,MainFrame,0.1)
-
-		-- Add explicit minimize and close buttons (fallback) to ensure users can minimize/close.
-		local MinimizeBtn = Instance.new('TextButton')
-		MinimizeBtn.Name = Compkiller:_RandomString()
-		MinimizeBtn.Parent = MainFrame
-		MinimizeBtn.BackgroundTransparency = 1
-		MinimizeBtn.BorderSizePixel = 0
-		MinimizeBtn.Text = "–"
-		MinimizeBtn.Font = Enum.Font.GothamBold
-		MinimizeBtn.TextSize = 20
-		MinimizeBtn.Size = UDim2.new(0, 28, 0, 22)
-		MinimizeBtn.Position = UDim2.new(1, -90, 0, 8)
-		MinimizeBtn.ZIndex = MainFrame.ZIndex + 50
-		MinimizeBtn.TextColor3 = Compkiller.Colors.SwitchColor
-
-		MinimizeBtn.MouseButton1Click:Connect(function()
-			-- toggle content visibility (tab content)
-			if TabMainFrame then
-				TabMainFrame.Visible = not TabMainFrame.Visible
-			end
-		end)
-
-		local ForceCloseBtn = Instance.new('TextButton')
-		ForceCloseBtn.Name = Compkiller:_RandomString()
-		ForceCloseBtn.Parent = MainFrame
-		ForceCloseBtn.BackgroundTransparency = 1
-		ForceCloseBtn.BorderSizePixel = 0
-		ForceCloseBtn.Text = "✕"
-		ForceCloseBtn.Font = Enum.Font.GothamBold
-		ForceCloseBtn.TextSize = 18
-		ForceCloseBtn.Size = UDim2.new(0, 28, 0, 22)
-		ForceCloseBtn.Position = UDim2.new(1, -58, 0, 8)
-		ForceCloseBtn.ZIndex = MainFrame.ZIndex + 50
-		ForceCloseBtn.TextColor3 = Color3.fromRGB(200,200,200)
-
-		ForceCloseBtn.MouseButton1Click:Connect(function()
-			-- fully hide the window
-			MainFrame.Visible = false
-			WindowArgs.IsOpen = false
-			WindowOpen:Fire(false)
-		end)
+		-- MovementFrame and controls created synchronously earlier (outside this thread)
 
 		-- Manual drag fallback for environments where Compkiller:Drag may not work.
 		do

@@ -292,7 +292,7 @@ function Compkiller.new(WindowName: string , WindowIcon: string)
 
 	Line.Name = "Line"
 	Line.Parent = HeaderFrame
-	Line.BackgroundColor3 = Color3.fromRGB(17, 238, 253)
+	Line.BackgroundColor3 = Color3.fromRGB(230, 140, 80)
 	Line.BorderColor3 = Color3.fromRGB(0, 0, 0)
 	Line.BorderSizePixel = 0
 	Line.Position = UDim2.new(0, 40, 0, 0)
@@ -411,13 +411,13 @@ function Compkiller.new(WindowName: string , WindowIcon: string)
 		UICorner_2.Parent = ToggleContainer
 
 		UIStroke.Thickness = 1.500
-		UIStroke.Color = Color3.fromRGB(17, 238, 253)
+		UIStroke.Color = Color3.fromRGB(230, 140, 80)
 		UIStroke.Parent = ToggleContainer
 
 		ToggleValue.Name = "ToggleValue"
 		ToggleValue.Parent = ToggleContainer
 		ToggleValue.AnchorPoint = Vector2.new(0.5, 0.5)
-		ToggleValue.BackgroundColor3 = Color3.fromRGB(17, 238, 253)
+		ToggleValue.BackgroundColor3 = Color3.fromRGB(205, 110, 55)
 		ToggleValue.BorderColor3 = Color3.fromRGB(0, 0, 0)
 		ToggleValue.BorderSizePixel = 0
 		ToggleValue.Position = UDim2.new(0.5, 0, 0.5, 0)
