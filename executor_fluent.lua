@@ -231,8 +231,9 @@ SaveManager:SetLibrary(Fluent)
 InterfaceManager:SetLibrary(Fluent)
 
 -- FORCE CatHub Theme - Fresh New UI with Orange/Yellow Colors
-Fluent:SetTheme("CatHub")
+-- Reset and apply CatHub theme
 InterfaceManager.Settings.Theme = "CatHub"
+Fluent:SetTheme("CatHub")
 
 -- Ignore keys that are used by ThemeManager.
 SaveManager:IgnoreThemeSettings()
