@@ -152,8 +152,8 @@ return function(Config)
 	})
 
 	Window.ContainerCanvas = New("Frame", {
-		Size = UDim2.new(1, -Window.TabWidth - 20, 1, -78),
-		Position = UDim2.fromOffset(Window.TabWidth + 10, 70),
+		Size = UDim2.new(1, -Window.TabWidth - 20, 1, -52), -- Taller container (was -78)
+		Position = UDim2.fromOffset(Window.TabWidth + 10, 48), -- Moved up (was 70)
 		BackgroundTransparency = 1,
 	}, {
 		Window.ContainerAnim,
