@@ -53,7 +53,7 @@ return function(Parent, Acrylic)
 		},
 	}, {
 		New("UICorner", {
-			CornerRadius = UDim.new(0, 4),
+			CornerRadius = UDim.new(0, 0),
 		}),
 		New("UIStroke", {
 			ApplyStrokeMode = Enum.ApplyStrokeMode.Border,

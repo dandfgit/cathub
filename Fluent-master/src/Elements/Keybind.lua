@@ -60,7 +60,7 @@ function Element:New(Idx, Config)
 		},
 	}, {
 		New("UICorner", {
-			CornerRadius = UDim.new(0, 5),
+			CornerRadius = UDim.new(0, 0),
 		}),
 		New("UIPadding", {
 			PaddingLeft = UDim.new(0, 8),

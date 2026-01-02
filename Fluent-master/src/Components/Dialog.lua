@@ -32,7 +32,7 @@ function Dialog:Create()
 		Parent = Dialog.Window.Root,
 	}, {
 		New("UICorner", {
-			CornerRadius = UDim.new(0, 8),
+			CornerRadius = UDim.new(0, 0),
 		}),
 	})
 
@@ -104,7 +104,7 @@ function Dialog:Create()
 		},
 	}, {
 		New("UICorner", {
-			CornerRadius = UDim.new(0, 8),
+			CornerRadius = UDim.new(0, 0),
 		}),
 		New("UIStroke", {
 			Transparency = 0.5,

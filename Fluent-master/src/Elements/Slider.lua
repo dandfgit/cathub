@@ -59,7 +59,7 @@ function Element:New(Idx, Config)
 		},
 	}, {
 		New("UICorner", {
-			CornerRadius = UDim.new(1, 0),
+			CornerRadius = UDim.new(0, 0),
 		}),
 	})
 
@@ -90,7 +90,7 @@ function Element:New(Idx, Config)
 		},
 	}, {
 		New("UICorner", {
-			CornerRadius = UDim.new(1, 0),
+			CornerRadius = UDim.new(0, 0),
 		}),
 		New("UISizeConstraint", {
 			MaxSize = Vector2.new(150, math.huge),

@@ -50,7 +50,7 @@ function Element:New(Idx, Config)
 		Parent = ColorpickerFrame.Frame,
 	}, {
 		New("UICorner", {
-			CornerRadius = UDim.new(0, 4),
+			CornerRadius = UDim.new(0, 0),
 		}),
 	})
 
@@ -65,7 +65,7 @@ function Element:New(Idx, Config)
 		TileSize = UDim2.fromOffset(40, 40),
 	}, {
 		New("UICorner", {
-			CornerRadius = UDim.new(0, 4),
+			CornerRadius = UDim.new(0, 0),
 		}),
 		DisplayFrameColor,
 	})
@@ -129,7 +129,7 @@ function Element:New(Idx, Config)
 			Parent = Dialog.Root,
 		}, {
 			New("UICorner", {
-				CornerRadius = UDim.new(0, 4),
+				CornerRadius = UDim.new(0, 0),
 			}),
 			SatCursor,
 		})
@@ -140,7 +140,7 @@ function Element:New(Idx, Config)
 			BackgroundTransparency = Colorpicker.Transparency,
 		}, {
 			New("UICorner", {
-				CornerRadius = UDim.new(0, 4),
+				CornerRadius = UDim.new(0, 0),
 			}),
 		})
 
@@ -155,7 +155,7 @@ function Element:New(Idx, Config)
 			Parent = Dialog.Root,
 		}, {
 			New("UICorner", {
-				CornerRadius = UDim.new(0, 4),
+				CornerRadius = UDim.new(0, 0),
 			}),
 			New("UIStroke", {
 				Thickness = 2,
@@ -170,7 +170,7 @@ function Element:New(Idx, Config)
 			BackgroundTransparency = 0,
 		}, {
 			New("UICorner", {
-				CornerRadius = UDim.new(0, 4),
+				CornerRadius = UDim.new(0, 0),
 			}),
 		})
 
@@ -185,7 +185,7 @@ function Element:New(Idx, Config)
 			Parent = Dialog.Root,
 		}, {
 			New("UICorner", {
-				CornerRadius = UDim.new(0, 4),
+				CornerRadius = UDim.new(0, 0),
 			}),
 			New("UIStroke", {
 				Thickness = 2,

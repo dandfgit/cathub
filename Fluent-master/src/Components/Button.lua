@@ -33,7 +33,7 @@ return function(Theme, Parent, DialogCheck)
 		},
 	}, {
 		New("UICorner", {
-			CornerRadius = UDim.new(0, 4),
+			CornerRadius = UDim.new(0, 0),
 		}),
 	})
 
@@ -45,7 +45,7 @@ return function(Theme, Parent, DialogCheck)
 		},
 	}, {
 		New("UICorner", {
-			CornerRadius = UDim.new(0, 4),
+			CornerRadius = UDim.new(0, 0),
 		}),
 		New("UIStroke", {
 			ApplyStrokeMode = Enum.ApplyStrokeMode.Border,

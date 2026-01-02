@@ -72,7 +72,7 @@ function Element:New(Idx, Config)
 		},
 	}, {
 		New("UICorner", {
-			CornerRadius = UDim.new(0, 5),
+			CornerRadius = UDim.new(0, 0),
 		}),
 		New("UIStroke", {
 			Transparency = 0.5,
@@ -113,7 +113,7 @@ function Element:New(Idx, Config)
 	}, {
 		DropdownScrollFrame,
 		New("UICorner", {
-			CornerRadius = UDim.new(0, 7),
+			CornerRadius = UDim.new(0, 0),
 		}),
 		New("UIStroke", {
 			ApplyStrokeMode = Enum.ApplyStrokeMode.Border,
@@ -275,7 +275,7 @@ function Element:New(Idx, Config)
 				},
 			}, {
 				New("UICorner", {
-					CornerRadius = UDim.new(0, 2),
+					CornerRadius = UDim.new(0, 0),
 				}),
 			})
 
@@ -309,7 +309,7 @@ function Element:New(Idx, Config)
 				ButtonSelector,
 				ButtonLabel,
 				New("UICorner", {
-					CornerRadius = UDim.new(0, 6),
+					CornerRadius = UDim.new(0, 0),
 				}),
 			})
 

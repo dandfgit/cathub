@@ -58,7 +58,7 @@ function TabModule:New(Title, Icon, Parent)
 		},
 	}, {
 		New("UICorner", {
-			CornerRadius = UDim.new(0, 6),
+			CornerRadius = UDim.new(0, 0),
 		}),
 		New("TextLabel", {
 			AnchorPoint = Vector2.new(0, 0.5),

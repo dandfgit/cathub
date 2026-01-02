@@ -54,7 +54,7 @@ function Element:New(Idx, Config)
 		},
 	}, {
 		New("UICorner", {
-			CornerRadius = UDim.new(0, 9),
+			CornerRadius = UDim.new(0, 0),
 		}),
 		ToggleBorder,
 		ToggleCircle,

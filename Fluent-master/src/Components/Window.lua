@@ -46,7 +46,7 @@ return function(Config)
 		},
 	}, {
 		New("UICorner", {
-			CornerRadius = UDim.new(0, 2),
+			CornerRadius = UDim.new(0, 0),
 		}),
 	})
 
