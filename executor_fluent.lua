@@ -27,13 +27,17 @@ local Tabs = {
 
 local Options = Fluent.Options
 
--- CatHub Welcome Notification
+-- CatHub Welcome Notification - Fresh New UI!
 Fluent:Notify({
-    Title = "CatHub",
-    Content = "Welcome to CatHub! 🐱",
-    SubContent = "Premium script hub loaded successfully",
-    Duration = 4
+    Title = "CatHub 🐱",
+    Content = "Fresh New UI Loaded!",
+    SubContent = "Orange/Yellow cat-themed colors activated",
+    Duration = 5
 })
+
+-- Force apply CatHub theme immediately
+task.wait(0.2)
+Fluent:SetTheme("CatHub")
 
 -- Main Tab Content - Modern Solid Design
 do
@@ -198,8 +202,11 @@ end
 SaveManager:SetLibrary(Fluent)
 InterfaceManager:SetLibrary(Fluent)
 
+-- FORCE CatHub Theme - Fresh New UI with Orange/Yellow Colors
+Fluent:SetTheme("CatHub")
+InterfaceManager.Settings.Theme = "CatHub"
+
 -- Ignore keys that are used by ThemeManager.
--- (we dont want configs to save themes, do we?)
 SaveManager:IgnoreThemeSettings()
 
 -- You can add indexes of elements the save manager should ignore
@@ -209,20 +216,30 @@ SaveManager:SetIgnoreIndexes({})
 InterfaceManager:SetFolder("CatHub")
 SaveManager:SetFolder("CatHub/configs")
 
+-- Build Interface Section with CatHub theme
 InterfaceManager:BuildInterfaceSection(Tabs.Settings)
 SaveManager:BuildConfigSection(Tabs.Settings)
+
+-- Force apply CatHub theme again after sections are built
+task.wait(0.1)
+Fluent:SetTheme("CatHub")
 
 
 -- Select Main Tab
 Window:SelectTab(1)
 
--- Final Welcome Notification
+-- Final Welcome Notification - Confirm Theme Applied
 Fluent:Notify({
-    Title = "CatHub",
-    Content = "UI loaded successfully! 🐱",
-    SubContent = "Press RightControl to toggle UI",
-    Duration = 5
+    Title = "CatHub 🐱",
+    Content = "Fresh UI Ready!",
+    SubContent = "Orange/Yellow theme active | Press RightControl to toggle",
+    Duration = 6
 })
+
+-- Final theme enforcement
+task.wait(0.1)
+Fluent:SetTheme("CatHub")
+print("🎨 CatHub Theme Applied: Orange/Yellow Cat Colors")
 
 -- You can use the SaveManager:LoadAutoloadConfig() to load a config
 -- which has been marked to be one that auto loads!
