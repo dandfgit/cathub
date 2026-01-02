@@ -20,7 +20,7 @@ return {
 	Element = Color3.fromRGB(35, 30, 25), -- Warm dark element with orange hint
 	ElementBorder = Color3.fromRGB(70, 55, 40), -- Orange-tinted border
 	InElementBorder = Color3.fromRGB(90, 70, 50), -- Bright orange-tinted inner border
-	ElementTransparency = 0.70, -- Very solid appearance
+	ElementTransparency = 0.65, -- More solid, boxy appearance
 
 	-- 🟠 ORANGE/YELLOW TOGGLE (Cat-themed)
 	ToggleSlider = Color3.fromRGB(60, 50, 40), -- Warm toggle base
