@@ -15,57 +15,6 @@ local InterfaceManager = loadstring(game:HttpGet("https://raw.githubusercontent.
 -- Since main.lua is minified and doesn't include CatHub theme,
 -- we inject it manually here
 
-local CatHubTheme = {
-    Name = "CatHub",
-    
-    -- Orange cat accent color
-    Accent = Color3.fromRGB(255, 140, 50),
-    
-    -- More transparent acrylic
-    AcrylicMain = Color3.fromRGB(20, 20, 24),
-    AcrylicBorder = Color3.fromRGB(60, 55, 50),
-    AcrylicGradient = ColorSequence.new(Color3.fromRGB(25, 23, 22), Color3.fromRGB(15, 14, 13)),
-    AcrylicNoise = 0.97,
-    
-    TitleBarLine = Color3.fromRGB(50, 45, 40),
-    Tab = Color3.fromRGB(100, 95, 90),
-    
-    Element = Color3.fromRGB(45, 43, 40),
-    ElementBorder = Color3.fromRGB(30, 28, 26),
-    InElementBorder = Color3.fromRGB(60, 55, 50),
-    ElementTransparency = 0.72,
-    
-    ToggleSlider = Color3.fromRGB(80, 75, 70),
-    ToggleToggled = Color3.fromRGB(255, 255, 255),
-    SliderRail = Color3.fromRGB(60, 55, 50),
-    
-    DropdownFrame = Color3.fromRGB(55, 52, 48),
-    DropdownHolder = Color3.fromRGB(28, 26, 24),
-    DropdownBorder = Color3.fromRGB(45, 42, 38),
-    DropdownOption = Color3.fromRGB(70, 65, 60),
-    
-    Keybind = Color3.fromRGB(55, 52, 48),
-    
-    Input = Color3.fromRGB(55, 52, 48),
-    InputFocused = Color3.fromRGB(25, 23, 22),
-    InputIndicator = Color3.fromRGB(90, 85, 80),
-    
-    Dialog = Color3.fromRGB(30, 28, 26),
-    DialogHolder = Color3.fromRGB(25, 23, 22),
-    DialogHolderLine = Color3.fromRGB(22, 20, 18),
-    DialogButton = Color3.fromRGB(45, 42, 38),
-    DialogButtonBorder = Color3.fromRGB(60, 55, 50),
-    DialogBorder = Color3.fromRGB(50, 45, 40),
-    DialogInput = Color3.fromRGB(38, 35, 32),
-    DialogInputLine = Color3.fromRGB(120, 110, 100),
-    
-    Text = Color3.fromRGB(250, 248, 245),
-    SubText = Color3.fromRGB(160, 155, 150),
-    
-    Hover = Color3.fromRGB(90, 85, 80),
-    HoverChange = 0.06,
-}
-
 -- Inject theme into Fluent's internal theme system
 pcall(function()
     -- Add CatHub to themes list if not exists
@@ -88,7 +37,7 @@ print("[CatHub] Available themes: " .. table.concat(Fluent.Themes or {}, ", "))
 -- CREATE WINDOW
 -- ═══════════════════════════════════════════
 local Window = Fluent:CreateWindow({
-    Title = "🐱 <font color='rgb(255,165,80)'>Cat</font><font color='rgb(255,255,255)'><b>Hub</b></font>",
+    Title = "🐱 <font color='rgb(255,165,80)'>Cat</font> <font color='rgb(255,255,255)'><b>Hub</b></font>",
     SubTitle = "<font color='rgb(120,120,120)'>•</font> <font color='rgb(255,165,80)'><b>v1.0</b></font>",
     TabWidth = 80,
     Size = UDim2.fromOffset(480, 360),
