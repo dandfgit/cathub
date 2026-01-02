@@ -1,16 +1,22 @@
 -- Example single-file executor script for full CompKiller UI
 -- This will download the library from the author's repo and run the example UI.
 
-local Compkiller = loadstring(game:HttpGet("https://raw.githubusercontent.com/dandfgit/cathub/main/CompKiller-UI/src/small.luau"))();
+local Compkiller = loadstring(game:HttpGet("https://raw.githubusercontent.com/dandfgit/cathub/main/CompKiller-UI/src/source.luau"))();
 
 -- Create Notification --
-local Notifier = Compkiller.newNotify();
+local Notifier = nil
+if Compkiller and type(Compkiller.newNotify) == 'function' then
+    Notifier = Compkiller.newNotify();
+end
 
 -- Create Config Mamager --
-local ConfigManager = Compkiller:ConfigManager({
-    Directory = "Compkiller-UI",
-    Config = "Example-Configs"
-});
+local ConfigManager = nil
+if Compkiller and type(Compkiller.ConfigManager) == 'function' then
+    ConfigManager = Compkiller:ConfigManager({
+        Directory = "Compkiller-UI",
+        Config = "Example-Configs"
+    });
+end
 
 -- Loading UI removed for performance
 
@@ -81,12 +87,14 @@ UserSettings:AddDropdown({
 
 -- Notification --
 
-Notifier.new({
-    Title = "Notification",
-    Content = "Thank you for use this script!",
-    Duration = 10,
-    Icon = "rbxassetid://120245531583106"
-});
+if Notifier and type(Notifier.new) == 'function' then
+    Notifier.new({
+        Title = "Notification",
+        Content = "Thank you for use this script!",
+        Duration = 10,
+        Icon = "rbxassetid://120245531583106"
+    });
+end
 
 -- Watermark removed to reduce UI elements and background work
 
