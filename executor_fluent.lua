@@ -1,25 +1,25 @@
 --[[
     CatHub 🐱 - Modern Minimalist Script Hub
-    Theme: Black Transparent + Orange Accent
-    Design: Compact, Clean, User-Friendly
+    Theme: Dark Minimal + Blue Accent
+    Design: Ultra Compact, Clean, Professional
 ]]
 
 local Fluent = loadstring(game:HttpGet("https://raw.githubusercontent.com/dandfgit/cathub/refs/heads/main/Fluent-master/main.lua"))()
 local SaveManager = loadstring(game:HttpGet("https://raw.githubusercontent.com/dandfgit/cathub/refs/heads/main/Fluent-master/Addons/SaveManager.lua"))()
 local InterfaceManager = loadstring(game:HttpGet("https://raw.githubusercontent.com/dandfgit/cathub/refs/heads/main/Fluent-master/Addons/InterfaceManager.lua"))()
 
--- CatHub - Modern Compact UI (using Darker theme as base)
+-- CatHub - Modern Minimal UI
 local Window = Fluent:CreateWindow({
     Title = "CatHub",
-    SubTitle = "🐱 v1.0",
-    TabWidth = 100, -- Lebar sidebar untuk text lengkap
-    Size = UDim2.fromOffset(520, 420), -- Smaller, more compact size
-    Acrylic = true, -- Transparent blur background
-    Theme = "Darker", -- Use Darker as base (black theme)
+    SubTitle = "v1.0",
+    TabWidth = 50, -- Ultra compact icon-only sidebar
+    Size = UDim2.fromOffset(480, 360), -- Compact size
+    Acrylic = true,
+    Theme = "Darker",
     MinimizeKey = Enum.KeyCode.RightControl
 })
 
--- Compact Navigation Tabs
+-- Navigation Tabs (icons only)
 local Tabs = {
     Main = Window:AddTab({ Title = "Main", Icon = "home" }),
     Player = Window:AddTab({ Title = "Player", Icon = "user" }),
@@ -33,8 +33,8 @@ local Options = Fluent.Options
 -- Welcome Notification
 Fluent:Notify({
     Title = "CatHub 🐱",
-    Content = "Welcome to CatHub!",
-    SubContent = "Press RightControl to toggle UI",
+    Content = "Welcome!",
+    SubContent = "Press RightControl to toggle",
     Duration = 3
 })
 
@@ -46,12 +46,12 @@ do
     
     MainSection:AddParagraph({
         Title = "🐱 CatHub",
-        Content = "Modern & Lightweight Script Hub"
+        Content = "Modern Script Hub"
     })
 
     MainSection:AddButton({
-        Title = "🚀 Execute Script",
-        Description = "Run your custom script",
+        Title = "Execute Script",
+        Description = "Run custom script",
         Callback = function()
             Fluent:Notify({
                 Title = "CatHub",
@@ -62,22 +62,22 @@ do
     })
 
     local AutoFarmToggle = MainSection:AddToggle("AutoFarm", {
-        Title = "⚡ Auto Farm",
-        Description = "Automatically farm resources",
+        Title = "Auto Farm",
+        Description = "Auto farm resources",
         Default = false
     })
     
     AutoFarmToggle:OnChanged(function(value)
         Fluent:Notify({
             Title = "Auto Farm",
-            Content = value and "Enabled" or "Disabled",
-            Duration = 1.5
+            Content = value and "ON" or "OFF",
+            Duration = 1
         })
     end)
 
     local SpeedSlider = MainSection:AddSlider("Speed", {
-        Title = "🏃 Walk Speed",
-        Description = "Adjust your movement speed",
+        Title = "Walk Speed",
+        Description = "Movement speed",
         Default = 16,
         Min = 16,
         Max = 100,
@@ -99,20 +99,20 @@ do
     local PlayerSection = Tabs.Player:AddSection("Player Mods")
     
     local InfiniteJumpToggle = PlayerSection:AddToggle("InfJump", {
-        Title = "🦘 Infinite Jump",
-        Description = "Jump unlimited times",
+        Title = "Infinite Jump",
+        Description = "Unlimited jumps",
         Default = false
     })
 
     local NoClipToggle = PlayerSection:AddToggle("NoClip", {
-        Title = "👻 NoClip",
+        Title = "NoClip",
         Description = "Walk through walls",
         Default = false
     })
 
     local JumpPowerSlider = PlayerSection:AddSlider("JumpPower", {
-        Title = "⬆️ Jump Power",
-        Description = "Adjust jump height",
+        Title = "Jump Power",
+        Description = "Jump height",
         Default = 50,
         Min = 50,
         Max = 200,
@@ -120,8 +120,8 @@ do
     })
 
     local GravitySlider = PlayerSection:AddSlider("Gravity", {
-        Title = "🌍 Gravity",
-        Description = "Adjust world gravity",
+        Title = "Gravity",
+        Description = "World gravity",
         Default = 196,
         Min = 0,
         Max = 500,
@@ -137,31 +137,31 @@ end
 -- COMBAT TAB
 -- ═══════════════════════════════════════════
 do
-    local CombatSection = Tabs.Combat:AddSection("Combat Features")
+    local CombatSection = Tabs.Combat:AddSection("Combat")
     
     local AimbotToggle = CombatSection:AddToggle("Aimbot", {
-        Title = "🎯 Aimbot",
-        Description = "Auto aim at enemies",
+        Title = "Aimbot",
+        Description = "Auto aim",
         Default = false
     })
 
     local AimbotKey = CombatSection:AddKeybind("AimbotKey", {
-        Title = "🔑 Aimbot Key",
-        Description = "Keybind to activate aimbot",
+        Title = "Aimbot Key",
+        Description = "Activation key",
         Default = "E",
         Mode = "Hold"
     })
 
     local TargetPart = CombatSection:AddDropdown("TargetPart", {
-        Title = "🎯 Target Part",
-        Description = "Which body part to aim at",
+        Title = "Target Part",
+        Description = "Aim target",
         Values = {"Head", "HumanoidRootPart", "Torso"},
         Default = 1
     })
 
     local FOVSlider = CombatSection:AddSlider("FOV", {
-        Title = "📐 FOV Radius",
-        Description = "Aimbot field of view",
+        Title = "FOV Radius",
+        Description = "Aim FOV",
         Default = 100,
         Min = 50,
         Max = 500,
@@ -169,8 +169,8 @@ do
     })
 
     local ESPToggle = CombatSection:AddToggle("ESP", {
-        Title = "👁️ ESP",
-        Description = "See players through walls",
+        Title = "ESP",
+        Description = "See through walls",
         Default = false
     })
 end
@@ -182,26 +182,26 @@ do
     local VisualsSection = Tabs.Visuals:AddSection("Visual Settings")
     
     local FullbrightToggle = VisualsSection:AddToggle("Fullbright", {
-        Title = "☀️ Fullbright",
-        Description = "Remove darkness/shadows",
+        Title = "Fullbright",
+        Description = "Remove shadows",
         Default = false
     })
 
     local NoFogToggle = VisualsSection:AddToggle("NoFog", {
-        Title = "🌫️ Remove Fog",
-        Description = "Disable fog effects",
+        Title = "Remove Fog",
+        Description = "Disable fog",
         Default = false
     })
 
     local ESPColor = VisualsSection:AddColorpicker("ESPColor", {
-        Title = "🎨 ESP Color",
-        Description = "Choose ESP highlight color",
-        Default = Color3.fromRGB(255, 170, 0) -- Orange accent
+        Title = "ESP Color",
+        Description = "Highlight color",
+        Default = Color3.fromRGB(80, 160, 220)
     })
 
     local FOVCircle = VisualsSection:AddToggle("FOVCircle", {
-        Title = "⭕ FOV Circle",
-        Description = "Show FOV circle on screen",
+        Title = "FOV Circle",
+        Description = "Show FOV",
         Default = false
     })
 end
@@ -210,24 +210,20 @@ end
 -- SETTINGS TAB
 -- ═══════════════════════════════════════════
 do
-    -- Hand over to addon managers
     SaveManager:SetLibrary(Fluent)
     InterfaceManager:SetLibrary(Fluent)
 
-    -- Ignore theme settings in config
     SaveManager:IgnoreThemeSettings()
     SaveManager:SetIgnoreIndexes({})
 
-    -- CatHub folder for configs
     InterfaceManager:SetFolder("CatHub")
     SaveManager:SetFolder("CatHub/configs")
 
-    -- Build interface and config sections
     InterfaceManager:BuildInterfaceSection(Tabs.Settings)
     SaveManager:BuildConfigSection(Tabs.Settings)
 end
 
--- Apply Darker theme (dark black base)
+-- Apply theme
 Fluent:SetTheme("Darker")
 InterfaceManager.Settings.Theme = "Darker"
 
@@ -237,9 +233,9 @@ Window:SelectTab(1)
 -- Final notification
 Fluent:Notify({
     Title = "CatHub 🐱",
-    Content = "UI Loaded Successfully!",
-    SubContent = "Compact • Modern • Powerful",
-    Duration = 4
+    Content = "Ready!",
+    SubContent = "Compact • Modern • Fast",
+    Duration = 3
 })
 
 -- Load auto-saved config

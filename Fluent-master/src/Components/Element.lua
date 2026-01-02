@@ -1,3 +1,4 @@
+-- Modern Minimal Element Base Component
 local Root = script.Parent.Parent
 local Flipper = require(Root.Packages.Flipper)
 local Creator = require(Root.Creator)
@@ -25,14 +26,14 @@ return function(Title, Desc, Parent, Hover)
 	Element.DescLabel = New("TextLabel", {
 		FontFace = Font.new("rbxasset://fonts/families/GothamSSm.json"),
 		Text = Desc,
-		TextColor3 = Color3.fromRGB(200, 200, 200),
-		TextSize = 12,
+		TextColor3 = Color3.fromRGB(180, 180, 180),
+		TextSize = 11,
 		TextWrapped = true,
 		TextXAlignment = Enum.TextXAlignment.Left,
 		BackgroundColor3 = Color3.fromRGB(255, 255, 255),
 		AutomaticSize = Enum.AutomaticSize.Y,
 		BackgroundTransparency = 1,
-		Size = UDim2.new(1, 0, 0, 14),
+		Size = UDim2.new(1, 0, 0, 12),
 		ThemeTag = {
 			TextColor3 = "SubText",
 		},
@@ -42,23 +43,24 @@ return function(Title, Desc, Parent, Hover)
 		AutomaticSize = Enum.AutomaticSize.Y,
 		BackgroundColor3 = Color3.fromRGB(255, 255, 255),
 		BackgroundTransparency = 1,
-		Position = UDim2.fromOffset(10, 0),
-		Size = UDim2.new(1, -28, 0, 0),
+		Position = UDim2.fromOffset(8, 0),
+		Size = UDim2.new(1, -24, 0, 0),
 	}, {
 		New("UIListLayout", {
 			SortOrder = Enum.SortOrder.LayoutOrder,
 			VerticalAlignment = Enum.VerticalAlignment.Center,
+			Padding = UDim.new(0, 2),
 		}),
 		New("UIPadding", {
-			PaddingBottom = UDim.new(0, 13),
-			PaddingTop = UDim.new(0, 13),
+			PaddingBottom = UDim.new(0, 10),
+			PaddingTop = UDim.new(0, 10),
 		}),
 		Element.TitleLabel,
 		Element.DescLabel,
 	})
 
 	Element.Border = New("UIStroke", {
-		Transparency = 0.5,
+		Transparency = 0.85,
 		ApplyStrokeMode = Enum.ApplyStrokeMode.Border,
 		Color = Color3.fromRGB(0, 0, 0),
 		ThemeTag = {
@@ -68,8 +70,8 @@ return function(Title, Desc, Parent, Hover)
 
 	Element.Frame = New("TextButton", {
 		Size = UDim2.new(1, 0, 0, 0),
-		BackgroundTransparency = 0.89,
-		BackgroundColor3 = Color3.fromRGB(130, 130, 130),
+		BackgroundTransparency = 0.92,
+		BackgroundColor3 = Color3.fromRGB(100, 100, 100),
 		Parent = Parent,
 		AutomaticSize = Enum.AutomaticSize.Y,
 		Text = "",

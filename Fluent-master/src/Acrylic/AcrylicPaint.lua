@@ -1,3 +1,4 @@
+-- Modern Minimal AcrylicPaint
 local Creator = require(script.Parent.Parent.Creator)
 local AcrylicBlur = require(script.Parent.AcrylicBlur)
 
@@ -8,7 +9,7 @@ return function(props)
 
 	AcrylicPaint.Frame = New("Frame", {
 		Size = UDim2.fromScale(1, 1),
-		BackgroundTransparency = 0.9,
+		BackgroundTransparency = 0.92,
 		BackgroundColor3 = Color3.fromRGB(255, 255, 255),
 		BorderSizePixel = 0,
 	}, {
@@ -21,7 +22,7 @@ return function(props)
 			Position = UDim2.new(0.5, 0, 0.5, 0),
 			BackgroundTransparency = 1,
 			ImageColor3 = Color3.fromRGB(0, 0, 0),
-			ImageTransparency = 0.7,
+			ImageTransparency = 0.6,
 		}),
 
 		New("UICorner", {
@@ -29,7 +30,7 @@ return function(props)
 		}),
 
 		New("Frame", {
-			BackgroundTransparency = 0.45,
+			BackgroundTransparency = 0.35,
 			Size = UDim2.fromScale(1, 1),
 			Name = "Background",
 			ThemeTag = {
@@ -43,7 +44,7 @@ return function(props)
 
 		New("Frame", {
 			BackgroundColor3 = Color3.fromRGB(255, 255, 255),
-			BackgroundTransparency = 0.4,
+			BackgroundTransparency = 0.5,
 			Size = UDim2.fromScale(1, 1),
 		}, {
 			New("UICorner", {
@@ -73,7 +74,7 @@ return function(props)
 
 		New("ImageLabel", {
 			Image = "rbxassetid://9968344227",
-			ImageTransparency = 0.9,
+			ImageTransparency = 0.94,
 			ScaleType = Enum.ScaleType.Tile,
 			TileSize = UDim2.new(0, 128, 0, 128),
 			Size = UDim2.fromScale(1, 1),
@@ -96,7 +97,7 @@ return function(props)
 				CornerRadius = UDim.new(0, 0),
 			}),
 			New("UIStroke", {
-				Transparency = 0.5,
+				Transparency = 0.7,
 				Thickness = 1,
 				ThemeTag = {
 					Color = "AcrylicBorder",

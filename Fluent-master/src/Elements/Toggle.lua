@@ -1,3 +1,4 @@
+-- Modern Minimal Toggle Switch
 local TweenService = game:GetService("TweenService")
 local Root = script.Parent.Parent
 local Creator = require(Root.Creator)
@@ -20,33 +21,39 @@ function Element:New(Idx, Config)
 	}
 
 	local ToggleFrame = require(Components.Element)(Config.Title, Config.Description, self.Container, true)
-	ToggleFrame.DescLabel.Size = UDim2.new(1, -54, 0, 14)
+	ToggleFrame.DescLabel.Size = UDim2.new(1, -50, 0, 14)
 
 	Toggle.SetTitle = ToggleFrame.SetTitle
 	Toggle.SetDesc = ToggleFrame.SetDesc
 
-	local ToggleCircle = New("ImageLabel", {
+	-- Modern minimal circle indicator
+	local ToggleCircle = New("Frame", {
 		AnchorPoint = Vector2.new(0, 0.5),
-		Size = UDim2.fromOffset(14, 14),
+		Size = UDim2.fromOffset(16, 16),
 		Position = UDim2.new(0, 2, 0.5, 0),
-		Image = "http://www.roblox.com/asset/?id=12266946128",
-		ImageTransparency = 0.5,
+		BackgroundColor3 = Color3.fromRGB(255, 255, 255),
 		ThemeTag = {
-			ImageColor3 = "ToggleSlider",
+			BackgroundColor3 = "ToggleSlider",
 		},
+	}, {
+		New("UICorner", {
+			CornerRadius = UDim.new(1, 0),
+		}),
 	})
 
 	local ToggleBorder = New("UIStroke", {
-		Transparency = 0.5,
+		Transparency = 0.6,
+		Thickness = 1,
 		ThemeTag = {
 			Color = "ToggleSlider",
 		},
 	})
 
+	-- Modern pill-shaped toggle track
 	local ToggleSlider = New("Frame", {
-		Size = UDim2.fromOffset(36, 18),
+		Size = UDim2.fromOffset(40, 20),
 		AnchorPoint = Vector2.new(1, 0.5),
-		Position = UDim2.new(1, -10, 0.5, 0),
+		Position = UDim2.new(1, -8, 0.5, 0),
 		Parent = ToggleFrame.Frame,
 		BackgroundTransparency = 1,
 		ThemeTag = {
@@ -54,7 +61,7 @@ function Element:New(Idx, Config)
 		},
 	}, {
 		New("UICorner", {
-			CornerRadius = UDim.new(0, 0),
+			CornerRadius = UDim.new(1, 0),
 		}),
 		ToggleBorder,
 		ToggleCircle,
@@ -70,18 +77,18 @@ function Element:New(Idx, Config)
 		Toggle.Value = Value
 
 		Creator.OverrideTag(ToggleBorder, { Color = Toggle.Value and "Accent" or "ToggleSlider" })
-		Creator.OverrideTag(ToggleCircle, { ImageColor3 = Toggle.Value and "ToggleToggled" or "ToggleSlider" })
+		Creator.OverrideTag(ToggleCircle, { BackgroundColor3 = Toggle.Value and "Accent" or "ToggleSlider" })
+		
 		TweenService:Create(
 			ToggleCircle,
-			TweenInfo.new(0.25, Enum.EasingStyle.Quint, Enum.EasingDirection.Out),
-			{ Position = UDim2.new(0, Toggle.Value and 19 or 2, 0.5, 0) }
+			TweenInfo.new(0.2, Enum.EasingStyle.Quart, Enum.EasingDirection.Out),
+			{ Position = UDim2.new(0, Toggle.Value and 22 or 2, 0.5, 0) }
 		):Play()
 		TweenService:Create(
 			ToggleSlider,
-			TweenInfo.new(0.25, Enum.EasingStyle.Quint, Enum.EasingDirection.Out),
-			{ BackgroundTransparency = Toggle.Value and 0 or 1 }
+			TweenInfo.new(0.2, Enum.EasingStyle.Quart, Enum.EasingDirection.Out),
+			{ BackgroundTransparency = Toggle.Value and 0.3 or 1 }
 		):Play()
-		ToggleCircle.ImageTransparency = Toggle.Value and 0 or 0.5
 
 		Library:SafeCallback(Toggle.Callback, Toggle.Value)
 		Library:SafeCallback(Toggle.Changed, Toggle.Value)

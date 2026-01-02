@@ -1,4 +1,4 @@
--- i will rewrite this someday
+-- Modern Minimalist Window Component
 local UserInputService = game:GetService("UserInputService")
 local Mouse = game:GetService("Players").LocalPlayer:GetMouse()
 local Camera = game:GetService("Workspace").CurrentCamera
@@ -34,20 +34,12 @@ return function(Config)
 	local MinimizeNotif = false
 
 	Window.AcrylicPaint = Acrylic.AcrylicPaint()
-	Window.TabWidth = Config.TabWidth
+	Window.TabWidth = Config.TabWidth or 50
 
+	-- Hidden selector (we use indicator in tabs now)
 	local Selector = New("Frame", {
-		Size = UDim2.fromOffset(4, 0),
-		BackgroundColor3 = Color3.fromRGB(76, 194, 255),
-		Position = UDim2.fromOffset(0, 17),
-		AnchorPoint = Vector2.new(0, 0.5),
-		ThemeTag = {
-			BackgroundColor3 = "Accent",
-		},
-	}, {
-		New("UICorner", {
-			CornerRadius = UDim.new(0, 0),
-		}),
+		Size = UDim2.fromOffset(0, 0),
+		BackgroundTransparency = 1,
 	})
 
 	local ResizeStartFrame = New("Frame", {
@@ -66,16 +58,23 @@ return function(Config)
 		ScrollingDirection = Enum.ScrollingDirection.Y,
 	}, {
 		New("UIListLayout", {
-			Padding = UDim.new(0, 4),
+			Padding = UDim.new(0, 2),
 		}),
 	})
 
+	-- Compact sidebar frame
 	local TabFrame = New("Frame", {
-		Size = UDim2.new(0, Window.TabWidth, 1, -66),
-		Position = UDim2.new(0, 12, 0, 54),
-		BackgroundTransparency = 1,
+		Size = UDim2.new(0, Window.TabWidth, 1, -46),
+		Position = UDim2.new(0, 0, 0, 38),
+		BackgroundTransparency = 0.5,
 		ClipsDescendants = true,
+		ThemeTag = {
+			BackgroundColor3 = "AcrylicMain",
+		},
 	}, {
+		New("UICorner", {
+			CornerRadius = UDim.new(0, 0),
+		}),
 		Window.TabHolder,
 		Selector,
 	})
@@ -85,11 +84,11 @@ return function(Config)
 		Text = "Tab",
 		TextTransparency = 0,
 		FontFace = Font.new("rbxassetid://12187365364", Enum.FontWeight.SemiBold, Enum.FontStyle.Normal),
-		TextSize = 28,
+		TextSize = 16,
 		TextXAlignment = "Left",
 		TextYAlignment = "Center",
-		Size = UDim2.new(1, -16, 0, 28),
-		Position = UDim2.fromOffset(Window.TabWidth + 26, 56),
+		Size = UDim2.new(1, -16, 0, 20),
+		Position = UDim2.fromOffset(Window.TabWidth + 12, 42),
 		BackgroundTransparency = 1,
 		ThemeTag = {
 			TextColor3 = "Text",
@@ -107,8 +106,8 @@ return function(Config)
 	})
 
 	Window.ContainerCanvas = New("Frame", {
-		Size = UDim2.new(1, -Window.TabWidth - 32, 1, -102),
-		Position = UDim2.fromOffset(Window.TabWidth + 26, 90),
+		Size = UDim2.new(1, -Window.TabWidth - 16, 1, -72),
+		Position = UDim2.fromOffset(Window.TabWidth + 8, 66),
 		BackgroundTransparency = 1,
 	}, {
 		Window.ContainerAnim,
@@ -280,7 +279,7 @@ return function(Config)
 
 			local TargetSize = Vector3.new(StartSize.X.Offset, StartSize.Y.Offset, 0) + Vector3.new(1, 1, 0) * Delta
 			local TargetSizeClamped =
-				Vector2.new(math.clamp(TargetSize.X, 470, 2048), math.clamp(TargetSize.Y, 380, 2048))
+				Vector2.new(math.clamp(TargetSize.X, 400, 2048), math.clamp(TargetSize.Y, 300, 2048))
 
 			SizeMotor:setGoal({
 				X = Flipper.Instant.new(TargetSizeClamped.X),
@@ -344,11 +343,11 @@ return function(Config)
 			FontFace = Font.new("rbxasset://fonts/families/GothamSSm.json"),
 			Text = Config.Content,
 			TextColor3 = Color3.fromRGB(240, 240, 240),
-			TextSize = 14,
+			TextSize = 13,
 			TextXAlignment = Enum.TextXAlignment.Left,
 			TextYAlignment = Enum.TextYAlignment.Top,
 			Size = UDim2.new(1, -40, 1, 0),
-			Position = UDim2.fromOffset(20, 60),
+			Position = UDim2.fromOffset(20, 50),
 			BackgroundTransparency = 1,
 			Parent = Dialog.Root,
 			ClipsDescendants = false,
@@ -358,16 +357,16 @@ return function(Config)
 		})
 
 		New("UISizeConstraint", {
-			MinSize = Vector2.new(300, 165),
-			MaxSize = Vector2.new(620, math.huge),
+			MinSize = Vector2.new(280, 150),
+			MaxSize = Vector2.new(500, math.huge),
 			Parent = Dialog.Root,
 		})
 
-		Dialog.Root.Size = UDim2.fromOffset(Content.TextBounds.X + 40, 165)
-		if Content.TextBounds.X + 40 > Window.Size.X.Offset - 120 then
-			Dialog.Root.Size = UDim2.fromOffset(Window.Size.X.Offset - 120, 165)
+		Dialog.Root.Size = UDim2.fromOffset(Content.TextBounds.X + 40, 150)
+		if Content.TextBounds.X + 40 > Window.Size.X.Offset - 100 then
+			Dialog.Root.Size = UDim2.fromOffset(Window.Size.X.Offset - 100, 150)
 			Content.TextWrapped = true
-			Dialog.Root.Size = UDim2.fromOffset(Window.Size.X.Offset - 120, Content.TextBounds.Y + 150)
+			Dialog.Root.Size = UDim2.fromOffset(Window.Size.X.Offset - 100, Content.TextBounds.Y + 130)
 		end
 
 		for _, Button in next, Config.Buttons do

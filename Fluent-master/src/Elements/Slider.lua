@@ -1,3 +1,4 @@
+-- Modern Minimal Slider
 local UserInputService = game:GetService("UserInputService")
 local Root = script.Parent.Parent
 local Creator = require(Root.Creator)
@@ -29,29 +30,34 @@ function Element:New(Idx, Config)
 	local Dragging = false
 
 	local SliderFrame = require(Components.Element)(Config.Title, Config.Description, self.Container, false)
-	SliderFrame.DescLabel.Size = UDim2.new(1, -170, 0, 14)
+	SliderFrame.DescLabel.Size = UDim2.new(1, -140, 0, 14)
 
 	Slider.SetTitle = SliderFrame.SetTitle
 	Slider.SetDesc = SliderFrame.SetDesc
 
-	local SliderDot = New("ImageLabel", {
-		AnchorPoint = Vector2.new(0, 0.5),
-		Position = UDim2.new(0, -7, 0.5, 0),
-		Size = UDim2.fromOffset(14, 14),
-		Image = "http://www.roblox.com/asset/?id=12266946128",
+	-- Modern minimal thumb
+	local SliderDot = New("Frame", {
+		AnchorPoint = Vector2.new(0.5, 0.5),
+		Position = UDim2.new(0, 0, 0.5, 0),
+		Size = UDim2.fromOffset(12, 12),
 		ThemeTag = {
-			ImageColor3 = "Accent",
+			BackgroundColor3 = "Accent",
 		},
+	}, {
+		New("UICorner", {
+			CornerRadius = UDim.new(1, 0),
+		}),
 	})
 
 	local SliderRail = New("Frame", {
 		BackgroundTransparency = 1,
-		Position = UDim2.fromOffset(7, 0),
-		Size = UDim2.new(1, -14, 1, 0),
+		Position = UDim2.fromOffset(6, 0),
+		Size = UDim2.new(1, -12, 1, 0),
 	}, {
 		SliderDot,
 	})
 
+	-- Thin fill bar
 	local SliderFill = New("Frame", {
 		Size = UDim2.new(0, 0, 1, 0),
 		ThemeTag = {
@@ -63,27 +69,29 @@ function Element:New(Idx, Config)
 		}),
 	})
 
+	-- Value display
 	local SliderDisplay = New("TextLabel", {
 		FontFace = Font.new("rbxasset://fonts/families/GothamSSm.json"),
-		Text = "Value",
+		Text = "0",
 		TextSize = 12,
 		TextWrapped = true,
 		TextXAlignment = Enum.TextXAlignment.Right,
 		BackgroundColor3 = Color3.fromRGB(255, 255, 255),
 		BackgroundTransparency = 1,
-		Size = UDim2.new(0, 100, 0, 14),
-		Position = UDim2.new(0, -4, 0.5, 0),
+		Size = UDim2.new(0, 50, 0, 14),
+		Position = UDim2.new(0, -8, 0.5, 0),
 		AnchorPoint = Vector2.new(1, 0.5),
 		ThemeTag = {
 			TextColor3 = "SubText",
 		},
 	})
 
+	-- Thin track
 	local SliderInner = New("Frame", {
-		Size = UDim2.new(1, 0, 0, 4),
+		Size = UDim2.new(1, 0, 0, 3),
 		AnchorPoint = Vector2.new(1, 0.5),
-		Position = UDim2.new(1, -10, 0.5, 0),
-		BackgroundTransparency = 0.4,
+		Position = UDim2.new(1, -8, 0.5, 0),
+		BackgroundTransparency = 0.5,
 		Parent = SliderFrame.Frame,
 		ThemeTag = {
 			BackgroundColor3 = "SliderRail",
@@ -93,7 +101,7 @@ function Element:New(Idx, Config)
 			CornerRadius = UDim.new(0, 0),
 		}),
 		New("UISizeConstraint", {
-			MaxSize = Vector2.new(150, math.huge),
+			MaxSize = Vector2.new(120, math.huge),
 		}),
 		SliderDisplay,
 		SliderFill,
@@ -139,8 +147,9 @@ function Element:New(Idx, Config)
 
 	function Slider:SetValue(Value)
 		self.Value = Library:Round(math.clamp(Value, Slider.Min, Slider.Max), Slider.Rounding)
-		SliderDot.Position = UDim2.new((self.Value - Slider.Min) / (Slider.Max - Slider.Min), -7, 0.5, 0)
-		SliderFill.Size = UDim2.fromScale((self.Value - Slider.Min) / (Slider.Max - Slider.Min), 1)
+		local Percent = (self.Value - Slider.Min) / (Slider.Max - Slider.Min)
+		SliderDot.Position = UDim2.new(Percent, 0, 0.5, 0)
+		SliderFill.Size = UDim2.fromScale(Percent, 1)
 		SliderDisplay.Text = tostring(self.Value)
 
 		Library:SafeCallback(Slider.Callback, self.Value)

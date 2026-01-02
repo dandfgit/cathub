@@ -1,3 +1,4 @@
+-- Modern Minimal TitleBar
 local Root = script.Parent.Parent
 local Assets = require(script.Parent.Assets)
 local Creator = require(Root.Creator)
@@ -17,8 +18,8 @@ return function(Config)
 		}
 
 		Button.Frame = New("TextButton", {
-			Size = UDim2.new(0, 34, 1, -8),
-			AnchorPoint = Vector2.new(1, 0),
+			Size = UDim2.new(0, 28, 0, 28),
+			AnchorPoint = Vector2.new(1, 0.5),
 			BackgroundTransparency = 1,
 			Parent = Parent,
 			Position = Pos,
@@ -32,7 +33,7 @@ return function(Config)
 			}),
 			New("ImageLabel", {
 				Image = Icon,
-				Size = UDim2.fromOffset(16, 16),
+				Size = UDim2.fromOffset(14, 14),
 				Position = UDim2.fromScale(0.5, 0.5),
 				AnchorPoint = Vector2.new(0.5, 0.5),
 				BackgroundTransparency = 1,
@@ -46,16 +47,16 @@ return function(Config)
 		local Motor, SetTransparency = Creator.SpringMotor(1, Button.Frame, "BackgroundTransparency")
 
 		AddSignal(Button.Frame.MouseEnter, function()
-			SetTransparency(0.94)
+			SetTransparency(0.92)
 		end)
 		AddSignal(Button.Frame.MouseLeave, function()
 			SetTransparency(1, true)
 		end)
 		AddSignal(Button.Frame.MouseButton1Down, function()
-			SetTransparency(0.96)
+			SetTransparency(0.88)
 		end)
 		AddSignal(Button.Frame.MouseButton1Up, function()
-			SetTransparency(0.94)
+			SetTransparency(0.92)
 		end)
 		AddSignal(Button.Frame.MouseButton1Click, Button.Callback)
 
@@ -67,29 +68,30 @@ return function(Config)
 	end
 
 	TitleBar.Frame = New("Frame", {
-		Size = UDim2.new(1, 0, 0, 42),
+		Size = UDim2.new(1, 0, 0, 36),
 		BackgroundTransparency = 1,
 		Parent = Config.Parent,
 	}, {
 		New("Frame", {
-			Size = UDim2.new(1, -16, 1, 0),
-			Position = UDim2.new(0, 16, 0, 0),
+			Size = UDim2.new(1, -12, 1, 0),
+			Position = UDim2.new(0, 12, 0, 0),
 			BackgroundTransparency = 1,
 		}, {
 			New("UIListLayout", {
-				Padding = UDim.new(0, 5),
+				Padding = UDim.new(0, 4),
 				FillDirection = Enum.FillDirection.Horizontal,
 				SortOrder = Enum.SortOrder.LayoutOrder,
+				VerticalAlignment = Enum.VerticalAlignment.Center,
 			}),
 			New("TextLabel", {
 				RichText = true,
 				Text = Config.Title,
 				FontFace = Font.new(
 					"rbxasset://fonts/families/GothamSSm.json",
-					Enum.FontWeight.Regular,
+					Enum.FontWeight.SemiBold,
 					Enum.FontStyle.Normal
 				),
-				TextSize = 12,
+				TextSize = 13,
 				TextXAlignment = "Left",
 				TextYAlignment = "Center",
 				Size = UDim2.fromScale(0, 1),
@@ -102,13 +104,13 @@ return function(Config)
 			New("TextLabel", {
 				RichText = true,
 				Text = Config.SubTitle,
-				TextTransparency = 0.4,
+				TextTransparency = 0.5,
 				FontFace = Font.new(
 					"rbxasset://fonts/families/GothamSSm.json",
 					Enum.FontWeight.Regular,
 					Enum.FontStyle.Normal
 				),
-				TextSize = 12,
+				TextSize = 11,
 				TextXAlignment = "Left",
 				TextYAlignment = "Center",
 				Size = UDim2.fromScale(0, 1),
@@ -120,7 +122,7 @@ return function(Config)
 			}),
 		}),
 		New("Frame", {
-			BackgroundTransparency = 0.5,
+			BackgroundTransparency = 0.7,
 			Size = UDim2.new(1, 0, 0, 1),
 			Position = UDim2.new(0, 0, 1, 0),
 			ThemeTag = {
@@ -129,7 +131,7 @@ return function(Config)
 		}),
 	})
 
-	TitleBar.CloseButton = BarButton(Assets.Close, UDim2.new(1, -4, 0, 4), TitleBar.Frame, function()
+	TitleBar.CloseButton = BarButton(Assets.Close, UDim2.new(1, -4, 0.5, 0), TitleBar.Frame, function()
 		Library.Window:Dialog({
 			Title = "Close",
 			Content = "Are you sure you want to unload the interface?",
@@ -146,10 +148,10 @@ return function(Config)
 			},
 		})
 	end)
-	TitleBar.MaxButton = BarButton(Assets.Max, UDim2.new(1, -40, 0, 4), TitleBar.Frame, function()
+	TitleBar.MaxButton = BarButton(Assets.Max, UDim2.new(1, -34, 0.5, 0), TitleBar.Frame, function()
 		Config.Window.Maximize(not Config.Window.Maximized)
 	end)
-	TitleBar.MinButton = BarButton(Assets.Min, UDim2.new(1, -80, 0, 4), TitleBar.Frame, function()
+	TitleBar.MinButton = BarButton(Assets.Min, UDim2.new(1, -64, 0.5, 0), TitleBar.Frame, function()
 		Library.Window:Minimize()
 	end)
 

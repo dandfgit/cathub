@@ -1,3 +1,4 @@
+-- Modern Minimal Dropdown
 local TweenService = game:GetService("TweenService")
 local UserInputService = game:GetService("UserInputService")
 local Mouse = game:GetService("Players").LocalPlayer:GetMouse()
@@ -28,7 +29,7 @@ function Element:New(Idx, Config)
 	}
 
 	local DropdownFrame = require(Components.Element)(Config.Title, Config.Description, self.Container, false)
-	DropdownFrame.DescLabel.Size = UDim2.new(1, -170, 0, 14)
+	DropdownFrame.DescLabel.Size = UDim2.new(1, -140, 0, 14)
 
 	Dropdown.SetTitle = DropdownFrame.SetTitle
 	Dropdown.SetDesc = DropdownFrame.SetDesc
@@ -36,11 +37,11 @@ function Element:New(Idx, Config)
 	local DropdownDisplay = New("TextLabel", {
 		FontFace = Font.new("rbxasset://fonts/families/GothamSSm.json", Enum.FontWeight.Regular, Enum.FontStyle.Normal),
 		Text = "Value",
-		TextColor3 = Color3.fromRGB(240, 240, 240),
-		TextSize = 13,
+		TextColor3 = Color3.fromRGB(200, 200, 200),
+		TextSize = 12,
 		TextXAlignment = Enum.TextXAlignment.Left,
-		Size = UDim2.new(1, -30, 0, 14),
-		Position = UDim2.new(0, 8, 0.5, 0),
+		Size = UDim2.new(1, -24, 0, 12),
+		Position = UDim2.new(0, 6, 0.5, 0),
 		AnchorPoint = Vector2.new(0, 0.5),
 		BackgroundColor3 = Color3.fromRGB(255, 255, 255),
 		BackgroundTransparency = 1,
@@ -52,9 +53,9 @@ function Element:New(Idx, Config)
 
 	local DropdownIco = New("ImageLabel", {
 		Image = "rbxassetid://10709790948",
-		Size = UDim2.fromOffset(16, 16),
+		Size = UDim2.fromOffset(12, 12),
 		AnchorPoint = Vector2.new(1, 0.5),
-		Position = UDim2.new(1, -8, 0.5, 0),
+		Position = UDim2.new(1, -6, 0.5, 0),
 		BackgroundTransparency = 1,
 		ThemeTag = {
 			ImageColor3 = "SubText",
@@ -62,8 +63,8 @@ function Element:New(Idx, Config)
 	})
 
 	local DropdownInner = New("TextButton", {
-		Size = UDim2.fromOffset(160, 30),
-		Position = UDim2.new(1, -10, 0.5, 0),
+		Size = UDim2.fromOffset(130, 26),
+		Position = UDim2.new(1, -8, 0.5, 0),
 		AnchorPoint = Vector2.new(1, 0.5),
 		BackgroundTransparency = 0.9,
 		Parent = DropdownFrame.Frame,
@@ -75,7 +76,7 @@ function Element:New(Idx, Config)
 			CornerRadius = UDim.new(0, 0),
 		}),
 		New("UIStroke", {
-			Transparency = 0.5,
+			Transparency = 0.6,
 			ApplyStrokeMode = Enum.ApplyStrokeMode.Border,
 			ThemeTag = {
 				Color = "InElementBorder",
@@ -86,19 +87,19 @@ function Element:New(Idx, Config)
 	})
 
 	local DropdownListLayout = New("UIListLayout", {
-		Padding = UDim.new(0, 3),
+		Padding = UDim.new(0, 2),
 	})
 
 	local DropdownScrollFrame = New("ScrollingFrame", {
-		Size = UDim2.new(1, -5, 1, -10),
-		Position = UDim2.fromOffset(5, 5),
+		Size = UDim2.new(1, -4, 1, -8),
+		Position = UDim2.fromOffset(4, 4),
 		BackgroundTransparency = 1,
 		BottomImage = "rbxassetid://6889812791",
 		MidImage = "rbxassetid://6889812721",
 		TopImage = "rbxassetid://6276641225",
 		ScrollBarImageColor3 = Color3.fromRGB(255, 255, 255),
 		ScrollBarImageTransparency = 0.95,
-		ScrollBarThickness = 4,
+		ScrollBarThickness = 2,
 		BorderSizePixel = 0,
 		CanvasSize = UDim2.fromScale(0, 0),
 	}, {
@@ -126,22 +127,22 @@ function Element:New(Idx, Config)
 			Image = "http://www.roblox.com/asset/?id=5554236805",
 			ScaleType = Enum.ScaleType.Slice,
 			SliceCenter = Rect.new(23, 23, 277, 277),
-			Size = UDim2.fromScale(1, 1) + UDim2.fromOffset(30, 30),
-			Position = UDim2.fromOffset(-15, -15),
+			Size = UDim2.fromScale(1, 1) + UDim2.fromOffset(24, 24),
+			Position = UDim2.fromOffset(-12, -12),
 			ImageColor3 = Color3.fromRGB(0, 0, 0),
-			ImageTransparency = 0.1,
+			ImageTransparency = 0.2,
 		}),
 	})
 
 	local DropdownHolderCanvas = New("Frame", {
 		BackgroundTransparency = 1,
-		Size = UDim2.fromOffset(170, 300),
+		Size = UDim2.fromOffset(140, 260),
 		Parent = self.Library.GUI,
 		Visible = false,
 	}, {
 		DropdownHolderFrame,
 		New("UISizeConstraint", {
-			MinSize = Vector2.new(170, 0),
+			MinSize = Vector2.new(140, 0),
 		}),
 	})
 	table.insert(Library.OpenFrames, DropdownHolderCanvas)
@@ -160,10 +161,10 @@ function Element:New(Idx, Config)
 
 	local ListSizeX = 0
 	local function RecalculateListSize()
-		if #Dropdown.Values > 10 then
-			DropdownHolderCanvas.Size = UDim2.fromOffset(ListSizeX, 392)
+		if #Dropdown.Values > 8 then
+			DropdownHolderCanvas.Size = UDim2.fromOffset(ListSizeX, 280)
 		else
-			DropdownHolderCanvas.Size = UDim2.fromOffset(ListSizeX, DropdownListLayout.AbsoluteContentSize.Y + 10)
+			DropdownHolderCanvas.Size = UDim2.fromOffset(ListSizeX, DropdownListLayout.AbsoluteContentSize.Y + 8)
 		end
 	end
 
@@ -204,7 +205,7 @@ function Element:New(Idx, Config)
 		DropdownHolderCanvas.Visible = true
 		TweenService:Create(
 			DropdownHolderFrame,
-			TweenInfo.new(0.2, Enum.EasingStyle.Quart, Enum.EasingDirection.Out),
+			TweenInfo.new(0.15, Enum.EasingStyle.Quart, Enum.EasingDirection.Out),
 			{ Size = UDim2.fromScale(1, 1) }
 		):Play()
 	end
@@ -266,10 +267,10 @@ function Element:New(Idx, Config)
 			Count = Count + 1
 
 			local ButtonSelector = New("Frame", {
-				Size = UDim2.fromOffset(4, 14),
+				Size = UDim2.fromOffset(3, 12),
 				BackgroundColor3 = Color3.fromRGB(76, 194, 255),
-				Position = UDim2.fromOffset(-1, 16),
-				AnchorPoint = Vector2.new(0, 0.5),
+				Position = UDim2.fromOffset(-1, 0),
+				AnchorPoint = Vector2.new(0, 0),
 				ThemeTag = {
 					BackgroundColor3 = "Accent",
 				},
@@ -283,13 +284,13 @@ function Element:New(Idx, Config)
 				FontFace = Font.new("rbxasset://fonts/families/GothamSSm.json"),
 				Text = Value,
 				TextColor3 = Color3.fromRGB(200, 200, 200),
-				TextSize = 13,
+				TextSize = 12,
 				TextXAlignment = Enum.TextXAlignment.Left,
 				BackgroundColor3 = Color3.fromRGB(255, 255, 255),
 				AutomaticSize = Enum.AutomaticSize.Y,
 				BackgroundTransparency = 1,
 				Size = UDim2.fromScale(1, 1),
-				Position = UDim2.fromOffset(10, 0),
+				Position = UDim2.fromOffset(8, 0),
 				Name = "ButtonLabel",
 				ThemeTag = {
 					TextColor3 = "Text",
@@ -297,7 +298,7 @@ function Element:New(Idx, Config)
 			})
 
 			local Button = New("TextButton", {
-				Size = UDim2.new(1, -5, 0, 32),
+				Size = UDim2.new(1, -4, 0, 28),
 				BackgroundTransparency = 1,
 				ZIndex = 23,
 				Text = "",
@@ -323,37 +324,37 @@ function Element:New(Idx, Config)
 
 			local BackMotor, SetBackTransparency = Creator.SpringMotor(1, Button, "BackgroundTransparency")
 			local SelMotor, SetSelTransparency = Creator.SpringMotor(1, ButtonSelector, "BackgroundTransparency")
-			local SelectorSizeMotor = Flipper.SingleMotor.new(6)
+			local SelectorSizeMotor = Flipper.SingleMotor.new(5)
 
 			SelectorSizeMotor:onStep(function(value)
-				ButtonSelector.Size = UDim2.new(0, 4, 0, value)
+				ButtonSelector.Size = UDim2.new(0, 3, 0, value)
 			end)
 
 			Creator.AddSignal(Button.MouseEnter, function()
-				SetBackTransparency(Selected and 0.85 or 0.89)
+				SetBackTransparency(Selected and 0.88 or 0.92)
 			end)
 			Creator.AddSignal(Button.MouseLeave, function()
-				SetBackTransparency(Selected and 0.89 or 1)
+				SetBackTransparency(Selected and 0.9 or 1)
 			end)
 			Creator.AddSignal(Button.MouseButton1Down, function()
-				SetBackTransparency(0.92)
+				SetBackTransparency(0.88)
 			end)
 			Creator.AddSignal(Button.MouseButton1Up, function()
-				SetBackTransparency(Selected and 0.85 or 0.89)
+				SetBackTransparency(Selected and 0.88 or 0.92)
 			end)
 
 			function Table:UpdateButton()
 				if Config.Multi then
 					Selected = Dropdown.Value[Value]
 					if Selected then
-						SetBackTransparency(0.89)
+						SetBackTransparency(0.9)
 					end
 				else
 					Selected = Dropdown.Value == Value
-					SetBackTransparency(Selected and 0.89 or 1)
+					SetBackTransparency(Selected and 0.9 or 1)
 				end
 
-				SelectorSizeMotor:setGoal(Flipper.Spring.new(Selected and 14 or 6, { frequency = 6 }))
+				SelectorSizeMotor:setGoal(Flipper.Spring.new(Selected and 12 or 5, { frequency = 6 }))
 				SetSelTransparency(Selected and 0 or 1)
 			end
 
@@ -401,7 +402,7 @@ function Element:New(Idx, Config)
 				end
 			end
 		end
-		ListSizeX = ListSizeX + 30
+		ListSizeX = ListSizeX + 24
 
 		RecalculateCanvasSize()
 		RecalculateListSize()

@@ -1,3 +1,4 @@
+-- Modern Minimal Keybind
 local UserInputService = game:GetService("UserInputService")
 
 local Root = script.Parent.Parent
@@ -34,12 +35,12 @@ function Element:New(Idx, Config)
 	local KeybindDisplayLabel = New("TextLabel", {
 		FontFace = Font.new("rbxasset://fonts/families/GothamSSm.json", Enum.FontWeight.Regular, Enum.FontStyle.Normal),
 		Text = Config.Default,
-		TextColor3 = Color3.fromRGB(240, 240, 240),
-		TextSize = 13,
+		TextColor3 = Color3.fromRGB(200, 200, 200),
+		TextSize = 12,
 		TextXAlignment = Enum.TextXAlignment.Center,
-		Size = UDim2.new(0, 0, 0, 14),
-		Position = UDim2.new(0, 0, 0.5, 0),
-		AnchorPoint = Vector2.new(0, 0.5),
+		Size = UDim2.new(0, 0, 0, 12),
+		Position = UDim2.new(0.5, 0, 0.5, 0),
+		AnchorPoint = Vector2.new(0.5, 0.5),
 		BackgroundColor3 = Color3.fromRGB(255, 255, 255),
 		AutomaticSize = Enum.AutomaticSize.X,
 		BackgroundTransparency = 1,
@@ -49,8 +50,8 @@ function Element:New(Idx, Config)
 	})
 
 	local KeybindDisplayFrame = New("TextButton", {
-		Size = UDim2.fromOffset(0, 30),
-		Position = UDim2.new(1, -10, 0.5, 0),
+		Size = UDim2.fromOffset(0, 26),
+		Position = UDim2.new(1, -8, 0.5, 0),
 		AnchorPoint = Vector2.new(1, 0.5),
 		BackgroundTransparency = 0.9,
 		Parent = KeybindFrame.Frame,
@@ -67,7 +68,7 @@ function Element:New(Idx, Config)
 			PaddingRight = UDim.new(0, 8),
 		}),
 		New("UIStroke", {
-			Transparency = 0.5,
+			Transparency = 0.6,
 			ApplyStrokeMode = Enum.ApplyStrokeMode.Border,
 			ThemeTag = {
 				Color = "InElementBorder",

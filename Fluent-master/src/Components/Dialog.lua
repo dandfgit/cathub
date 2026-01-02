@@ -1,3 +1,4 @@
+-- Modern Minimal Dialog
 local UserInputService = game:GetService("UserInputService")
 local Mouse = game:GetService("Players").LocalPlayer:GetMouse()
 local Camera = game:GetService("Workspace").CurrentCamera
@@ -39,13 +40,13 @@ function Dialog:Create()
 	local TintMotor, TintTransparency = Creator.SpringMotor(1, NewDialog.TintFrame, "BackgroundTransparency", true)
 
 	NewDialog.ButtonHolder = New("Frame", {
-		Size = UDim2.new(1, -40, 1, -40),
+		Size = UDim2.new(1, -32, 1, -32),
 		AnchorPoint = Vector2.new(0.5, 0.5),
 		Position = UDim2.fromScale(0.5, 0.5),
 		BackgroundTransparency = 1,
 	}, {
 		New("UIListLayout", {
-			Padding = UDim.new(0, 10),
+			Padding = UDim.new(0, 8),
 			FillDirection = Enum.FillDirection.Horizontal,
 			HorizontalAlignment = Enum.HorizontalAlignment.Center,
 			SortOrder = Enum.SortOrder.LayoutOrder,
@@ -53,8 +54,8 @@ function Dialog:Create()
 	})
 
 	NewDialog.ButtonHolderFrame = New("Frame", {
-		Size = UDim2.new(1, 0, 0, 70),
-		Position = UDim2.new(0, 0, 1, -70),
+		Size = UDim2.new(1, 0, 0, 56),
+		Position = UDim2.new(0, 0, 1, -56),
 		ThemeTag = {
 			BackgroundColor3 = "DialogHolder",
 		},
@@ -76,10 +77,10 @@ function Dialog:Create()
 		),
 		Text = "Dialog",
 		TextColor3 = Color3.fromRGB(240, 240, 240),
-		TextSize = 22,
+		TextSize = 16,
 		TextXAlignment = Enum.TextXAlignment.Left,
-		Size = UDim2.new(1, 0, 0, 22),
-		Position = UDim2.fromOffset(20, 25),
+		Size = UDim2.new(1, 0, 0, 18),
+		Position = UDim2.fromOffset(16, 16),
 		BackgroundColor3 = Color3.fromRGB(255, 255, 255),
 		BackgroundTransparency = 1,
 		ThemeTag = {
@@ -91,10 +92,10 @@ function Dialog:Create()
 		Scale = 1,
 	})
 
-	local ScaleMotor, Scale = Creator.SpringMotor(1.1, NewDialog.Scale, "Scale")
+	local ScaleMotor, Scale = Creator.SpringMotor(1.05, NewDialog.Scale, "Scale")
 
 	NewDialog.Root = New("CanvasGroup", {
-		Size = UDim2.fromOffset(300, 165),
+		Size = UDim2.fromOffset(280, 140),
 		AnchorPoint = Vector2.new(0.5, 0.5),
 		Position = UDim2.fromScale(0.5, 0.5),
 		GroupTransparency = 1,
@@ -107,7 +108,7 @@ function Dialog:Create()
 			CornerRadius = UDim.new(0, 0),
 		}),
 		New("UIStroke", {
-			Transparency = 0.5,
+			Transparency = 0.7,
 			ThemeTag = {
 				Color = "DialogBorder",
 			},
@@ -121,8 +122,8 @@ function Dialog:Create()
 
 	function NewDialog:Open()
 		require(Root).DialogOpen = true
-		NewDialog.Scale.Scale = 1.1
-		TintTransparency(0.75)
+		NewDialog.Scale.Scale = 1.05
+		TintTransparency(0.7)
 		RootTransparency(0)
 		Scale(1)
 	end
@@ -131,9 +132,9 @@ function Dialog:Create()
 		require(Root).DialogOpen = false
 		TintTransparency(1)
 		RootTransparency(1)
-		Scale(1.1)
+		Scale(1.05)
 		NewDialog.Root.UIStroke:Destroy()
-		task.wait(0.15)
+		task.wait(0.12)
 		NewDialog.TintFrame:Destroy()
 	end
 
@@ -148,7 +149,7 @@ function Dialog:Create()
 		for _, Btn in next, NewDialog.ButtonHolder:GetChildren() do
 			if Btn:IsA("TextButton") then
 				Btn.Size =
-					UDim2.new(1 / NewDialog.Buttons, -(((NewDialog.Buttons - 1) * 10) / NewDialog.Buttons), 0, 32)
+					UDim2.new(1 / NewDialog.Buttons, -(((NewDialog.Buttons - 1) * 8) / NewDialog.Buttons), 0, 30)
 			end
 		end
 
