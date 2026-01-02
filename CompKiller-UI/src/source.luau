@@ -6744,6 +6744,69 @@ function Compkiller.new(Config : Window)
 		WindowOpen:Fire(false)
 	end)
 
+	-- Floating minimize ball (appears when window is minimized/closed)
+	local FloatingBall = Instance.new("TextButton")
+	FloatingBall.Name = Compkiller:_RandomString()
+	FloatingBall.Parent = CompKiller
+	FloatingBall.BackgroundColor3 = Compkiller.Colors.Highlight
+	FloatingBall.BorderSizePixel = 0
+	FloatingBall.Text = "🐱"
+	FloatingBall.Font = Enum.Font.GothamBold
+	FloatingBall.TextSize = 18
+	FloatingBall.TextColor3 = Color3.fromRGB(30,30,30)
+	FloatingBall.Size = UDim2.new(0, 36, 0, 36)
+	FloatingBall.Position = UDim2.new(0, 8, 0, 8)
+	FloatingBall.ZIndex = MainFrame.ZIndex + 100
+	FloatingBall.Visible = false
+
+	local fbCorner = Instance.new('UICorner')
+	fbCorner.CornerRadius = UDim.new(1,0)
+	fbCorner.Parent = FloatingBall
+
+	-- Click to restore
+	FloatingBall.MouseButton1Click:Connect(function()
+		MainFrame.Visible = true
+		WindowArgs.IsOpen = true
+		WindowOpen:Fire(true)
+		FloatingBall.Visible = false
+	end)
+
+	-- Make floating ball draggable
+	do
+		local dragging, dragStart, startPos = false, Vector2.new(), Vector2.new()
+		FloatingBall.InputBegan:Connect(function(input)
+			if input.UserInputType == Enum.UserInputType.MouseButton1 then
+				dragging = true
+				dragStart = input.Position
+				startPos = FloatingBall.Position
+			end
+		end)
+		FloatingBall.InputEnded:Connect(function(input)
+			if input.UserInputType == Enum.UserInputType.MouseButton1 then
+				dragging = false
+			end
+		end)
+		game:GetService('UserInputService').InputChanged:Connect(function(input)
+			if dragging and input.UserInputType == Enum.UserInputType.MouseMovement then
+				local delta = input.Position - dragStart
+				FloatingBall.Position = UDim2.new(startPos.X.Scale, startPos.X.Offset + delta.X, startPos.Y.Scale, startPos.Y.Offset + delta.Y)
+			end
+		end)
+	end
+
+	-- Update floating ball visibility when window open state changes
+	WindowOpen:Connect(function(isOpen)
+		FloatingBall.Visible = not isOpen
+	end)
+
+	-- Adjust Minimize button to use floating ball (minimize entire window)
+	MinimizeBtn.MouseButton1Click:Connect(function()
+		MainFrame.Visible = false
+		WindowArgs.IsOpen = false
+		WindowOpen:Fire(false)
+		FloatingBall.Visible = true
+	end)
+
 	-- Manual drag fallback: update position while dragging
 	do
 		local dragging = false
@@ -7202,8 +7265,8 @@ function Compkiller.new(Config : Window)
 		Icon.BackgroundTransparency = 1.000
 		Icon.BorderColor3 = Color3.fromRGB(0, 0, 0)
 		Icon.BorderSizePixel = 0
-		Icon.Position = UDim2.new(0, 10, 0.5, 0)
-		Icon.Size = UDim2.new(0, 14, 0, 14)
+		Icon.Position = UDim2.new(0, 12, 0.5, 0)
+		Icon.Size = UDim2.new(0, 18, 0, 18)
 		Icon.ZIndex = 3
 		Icon.Image = Compkiller:_GetIcon(TabConfig.Icon);
 		Icon.ImageColor3 = Compkiller.Colors.Highlight
@@ -7219,8 +7282,8 @@ function Compkiller.new(Config : Window)
 		TabNameLabel.BackgroundTransparency = 1.000
 		TabNameLabel.BorderColor3 = Color3.fromRGB(0, 0, 0)
 		TabNameLabel.BorderSizePixel = 0
-		TabNameLabel.Position = UDim2.new(0, 34, 0.5, 0)
-		TabNameLabel.Size = UDim2.new(0, 180, 0, 22)
+		TabNameLabel.Position = UDim2.new(0, 40, 0.5, 0)
+		TabNameLabel.Size = UDim2.new(0, 170, 0, 22)
 		TabNameLabel.ZIndex = 3
 		TabNameLabel.Font = Enum.Font.GothamMedium
 		TabNameLabel.Text = TabConfig.Name;
