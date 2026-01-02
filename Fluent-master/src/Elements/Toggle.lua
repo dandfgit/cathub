@@ -1,4 +1,4 @@
--- Modern Minimal Toggle Switch
+-- Toggle with Orange Cat Theme
 local TweenService = game:GetService("TweenService")
 local Root = script.Parent.Parent
 local Creator = require(Root.Creator)
@@ -21,20 +21,17 @@ function Element:New(Idx, Config)
 	}
 
 	local ToggleFrame = require(Components.Element)(Config.Title, Config.Description, self.Container, true)
-	ToggleFrame.DescLabel.Size = UDim2.new(1, -50, 0, 14)
+	ToggleFrame.DescLabel.Size = UDim2.new(1, -52, 0, 14)
 
 	Toggle.SetTitle = ToggleFrame.SetTitle
 	Toggle.SetDesc = ToggleFrame.SetDesc
 
-	-- Modern minimal circle indicator
+	-- Circle indicator with orange theme
 	local ToggleCircle = New("Frame", {
 		AnchorPoint = Vector2.new(0, 0.5),
-		Size = UDim2.fromOffset(16, 16),
-		Position = UDim2.new(0, 2, 0.5, 0),
-		BackgroundColor3 = Color3.fromRGB(255, 255, 255),
-		ThemeTag = {
-			BackgroundColor3 = "ToggleSlider",
-		},
+		Size = UDim2.fromOffset(14, 14),
+		Position = UDim2.new(0, 3, 0.5, 0),
+		BackgroundColor3 = Color3.fromRGB(150, 145, 140), -- Warm gray when off
 	}, {
 		New("UICorner", {
 			CornerRadius = UDim.new(1, 0),
@@ -42,23 +39,19 @@ function Element:New(Idx, Config)
 	})
 
 	local ToggleBorder = New("UIStroke", {
-		Transparency = 0.6,
+		Transparency = 0.5,
 		Thickness = 1,
-		ThemeTag = {
-			Color = "ToggleSlider",
-		},
+		Color = Color3.fromRGB(100, 95, 90),
 	})
 
-	-- Modern pill-shaped toggle track
+	-- Pill track
 	local ToggleSlider = New("Frame", {
-		Size = UDim2.fromOffset(40, 20),
+		Size = UDim2.fromOffset(38, 20),
 		AnchorPoint = Vector2.new(1, 0.5),
 		Position = UDim2.new(1, -8, 0.5, 0),
 		Parent = ToggleFrame.Frame,
 		BackgroundTransparency = 1,
-		ThemeTag = {
-			BackgroundColor3 = "Accent",
-		},
+		BackgroundColor3 = Color3.fromRGB(255, 140, 50), -- Orange when on
 	}, {
 		New("UICorner", {
 			CornerRadius = UDim.new(1, 0),
@@ -76,18 +69,25 @@ function Element:New(Idx, Config)
 		Value = not not Value
 		Toggle.Value = Value
 
-		Creator.OverrideTag(ToggleBorder, { Color = Toggle.Value and "Accent" or "ToggleSlider" })
-		Creator.OverrideTag(ToggleCircle, { BackgroundColor3 = Toggle.Value and "Accent" or "ToggleSlider" })
+		-- Update colors based on state
+		if Toggle.Value then
+			ToggleBorder.Color = Color3.fromRGB(255, 140, 50) -- Orange
+			ToggleCircle.BackgroundColor3 = Color3.fromRGB(255, 140, 50) -- Orange circle
+		else
+			ToggleBorder.Color = Color3.fromRGB(100, 95, 90)
+			ToggleCircle.BackgroundColor3 = Color3.fromRGB(150, 145, 140)
+		end
 		
+		-- Animation
 		TweenService:Create(
 			ToggleCircle,
 			TweenInfo.new(0.2, Enum.EasingStyle.Quart, Enum.EasingDirection.Out),
-			{ Position = UDim2.new(0, Toggle.Value and 22 or 2, 0.5, 0) }
+			{ Position = UDim2.new(0, Toggle.Value and 21 or 3, 0.5, 0) }
 		):Play()
 		TweenService:Create(
 			ToggleSlider,
 			TweenInfo.new(0.2, Enum.EasingStyle.Quart, Enum.EasingDirection.Out),
-			{ BackgroundTransparency = Toggle.Value and 0.3 or 1 }
+			{ BackgroundTransparency = Toggle.Value and 0.35 or 1 }
 		):Play()
 
 		Library:SafeCallback(Toggle.Callback, Toggle.Value)

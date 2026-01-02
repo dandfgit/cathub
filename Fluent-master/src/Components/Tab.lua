@@ -1,3 +1,4 @@
+-- Tab with Orange Cat Accent
 local Root = script.Parent.Parent
 local Flipper = require(Root.Packages.Flipper)
 local Creator = require(Root.Creator)
@@ -49,9 +50,23 @@ function TabModule:New(Title, Icon, Parent)
 		Icon = nil
 	end
 
-	-- Compact icon-only tab button (modern minimal style)
+	-- Orange selection indicator
+	local Indicator = New("Frame", {
+		Size = UDim2.new(0, 3, 0, 20),
+		Position = UDim2.new(0, 0, 0.5, 0),
+		AnchorPoint = Vector2.new(0, 0.5),
+		BackgroundTransparency = 1,
+		BackgroundColor3 = Color3.fromRGB(255, 140, 50), -- Orange
+		Name = "Indicator",
+	}, {
+		New("UICorner", {
+			CornerRadius = UDim.new(0, 0),
+		}),
+	})
+
+	-- Tab button
 	Tab.Frame = New("TextButton", {
-		Size = UDim2.new(1, 0, 0, 40),
+		Size = UDim2.new(1, 0, 0, 38),
 		BackgroundTransparency = 1,
 		Parent = Parent,
 		ThemeTag = {
@@ -61,28 +76,41 @@ function TabModule:New(Title, Icon, Parent)
 		New("UICorner", {
 			CornerRadius = UDim.new(0, 0),
 		}),
-		-- Icon centered
+		-- Icon
 		New("ImageLabel", {
-			AnchorPoint = Vector2.new(0.5, 0.5),
-			Size = UDim2.fromOffset(20, 20),
-			Position = UDim2.new(0.5, 0, 0.5, 0),
+			AnchorPoint = Vector2.new(0, 0.5),
+			Size = UDim2.fromOffset(18, 18),
+			Position = UDim2.new(0, 14, 0.5, 0),
 			BackgroundTransparency = 1,
 			Image = Icon and Icon or nil,
+			Name = "Icon",
 			ThemeTag = {
 				ImageColor3 = "Text",
 			},
 		}),
-		-- Selection indicator (left bar)
-		New("Frame", {
-			Size = UDim2.new(0, 3, 0, 20),
-			Position = UDim2.new(0, 0, 0.5, 0),
+		-- Tab name
+		New("TextLabel", {
 			AnchorPoint = Vector2.new(0, 0.5),
+			Position = UDim2.new(0, 38, 0.5, 0),
+			Text = Title,
+			RichText = true,
+			TextColor3 = Color3.fromRGB(255, 255, 255),
+			TextTransparency = 0,
+			FontFace = Font.new(
+				"rbxasset://fonts/families/GothamSSm.json",
+				Enum.FontWeight.Regular,
+				Enum.FontStyle.Normal
+			),
+			TextSize = 12,
+			TextXAlignment = "Left",
+			TextYAlignment = "Center",
+			Size = UDim2.new(1, -44, 1, 0),
 			BackgroundTransparency = 1,
-			Name = "Indicator",
 			ThemeTag = {
-				BackgroundColor3 = "Accent",
+				TextColor3 = "Text",
 			},
 		}),
+		Indicator,
 	})
 
 	local ContainerLayout = New("UIListLayout", {
@@ -98,8 +126,8 @@ function TabModule:New(Title, Icon, Parent)
 		BottomImage = "rbxassetid://6889812791",
 		MidImage = "rbxassetid://6889812721",
 		TopImage = "rbxassetid://6276641225",
-		ScrollBarImageColor3 = Color3.fromRGB(255, 255, 255),
-		ScrollBarImageTransparency = 0.95,
+		ScrollBarImageColor3 = Color3.fromRGB(255, 140, 50), -- Orange scrollbar
+		ScrollBarImageTransparency = 0.7,
 		ScrollBarThickness = 2,
 		BorderSizePixel = 0,
 		CanvasSize = UDim2.fromScale(0, 0),
@@ -119,17 +147,15 @@ function TabModule:New(Title, Icon, Parent)
 	end)
 
 	Tab.Motor, Tab.SetTransparency = Creator.SpringMotor(1, Tab.Frame, "BackgroundTransparency")
-	
-	local Indicator = Tab.Frame:FindFirstChild("Indicator")
 
 	Creator.AddSignal(Tab.Frame.MouseEnter, function()
 		Tab.SetTransparency(Tab.Selected and 0.85 or 0.92)
 	end)
 	Creator.AddSignal(Tab.Frame.MouseLeave, function()
-		Tab.SetTransparency(Tab.Selected and 0.89 or 1)
+		Tab.SetTransparency(Tab.Selected and 0.88 or 1)
 	end)
 	Creator.AddSignal(Tab.Frame.MouseButton1Down, function()
-		Tab.SetTransparency(0.88)
+		Tab.SetTransparency(0.85)
 	end)
 	Creator.AddSignal(Tab.Frame.MouseButton1Up, function()
 		Tab.SetTransparency(Tab.Selected and 0.85 or 0.92)
@@ -171,14 +197,26 @@ function TabModule:SelectTab(Tab)
 		if Indicator then
 			Indicator.BackgroundTransparency = 1
 		end
+		-- Reset icon color
+		local Icon = TabObject.Frame:FindFirstChild("Icon")
+		if Icon then
+			Creator.OverrideTag(Icon, { ImageColor3 = "SubText" })
+		end
 	end
-	TabModule.Tabs[Tab].SetTransparency(0.89)
+	
+	TabModule.Tabs[Tab].SetTransparency(0.88)
 	TabModule.Tabs[Tab].Selected = true
 	
-	-- Show indicator for selected tab
+	-- Show orange indicator
 	local SelectedIndicator = TabModule.Tabs[Tab].Frame:FindFirstChild("Indicator")
 	if SelectedIndicator then
 		SelectedIndicator.BackgroundTransparency = 0
+	end
+	
+	-- Highlight icon with accent
+	local SelectedIcon = TabModule.Tabs[Tab].Frame:FindFirstChild("Icon")
+	if SelectedIcon then
+		Creator.OverrideTag(SelectedIcon, { ImageColor3 = "Accent" })
 	end
 
 	Window.TabDisplay.Text = TabModule.Tabs[Tab].Name
@@ -187,16 +225,16 @@ function TabModule:SelectTab(Tab)
 	task.spawn(function()
 		Window.ContainerHolder.Parent = Window.ContainerAnim
 		
-		Window.ContainerPosMotor:setGoal(Spring(15, { frequency = 10 }))
+		Window.ContainerPosMotor:setGoal(Spring(12, { frequency = 10 }))
 		Window.ContainerBackMotor:setGoal(Spring(1, { frequency = 10 }))
-		task.wait(0.1)
+		task.wait(0.08)
 		for _, Container in next, TabModule.Containers do
 			Container.Visible = false
 		end
 		TabModule.Containers[Tab].Visible = true
 		Window.ContainerPosMotor:setGoal(Spring(0, { frequency = 5 }))
 		Window.ContainerBackMotor:setGoal(Spring(0, { frequency = 8 }))
-		task.wait(0.1)
+		task.wait(0.08)
 		Window.ContainerHolder.Parent = Window.ContainerCanvas
 	end)
 end

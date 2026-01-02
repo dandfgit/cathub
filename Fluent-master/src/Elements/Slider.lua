@@ -1,4 +1,4 @@
--- Modern Minimal Slider
+-- Slider with Orange Cat Theme
 local UserInputService = game:GetService("UserInputService")
 local Root = script.Parent.Parent
 local Creator = require(Root.Creator)
@@ -35,41 +35,48 @@ function Element:New(Idx, Config)
 	Slider.SetTitle = SliderFrame.SetTitle
 	Slider.SetDesc = SliderFrame.SetDesc
 
-	-- Modern minimal thumb
+	-- Orange thumb
 	local SliderDot = New("Frame", {
 		AnchorPoint = Vector2.new(0.5, 0.5),
 		Position = UDim2.new(0, 0, 0.5, 0),
-		Size = UDim2.fromOffset(12, 12),
-		ThemeTag = {
-			BackgroundColor3 = "Accent",
-		},
+		Size = UDim2.fromOffset(14, 14),
+		BackgroundColor3 = Color3.fromRGB(255, 140, 50), -- Orange
 	}, {
 		New("UICorner", {
 			CornerRadius = UDim.new(1, 0),
+		}),
+		-- White inner dot
+		New("Frame", {
+			Size = UDim2.fromOffset(6, 6),
+			Position = UDim2.fromScale(0.5, 0.5),
+			AnchorPoint = Vector2.new(0.5, 0.5),
+			BackgroundColor3 = Color3.fromRGB(255, 255, 255),
+		}, {
+			New("UICorner", {
+				CornerRadius = UDim.new(1, 0),
+			}),
 		}),
 	})
 
 	local SliderRail = New("Frame", {
 		BackgroundTransparency = 1,
-		Position = UDim2.fromOffset(6, 0),
-		Size = UDim2.new(1, -12, 1, 0),
+		Position = UDim2.fromOffset(7, 0),
+		Size = UDim2.new(1, -14, 1, 0),
 	}, {
 		SliderDot,
 	})
 
-	-- Thin fill bar
+	-- Orange fill
 	local SliderFill = New("Frame", {
 		Size = UDim2.new(0, 0, 1, 0),
-		ThemeTag = {
-			BackgroundColor3 = "Accent",
-		},
+		BackgroundColor3 = Color3.fromRGB(255, 140, 50), -- Orange
 	}, {
 		New("UICorner", {
 			CornerRadius = UDim.new(0, 0),
 		}),
 	})
 
-	-- Value display
+	-- Value display with warmer color
 	local SliderDisplay = New("TextLabel", {
 		FontFace = Font.new("rbxasset://fonts/families/GothamSSm.json"),
 		Text = "0",
@@ -78,24 +85,20 @@ function Element:New(Idx, Config)
 		TextXAlignment = Enum.TextXAlignment.Right,
 		BackgroundColor3 = Color3.fromRGB(255, 255, 255),
 		BackgroundTransparency = 1,
-		Size = UDim2.new(0, 50, 0, 14),
-		Position = UDim2.new(0, -8, 0.5, 0),
+		Size = UDim2.new(0, 45, 0, 14),
+		Position = UDim2.new(0, -6, 0.5, 0),
 		AnchorPoint = Vector2.new(1, 0.5),
-		ThemeTag = {
-			TextColor3 = "SubText",
-		},
+		TextColor3 = Color3.fromRGB(255, 180, 100), -- Warm orange text
 	})
 
-	-- Thin track
+	-- Track
 	local SliderInner = New("Frame", {
-		Size = UDim2.new(1, 0, 0, 3),
+		Size = UDim2.new(1, 0, 0, 4),
 		AnchorPoint = Vector2.new(1, 0.5),
 		Position = UDim2.new(1, -8, 0.5, 0),
-		BackgroundTransparency = 0.5,
+		BackgroundTransparency = 0.6,
 		Parent = SliderFrame.Frame,
-		ThemeTag = {
-			BackgroundColor3 = "SliderRail",
-		},
+		BackgroundColor3 = Color3.fromRGB(80, 75, 70),
 	}, {
 		New("UICorner", {
 			CornerRadius = UDim.new(0, 0),

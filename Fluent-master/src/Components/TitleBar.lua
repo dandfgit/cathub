@@ -1,4 +1,4 @@
--- Modern Minimal TitleBar
+-- TitleBar with Orange Cat Accents
 local Root = script.Parent.Parent
 local Assets = require(script.Parent.Assets)
 local Creator = require(Root.Creator)
@@ -48,9 +48,12 @@ return function(Config)
 
 		AddSignal(Button.Frame.MouseEnter, function()
 			SetTransparency(0.92)
+			-- Orange tint on hover
+			Button.Frame.Icon.ImageColor3 = Color3.fromRGB(255, 160, 80)
 		end)
 		AddSignal(Button.Frame.MouseLeave, function()
 			SetTransparency(1, true)
+			Creator.OverrideTag(Button.Frame.Icon, { ImageColor3 = "Text" })
 		end)
 		AddSignal(Button.Frame.MouseButton1Down, function()
 			SetTransparency(0.88)
@@ -67,6 +70,16 @@ return function(Config)
 		return Button
 	end
 
+	-- Cat emoji as branding
+	local CatBrand = New("TextLabel", {
+		Text = "🐱",
+		TextSize = 14,
+		Size = UDim2.fromOffset(20, 20),
+		Position = UDim2.fromOffset(10, 0),
+		BackgroundTransparency = 1,
+		AnchorPoint = Vector2.new(0, 0.5),
+	})
+
 	TitleBar.Frame = New("Frame", {
 		Size = UDim2.new(1, 0, 0, 36),
 		BackgroundTransparency = 1,
@@ -78,33 +91,32 @@ return function(Config)
 			BackgroundTransparency = 1,
 		}, {
 			New("UIListLayout", {
-				Padding = UDim.new(0, 4),
+				Padding = UDim.new(0, 6),
 				FillDirection = Enum.FillDirection.Horizontal,
 				SortOrder = Enum.SortOrder.LayoutOrder,
 				VerticalAlignment = Enum.VerticalAlignment.Center,
 			}),
+			-- Title with orange accent
 			New("TextLabel", {
 				RichText = true,
 				Text = Config.Title,
 				FontFace = Font.new(
 					"rbxasset://fonts/families/GothamSSm.json",
-					Enum.FontWeight.SemiBold,
+					Enum.FontWeight.Bold,
 					Enum.FontStyle.Normal
 				),
-				TextSize = 13,
+				TextSize = 14,
 				TextXAlignment = "Left",
 				TextYAlignment = "Center",
 				Size = UDim2.fromScale(0, 1),
 				AutomaticSize = Enum.AutomaticSize.X,
 				BackgroundTransparency = 1,
-				ThemeTag = {
-					TextColor3 = "Text",
-				},
+				TextColor3 = Color3.fromRGB(255, 160, 80), -- Orange title
 			}),
 			New("TextLabel", {
 				RichText = true,
 				Text = Config.SubTitle,
-				TextTransparency = 0.5,
+				TextTransparency = 0.4,
 				FontFace = Font.new(
 					"rbxasset://fonts/families/GothamSSm.json",
 					Enum.FontWeight.Regular,
@@ -121,20 +133,29 @@ return function(Config)
 				},
 			}),
 		}),
+		-- Bottom line with subtle orange gradient
 		New("Frame", {
-			BackgroundTransparency = 0.7,
+			BackgroundTransparency = 0.5,
 			Size = UDim2.new(1, 0, 0, 1),
 			Position = UDim2.new(0, 0, 1, 0),
 			ThemeTag = {
 				BackgroundColor3 = "TitleBarLine",
 			},
+		}, {
+			New("UIGradient", {
+				Color = ColorSequence.new({
+					ColorSequenceKeypoint.new(0, Color3.fromRGB(255, 140, 50)),
+					ColorSequenceKeypoint.new(0.3, Color3.fromRGB(80, 75, 70)),
+					ColorSequenceKeypoint.new(1, Color3.fromRGB(50, 48, 45)),
+				}),
+			}),
 		}),
 	})
 
 	TitleBar.CloseButton = BarButton(Assets.Close, UDim2.new(1, -4, 0.5, 0), TitleBar.Frame, function()
 		Library.Window:Dialog({
-			Title = "Close",
-			Content = "Are you sure you want to unload the interface?",
+			Title = "Close CatHub 🐱",
+			Content = "Are you sure you want to close?",
 			Buttons = {
 				{
 					Title = "Yes",

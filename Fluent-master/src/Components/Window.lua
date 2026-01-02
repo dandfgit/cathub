@@ -1,4 +1,4 @@
--- Modern Minimalist Window Component
+-- Modern Window with Decorative Sidebar
 local UserInputService = game:GetService("UserInputService")
 local Mouse = game:GetService("Players").LocalPlayer:GetMouse()
 local Camera = game:GetService("Workspace").CurrentCamera
@@ -34,9 +34,8 @@ return function(Config)
 	local MinimizeNotif = false
 
 	Window.AcrylicPaint = Acrylic.AcrylicPaint()
-	Window.TabWidth = Config.TabWidth or 50
+	Window.TabWidth = Config.TabWidth or 75
 
-	-- Hidden selector (we use indicator in tabs now)
 	local Selector = New("Frame", {
 		Size = UDim2.fromOffset(0, 0),
 		BackgroundTransparency = 1,
@@ -49,7 +48,8 @@ return function(Config)
 	})
 
 	Window.TabHolder = New("ScrollingFrame", {
-		Size = UDim2.fromScale(1, 1),
+		Size = UDim2.new(1, 0, 1, -40),
+		Position = UDim2.fromOffset(0, 40),
 		BackgroundTransparency = 1,
 		ScrollBarImageTransparency = 1,
 		ScrollBarThickness = 0,
@@ -62,11 +62,43 @@ return function(Config)
 		}),
 	})
 
-	-- Compact sidebar frame
+	-- Decorative sidebar background with cat paw pattern hint
+	local SidebarDecor = New("ImageLabel", {
+		Size = UDim2.new(1, 0, 0, 100),
+		Position = UDim2.new(0, 0, 1, -100),
+		AnchorPoint = Vector2.new(0, 0),
+		BackgroundTransparency = 1,
+		Image = "rbxassetid://6276641225", -- subtle pattern
+		ImageTransparency = 0.92,
+		ImageColor3 = Color3.fromRGB(255, 140, 50), -- orange tint
+		ScaleType = Enum.ScaleType.Tile,
+		TileSize = UDim2.fromOffset(30, 30),
+	})
+	
+	-- Gradient overlay on sidebar
+	local SidebarGradient = New("Frame", {
+		Size = UDim2.fromScale(1, 1),
+		BackgroundTransparency = 1,
+	}, {
+		New("UIGradient", {
+			Color = ColorSequence.new({
+				ColorSequenceKeypoint.new(0, Color3.fromRGB(255, 140, 50)),
+				ColorSequenceKeypoint.new(1, Color3.fromRGB(255, 80, 30)),
+			}),
+			Transparency = NumberSequence.new({
+				NumberSequenceKeypoint.new(0, 1),
+				NumberSequenceKeypoint.new(0.7, 0.98),
+				NumberSequenceKeypoint.new(1, 0.9),
+			}),
+			Rotation = 180,
+		}),
+	})
+
+	-- Sidebar with decorative elements
 	local TabFrame = New("Frame", {
-		Size = UDim2.new(0, Window.TabWidth, 1, -46),
+		Size = UDim2.new(0, Window.TabWidth, 1, -38),
 		Position = UDim2.new(0, 0, 0, 38),
-		BackgroundTransparency = 0.5,
+		BackgroundTransparency = 0.3,
 		ClipsDescendants = true,
 		ThemeTag = {
 			BackgroundColor3 = "AcrylicMain",
@@ -75,6 +107,18 @@ return function(Config)
 		New("UICorner", {
 			CornerRadius = UDim.new(0, 0),
 		}),
+		-- Subtle border on right side
+		New("Frame", {
+			Size = UDim2.new(0, 1, 1, 0),
+			Position = UDim2.new(1, -1, 0, 0),
+			BackgroundTransparency = 0.7,
+			BorderSizePixel = 0,
+			ThemeTag = {
+				BackgroundColor3 = "TitleBarLine",
+			},
+		}),
+		SidebarDecor,
+		SidebarGradient,
 		Window.TabHolder,
 		Selector,
 	})
@@ -84,11 +128,11 @@ return function(Config)
 		Text = "Tab",
 		TextTransparency = 0,
 		FontFace = Font.new("rbxassetid://12187365364", Enum.FontWeight.SemiBold, Enum.FontStyle.Normal),
-		TextSize = 16,
+		TextSize = 18,
 		TextXAlignment = "Left",
 		TextYAlignment = "Center",
-		Size = UDim2.new(1, -16, 0, 20),
-		Position = UDim2.fromOffset(Window.TabWidth + 12, 42),
+		Size = UDim2.new(1, -16, 0, 22),
+		Position = UDim2.fromOffset(Window.TabWidth + 14, 44),
 		BackgroundTransparency = 1,
 		ThemeTag = {
 			TextColor3 = "Text",
@@ -106,8 +150,8 @@ return function(Config)
 	})
 
 	Window.ContainerCanvas = New("Frame", {
-		Size = UDim2.new(1, -Window.TabWidth - 16, 1, -72),
-		Position = UDim2.fromOffset(Window.TabWidth + 8, 66),
+		Size = UDim2.new(1, -Window.TabWidth - 20, 1, -78),
+		Position = UDim2.fromOffset(Window.TabWidth + 10, 70),
 		BackgroundTransparency = 1,
 	}, {
 		Window.ContainerAnim,
@@ -320,9 +364,9 @@ return function(Config)
 			MinimizeNotif = true
 			local Key = Library.MinimizeKeybind and Library.MinimizeKeybind.Value or Library.MinimizeKey.Name
 			Library:Notify({
-				Title = "Interface",
-				Content = "Press " .. Key .. " to toggle the interface.",
-				Duration = 6
+				Title = "CatHub 🐱",
+				Content = "Press " .. Key .. " to toggle",
+				Duration = 5
 			})
 		end
 	end

@@ -1,4 +1,4 @@
--- Modern Minimal AcrylicPaint
+-- More Transparent AcrylicPaint with Orange Accents
 local Creator = require(script.Parent.Parent.Creator)
 local AcrylicBlur = require(script.Parent.AcrylicBlur)
 
@@ -9,10 +9,11 @@ return function(props)
 
 	AcrylicPaint.Frame = New("Frame", {
 		Size = UDim2.fromScale(1, 1),
-		BackgroundTransparency = 0.92,
+		BackgroundTransparency = 0.95,
 		BackgroundColor3 = Color3.fromRGB(255, 255, 255),
 		BorderSizePixel = 0,
 	}, {
+		-- Shadow
 		New("ImageLabel", {
 			Image = "rbxassetid://8992230677",
 			ScaleType = "Slice",
@@ -22,15 +23,16 @@ return function(props)
 			Position = UDim2.new(0.5, 0, 0.5, 0),
 			BackgroundTransparency = 1,
 			ImageColor3 = Color3.fromRGB(0, 0, 0),
-			ImageTransparency = 0.6,
+			ImageTransparency = 0.5,
 		}),
 
 		New("UICorner", {
 			CornerRadius = UDim.new(0, 0),
 		}),
 
+		-- Main dark background - more transparent
 		New("Frame", {
-			BackgroundTransparency = 0.35,
+			BackgroundTransparency = 0.25,
 			Size = UDim2.fromScale(1, 1),
 			Name = "Background",
 			ThemeTag = {
@@ -42,9 +44,10 @@ return function(props)
 			}),
 		}),
 
+		-- Subtle gradient overlay
 		New("Frame", {
 			BackgroundColor3 = Color3.fromRGB(255, 255, 255),
-			BackgroundTransparency = 0.5,
+			BackgroundTransparency = 0.6,
 			Size = UDim2.fromScale(1, 1),
 		}, {
 			New("UICorner", {
@@ -59,6 +62,7 @@ return function(props)
 			}),
 		}),
 
+		-- Very subtle noise
 		New("ImageLabel", {
 			Image = "rbxassetid://9968344105",
 			ImageTransparency = 0.98,
@@ -74,7 +78,7 @@ return function(props)
 
 		New("ImageLabel", {
 			Image = "rbxassetid://9968344227",
-			ImageTransparency = 0.94,
+			ImageTransparency = 0.96,
 			ScaleType = Enum.ScaleType.Tile,
 			TileSize = UDim2.new(0, 128, 0, 128),
 			Size = UDim2.fromScale(1, 1),
@@ -88,6 +92,7 @@ return function(props)
 			}),
 		}),
 
+		-- Border with subtle orange hint
 		New("Frame", {
 			BackgroundTransparency = 1,
 			Size = UDim2.fromScale(1, 1),
@@ -97,7 +102,7 @@ return function(props)
 				CornerRadius = UDim.new(0, 0),
 			}),
 			New("UIStroke", {
-				Transparency = 0.7,
+				Transparency = 0.6,
 				Thickness = 1,
 				ThemeTag = {
 					Color = "AcrylicBorder",

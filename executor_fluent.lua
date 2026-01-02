@@ -12,10 +12,10 @@ local InterfaceManager = loadstring(game:HttpGet("https://raw.githubusercontent.
 local Window = Fluent:CreateWindow({
     Title = "CatHub",
     SubTitle = "v1.0",
-    TabWidth = 50, -- Ultra compact icon-only sidebar
+    TabWidth = 75, -- Ultra compact icon-only sidebar
     Size = UDim2.fromOffset(480, 360), -- Compact size
     Acrylic = true,
-    Theme = "Darker",
+    Theme = "CatHub", -- Orange cat theme
     MinimizeKey = Enum.KeyCode.RightControl
 })
 

@@ -1,4 +1,4 @@
--- Modern Minimal Element Base Component
+-- Element with More Transparency
 local Root = script.Parent.Parent
 local Flipper = require(Root.Packages.Flipper)
 local Creator = require(Root.Creator)
@@ -12,7 +12,7 @@ return function(Title, Desc, Parent, Hover)
 	Element.TitleLabel = New("TextLabel", {
 		FontFace = Font.new("rbxasset://fonts/families/GothamSSm.json", Enum.FontWeight.Medium, Enum.FontStyle.Normal),
 		Text = Title,
-		TextColor3 = Color3.fromRGB(240, 240, 240),
+		TextColor3 = Color3.fromRGB(250, 248, 245), -- Warm white
 		TextSize = 13,
 		TextXAlignment = Enum.TextXAlignment.Left,
 		Size = UDim2.new(1, 0, 0, 14),
@@ -26,7 +26,7 @@ return function(Title, Desc, Parent, Hover)
 	Element.DescLabel = New("TextLabel", {
 		FontFace = Font.new("rbxasset://fonts/families/GothamSSm.json"),
 		Text = Desc,
-		TextColor3 = Color3.fromRGB(180, 180, 180),
+		TextColor3 = Color3.fromRGB(160, 155, 150), -- Warm gray
 		TextSize = 11,
 		TextWrapped = true,
 		TextXAlignment = Enum.TextXAlignment.Left,
@@ -60,7 +60,7 @@ return function(Title, Desc, Parent, Hover)
 	})
 
 	Element.Border = New("UIStroke", {
-		Transparency = 0.85,
+		Transparency = 0.88,
 		ApplyStrokeMode = Enum.ApplyStrokeMode.Border,
 		Color = Color3.fromRGB(0, 0, 0),
 		ThemeTag = {
@@ -70,8 +70,8 @@ return function(Title, Desc, Parent, Hover)
 
 	Element.Frame = New("TextButton", {
 		Size = UDim2.new(1, 0, 0, 0),
-		BackgroundTransparency = 0.92,
-		BackgroundColor3 = Color3.fromRGB(100, 100, 100),
+		BackgroundTransparency = 0.78, -- More transparent
+		BackgroundColor3 = Color3.fromRGB(55, 52, 48), -- Warmer
 		Parent = Parent,
 		AutomaticSize = Enum.AutomaticSize.Y,
 		Text = "",
