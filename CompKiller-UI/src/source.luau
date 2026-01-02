@@ -349,7 +349,8 @@ local Compkiller = {
 	Windows = {},
 	Scale = {
 		-- Compact defaults (smaller, denser UI)
-		Window = UDim2.new(0, 380, 0, 420),
+		-- Slightly wider default window while keeping a compact height
+		Window = UDim2.new(0, 420, 0, 420),
 		Mobile = UDim2.new(0, 340, 0, 320),
 		TabOpen = 150,
 		TabClose = 65,
@@ -6557,7 +6558,8 @@ function Compkiller.new(Config : Window)
 	UIListLayout.Parent = TabButtonScrollingFrame
 	UIListLayout.HorizontalAlignment = Enum.HorizontalAlignment.Center
 	UIListLayout.SortOrder = Enum.SortOrder.LayoutOrder
-	UIListLayout.Padding = UDim.new(0, 4)
+	-- reduced padding for a denser, compact layout
+	UIListLayout.Padding = UDim.new(0, 2)
 
 	Userinfo.Name = Compkiller:_RandomString()
 	Userinfo.Parent = TabFrame
@@ -7553,7 +7555,7 @@ function Compkiller.new(Config : Window)
 			end;
 		end;
 
-		table.insert(WindowArgs.THREADS,task.spawn(Executable))]]
+		table.insert(WindowArgs.THREADS,Compkiller._spawn(Executable))]]
 	end;
 
 	function WindowArgs:DrawConfig(Configuration : TabConfigManager , Internal)
@@ -10044,6 +10046,47 @@ function Compkiller.new(Config : Window)
 			end
 		end);
 	end);
+
+	-- Compactify helper: reduce font sizes and scale down common UI offsets for a denser appearance.
+	local function _compactifyInstance(root: Instance)
+		if not root or not root.GetDescendants then return end
+		local textScale = 0.85 -- decrease fonts to 85%
+		local imgScale = 0.9 -- decrease image sizes to 90%
+		local frameScale = 0.95 -- slight frame shrink
+
+		for _,v in ipairs(root:GetDescendants()) do
+			if v:IsA('TextLabel') or v:IsA('TextButton') or v:IsA('TextBox') then
+				if v.TextSize and type(v.TextSize) == 'number' then
+					local newSize = math.max(9, math.floor(v.TextSize * textScale))
+					v.TextSize = newSize
+				end
+			elseif v:IsA('ImageLabel') or v:IsA('ImageButton') then
+				if v.Size and typeof(v.Size) == 'UDim2' then
+					local sx, ox = v.Size.X.Scale, v.Size.X.Offset
+					local sy, oy = v.Size.Y.Scale, v.Size.Y.Offset
+					v.Size = UDim2.new(sx, math.floor((ox or 0) * imgScale), sy, math.floor((oy or 0) * imgScale))
+				end
+			elseif v:IsA('Frame') then
+				if v.Size and typeof(v.Size) == 'UDim2' then
+					local sx, ox = v.Size.X.Scale, v.Size.X.Offset
+					local sy, oy = v.Size.Y.Scale, v.Size.Y.Offset
+					v.Size = UDim2.new(sx, math.floor((ox or 0) * frameScale), sy, math.floor((oy or 0) * frameScale))
+				end
+			elseif v:IsA('UIListLayout') or v:IsA('UIPadding') then
+				-- reduce spacing/padding where possible
+				pcall(function()
+					if v.Padding and typeof(v.Padding) == 'UDim' then
+						v.Padding = UDim.new(v.Padding.Scale, math.floor((v.Padding.Offset or 0) * 0.6))
+					end
+				end)
+			end
+		end
+	end
+
+	-- apply compactification to the new ScreenGui (CompKiller) for denser UI
+	pcall(function()
+		_compactifyInstance(CompKiller)
+	end)
 
 	return WindowArgs;
 end;
