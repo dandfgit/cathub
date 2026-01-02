@@ -1,4 +1,3 @@
--- Modern Minimal Section (headers removed for cleaner UI)
 local Root = script.Parent.Parent
 local Creator = require(Root.Creator)
 
@@ -8,34 +7,45 @@ return function(Title, Parent)
 	local Section = {}
 
 	Section.Layout = New("UIListLayout", {
-		Padding = UDim.new(0, 3),
+		Padding = UDim.new(0, 5),
 	})
 
-	-- Container starts at position 0 (no header space needed)
 	Section.Container = New("Frame", {
 		Size = UDim2.new(1, 0, 0, 0),
-		Position = UDim2.fromOffset(0, 0), -- No offset for header
+		Position = UDim2.fromOffset(0, 24),
 		BackgroundTransparency = 1,
 	}, {
 		Section.Layout,
 	})
 
-	-- Root without the TextLabel header
 	Section.Root = New("Frame", {
 		BackgroundTransparency = 1,
-		Size = UDim2.new(1, 0, 0, 0), -- Zero initial size
+		Size = UDim2.new(1, 0, 0, 0),
 		LayoutOrder = 7,
 		Parent = Parent,
 	}, {
-		-- TextLabel removed to hide section headers
+		New("TextLabel", {
+			RichText = true,
+			Text = Title,
+			TextTransparency = 0,
+			FontFace = Font.new("rbxasset://fonts/families/GothamSSm.json", Enum.FontWeight.Medium, Enum.FontStyle.Normal),
+			TextSize = 14,
+			TextXAlignment = "Left",
+			TextYAlignment = "Center",
+			Size = UDim2.new(1, -12, 0, 14),
+			Position = UDim2.fromOffset(0, 0),
+			BackgroundTransparency = 1,
+			ThemeTag = {
+				TextColor3 = "Text",
+			},
+		}),
 		Section.Container,
 	})
 
 	Creator.AddSignal(Section.Layout:GetPropertyChangedSignal("AbsoluteContentSize"), function()
 		Section.Container.Size = UDim2.new(1, 0, 0, Section.Layout.AbsoluteContentSize.Y)
-		Section.Root.Size = UDim2.new(1, 0, 0, Section.Layout.AbsoluteContentSize.Y) -- No extra height for header
+		Section.Root.Size = UDim2.new(1, 0, 0, Section.Layout.AbsoluteContentSize.Y + 24)
 	end)
 
 	return Section
 end
-
