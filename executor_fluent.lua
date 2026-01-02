@@ -5,14 +5,14 @@ local Fluent = loadstring(game:HttpGet("https://raw.githubusercontent.com/dandfg
 local SaveManager = loadstring(game:HttpGet("https://raw.githubusercontent.com/dandfgit/cathub/refs/heads/main/Fluent-master/Addons/SaveManager.lua"))()
 local InterfaceManager = loadstring(game:HttpGet("https://raw.githubusercontent.com/dandfgit/cathub/refs/heads/main/Fluent-master/Addons/InterfaceManager.lua"))()
 
--- CatHub Window Configuration - Modern Sidebar Design (Like Image 2)
+-- CatHub Window Configuration - Modern, Solid, Box Design
 local Window = Fluent:CreateWindow({
     Title = "CatHub",
     SubTitle = "🐱 Premium Script Hub",
-    TabWidth = 80, -- Narrow sidebar width for icon-only navigation
-    Size = UDim2.fromOffset(700, 500), -- Larger size for better layout
+    TabWidth = 70, -- Compact sidebar for icon-only navigation
+    Size = UDim2.fromOffset(750, 550), -- Optimal size for modern layout
     Acrylic = true, -- Transparent blur background
-    Theme = "CatHub", -- Custom CatHub theme with cyan accent
+    Theme = "CatHub", -- Custom CatHub theme - Modern, Solid, Box
     MinimizeKey = Enum.KeyCode.RightControl
 })
 
@@ -35,45 +35,44 @@ Fluent:Notify({
     Duration = 4
 })
 
--- Main Tab Content
+-- Main Tab Content - Modern Solid Design
 do
-    -- Section with collapsible header
-    local MainSection = Tabs.Main:AddSection("Section")
+    local MainSection = Tabs.Main:AddSection("Main")
     
-    -- Welcome Paragraph
     MainSection:AddParagraph({
-        Title = "Very cool paragraph",
-        Content = "All elements in this section will be saved to the config!"
+        Title = "Welcome",
+        Content = "Modern, solid, and optimized UI design"
     })
 
 
 
-    -- Toggle with info icon
-    local Toggle1 = MainSection:AddToggle("Toggle1", {
-        Title = "Toggle",
-        Description = "Toggle with info icon",
+    -- Modern Toggles
+    local EnableFeature = MainSection:AddToggle("EnableFeature", {
+        Title = "Enable Feature",
+        Description = "Activate main feature",
         Default = true
     })
     
-    -- Toggle with gear icon
-    local Toggle2 = MainSection:AddToggle("Toggle2", {
-        Title = "Toggle",
-        Description = "Toggle with gear icon",
+    local AutoSave = MainSection:AddToggle("AutoSave", {
+        Title = "Auto Save",
+        Description = "Automatically save configurations",
         Default = true
     })
 
 
 
     -- Keybind
-    local Keybind = MainSection:AddKeybind("Keybind", {
-        Title = "Keybind",
-        Default = "LAlt",
+    local QuickToggle = MainSection:AddKeybind("QuickToggle", {
+        Title = "Quick Toggle",
+        Description = "Toggle UI visibility",
+        Default = "RightControl",
         Mode = "Toggle"
     })
 
-    -- Slider
-    local Slider = MainSection:AddSlider("Slider", {
-        Title = "Slider",
+    -- Performance Slider
+    local Performance = MainSection:AddSlider("Performance", {
+        Title = "Performance",
+        Description = "Adjust performance level",
         Default = 50,
         Min = 0,
         Max = 100,
@@ -82,98 +81,90 @@ do
 
 
 
-    -- ColorPicker (Cyan/Green like image)
-    local ColorPicker = MainSection:AddColorpicker("ColorPicker", {
-        Title = "ColorPicker",
-        Default = Color3.fromRGB(0, 255, 150) -- Bright cyan/green
+    -- Accent Color
+    local AccentColor = MainSection:AddColorpicker("AccentColor", {
+        Title = "Accent Color",
+        Description = "Customize UI accent color",
+        Default = Color3.fromRGB(0, 200, 255) -- Solid cyan
     })
 
-    -- Single Dropdown
-    local SingleDropdown = MainSection:AddDropdown("SingleDropdown", {
-        Title = "Single Dropdown",
-        Values = {"Head", "Torso", "Left Arm", "Right Arm", "Left Leg", "Right Leg"},
+    -- Category Selector
+    local Category = MainSection:AddDropdown("Category", {
+        Title = "Category",
+        Description = "Select script category",
+        Values = {"Combat", "Utility", "ESP", "Auto Farm", "Teleport", "Other"},
         Default = 1
     })
 
-    -- Multi Dropdown
-    local MultiDropdown = MainSection:AddDropdown("MultiDropdown", {
-        Title = "Multi Dropdown",
-        Values = {"Head", "Torso", "Left Arm", "Right Arm", "Left Leg", "Right Leg"},
+    -- Multi Selection
+    local Features = MainSection:AddDropdown("Features", {
+        Title = "Features",
+        Description = "Select multiple features",
+        Values = {"Feature 1", "Feature 2", "Feature 3", "Feature 4"},
         Multi = true,
-        Default = {1}
+        Default = {1, 2}
     })
 
-    -- Button (Cyan accent)
+    -- Execute Button
     MainSection:AddButton({
-        Title = "Button",
-        Description = "Cyan accent button",
+        Title = "Execute",
+        Description = "Run selected script",
         Callback = function()
             Fluent:Notify({
                 Title = "CatHub",
-                Content = "Button clicked!",
-                Duration = 2
+                Content = "Script executed successfully!",
+                Duration = 3
             })
         end
     })
 end
 
--- Scripts Tab Content (Second Section - Not Saved to Config)
+-- Scripts Tab - Script Library
 do
-    local ScriptsSection = Tabs.Scripts:AddSection("Section")
+    local ScriptsSection = Tabs.Scripts:AddSection("Scripts")
     
     ScriptsSection:AddParagraph({
-        Title = "Very cool paragraph",
-        Content = "All elements in this section will not be saved to the config"
+        Title = "Script Library",
+        Content = "Browse and manage your scripts"
     })
     
-    -- Duplicate elements for second panel
-    local Toggle3 = ScriptsSection:AddToggle("Toggle3", {
-        Title = "Toggle",
-        Default = true
+    -- Script Search
+    local ScriptSearch = ScriptsSection:AddInput("ScriptSearch", {
+        Title = "Search",
+        Description = "Search for scripts",
+        Default = "",
+        Placeholder = "Type to search..."
     })
     
-    local Toggle4 = ScriptsSection:AddToggle("Toggle4", {
-        Title = "Toggle",
-        Default = true
+    -- Script Options
+    local AutoLoad = ScriptsSection:AddToggle("AutoLoad", {
+        Title = "Auto Load",
+        Description = "Automatically load scripts on start",
+        Default = false
     })
     
-    local Keybind2 = ScriptsSection:AddKeybind("Keybind2", {
-        Title = "Keybind",
-        Default = "LAlt"
+    local ShowHidden = ScriptsSection:AddToggle("ShowHidden", {
+        Title = "Show Hidden",
+        Description = "Display hidden scripts",
+        Default = false
     })
     
-    local Slider2 = ScriptsSection:AddSlider("Slider2", {
-        Title = "Slider",
-        Default = 50,
-        Min = 0,
-        Max = 100,
-        Rounding = 0
-    })
-    
-    local ColorPicker2 = ScriptsSection:AddColorpicker("ColorPicker2", {
-        Title = "ColorPicker",
-        Default = Color3.fromRGB(0, 255, 150)
-    })
-    
-    local SingleDropdown2 = ScriptsSection:AddDropdown("SingleDropdown2", {
-        Title = "Single Dropdown",
-        Values = {"Head", "Torso", "Left Arm", "Right Arm", "Left Leg", "Right Leg"},
+    -- Script List
+    local ScriptList = ScriptsSection:AddDropdown("ScriptList", {
+        Title = "Script List",
+        Description = "Select a script",
+        Values = {"Script 1", "Script 2", "Script 3", "Script 4"},
         Default = 1
     })
     
-    local MultiDropdown2 = ScriptsSection:AddDropdown("MultiDropdown2", {
-        Title = "Multi Dropdown",
-        Values = {"Head", "Torso", "Left Arm", "Right Arm", "Left Leg", "Right Leg"},
-        Multi = true,
-        Default = {1}
-    })
-    
+    -- Load Script Button
     ScriptsSection:AddButton({
-        Title = "Button",
+        Title = "Load Script",
+        Description = "Load selected script",
         Callback = function()
             Fluent:Notify({
                 Title = "CatHub",
-                Content = "Button clicked!",
+                Content = "Script loaded!",
                 Duration = 2
             })
         end
