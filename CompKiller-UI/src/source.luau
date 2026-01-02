@@ -348,10 +348,11 @@ local Compkiller = {
 	Logo = "rbxassetid://120245531583106",
 	Windows = {},
 	Scale = {
-		Window = UDim2.new(0, 485,0, 565),
-		Mobile = UDim2.new(0, 450,0, 375),
-		TabOpen = 185,
-		TabClose = 85,
+		-- Compact defaults (smaller, denser UI)
+		Window = UDim2.new(0, 380, 0, 420),
+		Mobile = UDim2.new(0, 340, 0, 320),
+		TabOpen = 150,
+		TabClose = 65,
 	},
 	PerformanceMode = true,
 	WindowsNil = {},
@@ -1694,7 +1695,7 @@ function Compkiller:_Blur(element : Frame , WindowRemote) : RBXScriptSignal
 		end;
 	end);
 
-	local THREAD = task.spawn(function()
+	local THREAD = Compkiller._spawn(function()
 		while true do task.wait(0.1)
 			pcall(UpdateFunction);
 		end;
@@ -1703,7 +1704,7 @@ function Compkiller:_Blur(element : Frame , WindowRemote) : RBXScriptSignal
 	disconnect = function()
 		rbxsignal:Disconnect();
 		loopThread:Disconnect();
-		task.cancel(THREAD);
+		if THREAD then pcall(task.cancel, THREAD); end;
 		Part:Destroy();
 		DepthOfField:Destroy();
 	end;
@@ -3170,14 +3171,14 @@ function Compkiller:_AddColorPickerPanel(Button: ImageButton , Callback: (Color:
 			Args.IsHold = true;
 
 			if SPAWN_THREAD then
-				task.cancel(SPAWN_THREAD);
+				pcall(task.cancel, SPAWN_THREAD);
 				SPAWN_THREAD = nil;
 			end;
 
-			SPAWN_THREAD = task.spawn(function()
+			SPAWN_THREAD = Compkiller._spawn(function()
 				while true do task.wait(0.00001)
 					if not Args.IsHold then
-						break;	
+						break;    
 					end;
 
 					Callback(Color3.fromHSV(H , S , V),Transparency);
@@ -3191,7 +3192,7 @@ function Compkiller:_AddColorPickerPanel(Button: ImageButton , Callback: (Color:
 			Args.IsHold = false;
 
 			if SPAWN_THREAD then
-				task.cancel(SPAWN_THREAD);
+				pcall(task.cancel, SPAWN_THREAD);
 				SPAWN_THREAD = nil;
 			end;
 		end;
@@ -3407,7 +3408,7 @@ function Compkiller:_DrawKeybinds(Window: ScreenGui)
 		Root = Keybinds
 	};
 
-	Ref.THREAD = task.spawn(function()
+	Ref.THREAD = Compkiller._spawn(function()
 		while true do task.wait()
 			Compkiller:_Animation(MainFrame,TweenInfo.new(0.4),{
 				Size = UDim2.new(1, 30, 1, UIListLayout.AbsoluteContentSize.Y + 1)
@@ -3873,7 +3874,7 @@ function Compkiller:_KeybindHandler(Parent: Frame , ObjectType: string , Element
 		APIRef.Update();
 	end;
 
-	APIRef.Thread = task.spawn(function()
+	APIRef.Thread = Compkiller._spawn(function()
 		while true do task.wait(0.01)
 			if APIRef.Mode ~= 1 then
 				if ElementAPI:GetValue() == APIRef.On then
@@ -5767,7 +5768,7 @@ function Compkiller:_LoadElement(Parent: Frame , EnabledLine: boolean , Signal ,
 
 				TextBox_2.Text = tostring(value);
 
-				task.spawn(Config.Callback,value);
+				Compkiller._spawn(Config.Callback,value);
 
 				Config.Default = value;
 			else
@@ -8622,15 +8623,15 @@ function Compkiller.new(Config : Window)
 			ConfigButton:Update();
 
 			Compkiller:_Input(LoadButton,function()
-				task.spawn(ConfigButton.OnLoad);
+				Compkiller._spawn(ConfigButton.OnLoad);
 			end);
 
 			Compkiller:_Input(SaveButton,function()
-				task.spawn(ConfigButton.OnSave);
+				Compkiller._spawn(ConfigButton.OnSave);
 			end);
 
 			DelButton.MouseButton1Click:Connect(function()
-				task.spawn(ConfigButton.OnDelete);
+				Compkiller._spawn(ConfigButton.OnDelete);
 			end)
 
 			ConfigButton.OnLoad = nil;
@@ -8720,7 +8721,7 @@ function Compkiller.new(Config : Window)
 
 			Refresh();
 
-			Init.THREAD = task.spawn(function()
+			Init.THREAD = Compkiller._spawn(function()
 				local OldIndex = Configuration.Config:GetConfigCount();
 
 				while true do task.wait(0.125);
@@ -9864,7 +9865,7 @@ function Compkiller.new(Config : Window)
 			end);
 		end;
 
-		table.insert(WindowArgs.THREADS,task.spawn(function()
+		table.insert(WindowArgs.THREADS,Compkiller._spawn(function()
 			while true do task.wait(0.15)
 				if Compkiller:_IsMobile() then
 					ToggleCloseUI(true);
@@ -9929,7 +9930,7 @@ function Compkiller.new(Config : Window)
 		WindowArgs.Profile = config.UserProfile or WindowArgs.Profile;
 	end;
 
-	WindowArgs.LOOP_THREAD = task.spawn(function()
+		WindowArgs.LOOP_THREAD = Compkiller._spawn(function()
 		local TimeTic = tick();
 
 		local BlurElement = Instance.new("Frame")

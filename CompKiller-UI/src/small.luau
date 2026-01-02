@@ -141,7 +141,7 @@ function Compkiller:_Blur(element : Frame , Caller) : RBXScriptSignal
 		end;
 	end);
 
-	local THREAD = task.spawn(function()
+	local THREAD = Compkiller._spawn(function()
 		while true do task.wait(0.1)
 			pcall(UpdateFunction);
 		end;
@@ -150,7 +150,7 @@ function Compkiller:_Blur(element : Frame , Caller) : RBXScriptSignal
 	element.Destroying:Connect(function()
 		rbxsignal:Disconnect();
 		loopThread:Disconnect();
-		task.cancel(THREAD);
+		if THREAD then pcall(task.cancel, THREAD); end;
 		Part:Destroy();
 		DepthOfField:Destroy();
 	end);
