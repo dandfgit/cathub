@@ -2,47 +2,29 @@
     CatHub 🐱 - Modern Minimalist Script Hub
     Theme: Orange Cat (Warm Dark)
     Design: Ultra Compact, Clean, Professional
+    
+    🚀 OPTIMIZED FOR SMOOTH PERFORMANCE
 ]]
 
--- Load Fluent UI (minified version)
+-- ═══════════════════════════════════════════
+-- LOAD FLUENT UI
+-- ═══════════════════════════════════════════
 local Fluent = loadstring(game:HttpGet("https://raw.githubusercontent.com/dandfgit/cathub/refs/heads/main/Fluent-master/main.lua"))()
 local SaveManager = loadstring(game:HttpGet("https://raw.githubusercontent.com/dandfgit/cathub/refs/heads/main/Fluent-master/Addons/SaveManager.lua"))()
 local InterfaceManager = loadstring(game:HttpGet("https://raw.githubusercontent.com/dandfgit/cathub/refs/heads/main/Fluent-master/Addons/InterfaceManager.lua"))()
 
--- ═══════════════════════════════════════════
--- INJECT CATHUB THEME (Orange Cat Theme)
--- ═══════════════════════════════════════════
--- Since main.lua is minified and doesn't include CatHub theme,
--- we inject it manually here
-
--- Inject theme into Fluent's internal theme system
-pcall(function()
-    -- Add CatHub to themes list if not exists
-    if not table.find(Fluent.Themes, "CatHub") then
-        table.insert(Fluent.Themes, "CatHub")
-    end
-    
-    -- Try to inject into the internal Themes table
-    -- This requires accessing Fluent's internal module structure
-    if getgenv and getgenv().Fluent then
-        -- The theme data is stored in a Themes module
-        -- We need to find and inject into it
-    end
-end)
-
-print("[CatHub] 🐱 Theme injection complete!")
-print("[CatHub] Available themes: " .. table.concat(Fluent.Themes or {}, ", "))
+print("[CatHub] 🐱 UI Loaded!")
 
 -- ═══════════════════════════════════════════
--- CREATE WINDOW
+-- CREATE WINDOW (Lightweight & Smooth)
 -- ═══════════════════════════════════════════
 local Window = Fluent:CreateWindow({
     Title = "🐱 <font color='rgb(255,165,80)'>Cat</font> <font color='rgb(255,255,255)'><b>Hub</b></font>",
     SubTitle = "<font color='rgb(120,120,120)'>•</font> <font color='rgb(255,165,80)'><b>v1.0</b></font>",
     TabWidth = 80,
     Size = UDim2.fromOffset(480, 360),
-    Acrylic = true,
-    Theme = "Darker", -- Use Darker as base (CatHub theme may not be fully injected)
+    Acrylic = false, -- OFF = Smooth & Light for all devices
+    Theme = "Darker",
     MinimizeKey = Enum.KeyCode.RightControl
 })
 
