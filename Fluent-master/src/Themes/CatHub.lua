@@ -1,65 +1,47 @@
 return {
 	Name = "CatHub",
-	-- 🐱 CAT-THEMED ORANGE/YELLOW COLORS - PERFECT HARMONY 🐱
-	-- Primary Accent: Bright Orange (Ginger Cat Color)
-	Accent = Color3.fromRGB(255, 140, 0), -- Vibrant orange - main accent color
-	
-	-- Modern Dark Background with Orange Warmth
-	AcrylicMain = Color3.fromRGB(22, 20, 18), -- Deep warm dark
-	AcrylicBorder = Color3.fromRGB(60, 50, 40), -- Warm orange-tinted border
-	AcrylicGradient = ColorSequence.new(
-		Color3.fromRGB(25, 22, 18), -- Warm dark with orange hint
-		Color3.fromRGB(18, 16, 14)  -- Deeper warm dark
-	),
-	AcrylicNoise = 0.85, -- Very clean look
+	Accent = Color3.fromRGB(255, 170, 0),
 
-	TitleBarLine = Color3.fromRGB(80, 65, 50), -- Orange-tinted separator
-	Tab = Color3.fromRGB(90, 75, 60), -- Warm orange-tinted tab
+	AcrylicMain = Color3.fromRGB(15, 15, 15),
+	AcrylicBorder = Color3.fromRGB(45, 45, 45),
+	AcrylicGradient = ColorSequence.new(Color3.fromRGB(15, 15, 15), Color3.fromRGB(15, 15, 15)),
+	AcrylicNoise = 0.98, -- Less noise for cleaner look
 
-	-- Solid Elements with Orange Warmth
-	Element = Color3.fromRGB(35, 30, 25), -- Warm dark element with orange hint
-	ElementBorder = Color3.fromRGB(70, 55, 40), -- Orange-tinted border
-	InElementBorder = Color3.fromRGB(90, 70, 50), -- Bright orange-tinted inner border
-	ElementTransparency = 0.65, -- More solid, boxy appearance
+	TitleBarLine = Color3.fromRGB(45, 45, 45),
+	Tab = Color3.fromRGB(180, 180, 180),
 
-	-- 🟠 ORANGE/YELLOW TOGGLE (Cat-themed)
-	ToggleSlider = Color3.fromRGB(60, 50, 40), -- Warm toggle base
-	ToggleToggled = Color3.fromRGB(255, 140, 0), -- VIBRANT ORANGE when on
+	Element = Color3.fromRGB(25, 25, 25),
+	ElementBorder = Color3.fromRGB(40, 40, 40),
+	InElementBorder = Color3.fromRGB(60, 60, 60),
+	ElementTransparency = 0.9,
 
-	-- 🟡 SLIDER with Orange/Yellow Accent
-	SliderRail = Color3.fromRGB(40, 35, 30), -- Warm rail
-	SliderFill = Color3.fromRGB(255, 165, 0), -- BRIGHT YELLOW-ORANGE fill
+	ToggleSlider = Color3.fromRGB(255, 170, 0), -- Accent color for toggle
+	ToggleToggled = Color3.fromRGB(10, 10, 10),
 
-	-- Dropdown with Orange Warmth
-	DropdownFrame = Color3.fromRGB(35, 30, 25), -- Warm dropdown
-	DropdownHolder = Color3.fromRGB(25, 22, 18), -- Dark warm holder
-	DropdownBorder = Color3.fromRGB(70, 55, 40), -- Orange-tinted border
-	DropdownOption = Color3.fromRGB(45, 38, 30), -- Warm options
+	SliderRail = Color3.fromRGB(255, 170, 0),
 
-	-- Keybind with Orange Accent
-	Keybind = Color3.fromRGB(35, 30, 25), -- Warm keybind
-	KeybindBorder = Color3.fromRGB(70, 55, 40), -- Orange-tinted border
+	DropdownFrame = Color3.fromRGB(35, 35, 35),
+	DropdownHolder = Color3.fromRGB(25, 25, 25),
+	DropdownBorder = Color3.fromRGB(40, 40, 40),
+	DropdownOption = Color3.fromRGB(180, 180, 180),
 
-	-- Input with BRIGHT ORANGE Indicator
-	Input = Color3.fromRGB(30, 26, 22), -- Warm input
-	InputFocused = Color3.fromRGB(45, 38, 30), -- Warm focused
-	InputIndicator = Color3.fromRGB(255, 140, 0), -- BRIGHT ORANGE indicator
-	InputBorder = Color3.fromRGB(70, 55, 40), -- Orange-tinted border
+	Keybind = Color3.fromRGB(180, 180, 180),
 
-	-- Dialog with Orange Accents
-	Dialog = Color3.fromRGB(25, 22, 18), -- Warm dialog
-	DialogHolder = Color3.fromRGB(20, 18, 15), -- Dark warm holder
-	DialogHolderLine = Color3.fromRGB(80, 65, 50), -- Orange-tinted line
-	DialogButton = Color3.fromRGB(35, 30, 25), -- Warm button
-	DialogButtonBorder = Color3.fromRGB(90, 70, 50), -- Orange-tinted border
-	DialogBorder = Color3.fromRGB(70, 55, 40), -- Orange-tinted border
-	DialogInput = Color3.fromRGB(30, 26, 22), -- Warm input
-	DialogInputLine = Color3.fromRGB(255, 140, 0), -- BRIGHT ORANGE line
+	Input = Color3.fromRGB(35, 35, 35),
+	InputFocused = Color3.fromRGB(10, 10, 10),
+	InputIndicator = Color3.fromRGB(255, 170, 0),
 
-	-- Text Colors (Perfect Contrast with Orange Theme)
-	Text = Color3.fromRGB(255, 248, 240), -- Warm white text
-	SubText = Color3.fromRGB(220, 200, 180), -- Warm light gray with orange hint
-	Hover = Color3.fromRGB(80, 65, 50), -- Orange-tinted hover
-	HoverChange = 0.15, -- Strong hover effect for visibility
+	Dialog = Color3.fromRGB(25, 25, 25),
+	DialogHolder = Color3.fromRGB(20, 20, 20),
+	DialogHolderLine = Color3.fromRGB(30, 30, 30),
+	DialogButton = Color3.fromRGB(30, 30, 30),
+	DialogButtonBorder = Color3.fromRGB(50, 50, 50),
+	DialogBorder = Color3.fromRGB(45, 45, 45),
+	DialogInput = Color3.fromRGB(40, 40, 40),
+	DialogInputLine = Color3.fromRGB(255, 170, 0),
+
+	Text = Color3.fromRGB(255, 255, 255),
+	SubText = Color3.fromRGB(170, 170, 170),
+	Hover = Color3.fromRGB(40, 40, 40),
+	HoverChange = 0.1,
 }
-

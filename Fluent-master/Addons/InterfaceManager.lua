@@ -3,10 +3,10 @@ local httpService = game:GetService("HttpService")
 local InterfaceManager = {} do
 	InterfaceManager.Folder = "FluentSettings"
     InterfaceManager.Settings = {
-        Theme = "CatHub", -- Default to CatHub theme (Orange/Yellow)
+        Theme = "CatHub",
         Acrylic = true,
         Transparency = true,
-        MenuKeybind = "RightControl"
+        MenuKeybind = "LeftControl"
     }
 
     function InterfaceManager:SetFolder(folder)
@@ -68,7 +68,7 @@ local InterfaceManager = {} do
 			Title = "Theme",
 			Description = "Changes the interface theme.",
 			Values = Library.Themes,
-			Default = Settings.Theme or "CatHub",
+			Default = Settings.Theme,
 			Callback = function(Value)
 				Library:SetTheme(Value)
                 Settings.Theme = Value
@@ -76,7 +76,7 @@ local InterfaceManager = {} do
 			end
 		})
 
-        InterfaceTheme:SetValue(Settings.Theme or "CatHub")
+        InterfaceTheme:SetValue(Settings.Theme)
 	
 		if Library.UseAcrylic then
 			section:AddToggle("AcrylicToggle", {

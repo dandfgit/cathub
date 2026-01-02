@@ -1,238 +1,246 @@
+--[[
+    CatHub 🐱 - Modern Minimalist Script Hub
+    Theme: Black Transparent + Orange Accent
+    Design: Compact, Clean, User-Friendly
+]]
+
 local Fluent = loadstring(game:HttpGet("https://raw.githubusercontent.com/dandfgit/cathub/refs/heads/main/Fluent-master/main.lua"))()
 local SaveManager = loadstring(game:HttpGet("https://raw.githubusercontent.com/dandfgit/cathub/refs/heads/main/Fluent-master/Addons/SaveManager.lua"))()
 local InterfaceManager = loadstring(game:HttpGet("https://raw.githubusercontent.com/dandfgit/cathub/refs/heads/main/Fluent-master/Addons/InterfaceManager.lua"))()
 
--- CatHub - Modern Boxy UI Design
+-- CatHub - Modern Compact UI
 local Window = Fluent:CreateWindow({
     Title = "CatHub",
-    SubTitle = "🐱 Premium Script Hub",
-    TabWidth = 80, -- Compact sidebar for modern navigation
-    Size = UDim2.fromOffset(700, 550), -- Optimal size for modern boxy layout
+    SubTitle = "🐱 v1.0",
+    TabWidth = 70, -- Compact sidebar
+    Size = UDim2.fromOffset(520, 420), -- Smaller, more compact size
     Acrylic = true, -- Transparent blur background
-    Theme = "CatHub", -- Modern boxy theme with orange/yellow
+    Theme = "CatHub", -- Custom CatHub theme (black + orange)
     MinimizeKey = Enum.KeyCode.RightControl
 })
 
--- Modern Icon-Only Navigation (Boxy Style)
+-- Compact Navigation Tabs
 local Tabs = {
-    Main = Window:AddTab({ Title = "", Icon = "home" }), -- Icon only for modern look
-    Scripts = Window:AddTab({ Title = "", Icon = "code" }),
-    Settings = Window:AddTab({ Title = "", Icon = "settings" }),
-    Config = Window:AddTab({ Title = "", Icon = "folder" })
+    Main = Window:AddTab({ Title = "Main", Icon = "home" }),
+    Player = Window:AddTab({ Title = "Player", Icon = "user" }),
+    Combat = Window:AddTab({ Title = "Combat", Icon = "swords" }),
+    Visuals = Window:AddTab({ Title = "Visuals", Icon = "eye" }),
+    Settings = Window:AddTab({ Title = "Settings", Icon = "settings" })
 }
 
 local Options = Fluent.Options
 
--- CatHub Welcome
+-- Welcome Notification
 Fluent:Notify({
     Title = "CatHub 🐱",
-    Content = "Modern Boxy UI Loaded!",
-    SubContent = "Orange/Yellow cat-themed colors",
-    Duration = 4
+    Content = "Welcome to CatHub!",
+    SubContent = "Press RightControl to toggle UI",
+    Duration = 3
 })
 
--- Main Tab - Modern Boxy Design
+-- ═══════════════════════════════════════════
+-- MAIN TAB
+-- ═══════════════════════════════════════════
 do
-    local MainSection = Tabs.Main:AddSection("Section")
+    local MainSection = Tabs.Main:AddSection("Quick Actions")
     
     MainSection:AddParagraph({
-        Title = "Very cool paragraph",
-        Content = "All elements in this section will be saved to the config!"
+        Title = "🐱 CatHub",
+        Content = "Modern & Lightweight Script Hub"
     })
 
-
-
-    -- Modern Toggles (Boxy Style)
-    local Toggle1 = MainSection:AddToggle("Toggle1", {
-        Title = "Toggle",
-        Description = "Toggle with info icon",
-        Default = true
-    })
-    
-    local Toggle2 = MainSection:AddToggle("Toggle2", {
-        Title = "Toggle",
-        Description = "Toggle with gear icon",
-        Default = true
-    })
-    
-    local RiskyToggle = MainSection:AddToggle("RiskyToggle", {
-        Title = "Risky Feature",
-        Description = "Enable risky features",
-        Default = true
-    })
-
-
-
-    -- Keybind (Boxy Style)
-    local Keybind = MainSection:AddKeybind("Keybind", {
-        Title = "Keybind",
-        Description = "Set keybind for quick action",
-        Default = "LAlt",
-        Mode = "Toggle"
-    })
-
-    -- Slider (Boxy Style)
-    local Slider = MainSection:AddSlider("Slider", {
-        Title = "Slider",
-        Description = "Adjust slider value",
-        Default = 50,
-        Min = 0,
-        Max = 100,
-        Rounding = 0
-    })
-
-
-
-    -- ColorPicker (Boxy Style)
-    local ColorPicker = MainSection:AddColorpicker("ColorPicker", {
-        Title = "ColorPicker",
-        Description = "Pick your favorite color",
-        Default = Color3.fromRGB(0, 255, 150) -- Bright green
-    })
-
-    -- Single Dropdown (Boxy Style)
-    local SingleDropdown = MainSection:AddDropdown("SingleDropdown", {
-        Title = "Single Dropdown",
-        Description = "Select single option",
-        Values = {"Head", "Torso", "Left Arm", "Right Arm", "Left Leg", "Right Leg"},
-        Default = 1
-    })
-
-    -- Multi Dropdown (Boxy Style)
-    local MultiDropdown = MainSection:AddDropdown("MultiDropdown", {
-        Title = "Multi Dropdown",
-        Description = "Select multiple options",
-        Values = {"Head", "Torso", "Left Arm", "Right Arm", "Left Leg", "Right Leg"},
-        Multi = true,
-        Default = {1}
-    })
-
-
-
-    -- Button (Boxy Style with Accent)
     MainSection:AddButton({
-        Title = "Button",
-        Description = "Click to execute action",
+        Title = "🚀 Execute Script",
+        Description = "Run your custom script",
         Callback = function()
             Fluent:Notify({
                 Title = "CatHub",
-                Content = "Button clicked!",
+                Content = "Script executed!",
                 Duration = 2
             })
         end
     })
-end
 
--- Scripts Tab - Second Panel (Boxy Style)
-do
-    local ScriptsSection = Tabs.Scripts:AddSection("Section")
-    
-    ScriptsSection:AddParagraph({
-        Title = "Very cool paragraph",
-        Content = "All elements in this section will not be saved to the config"
+    local AutoFarmToggle = MainSection:AddToggle("AutoFarm", {
+        Title = "⚡ Auto Farm",
+        Description = "Automatically farm resources",
+        Default = false
     })
     
-    -- Duplicate elements for second panel
-    local Toggle3 = ScriptsSection:AddToggle("Toggle3", {
-        Title = "Toggle",
-        Description = "Toggle with gear icon",
-        Default = true
-    })
+    AutoFarmToggle:OnChanged(function(value)
+        Fluent:Notify({
+            Title = "Auto Farm",
+            Content = value and "Enabled" or "Disabled",
+            Duration = 1.5
+        })
+    end)
 
-    local Keybind2 = ScriptsSection:AddKeybind("Keybind2", {
-        Title = "Keybind",
-        Description = "Set keybind",
-        Default = "LAlt"
-    })
-
-    local Slider2 = ScriptsSection:AddSlider("Slider2", {
-        Title = "Slider",
-        Description = "Adjust value",
-        Default = 50,
-        Min = 0,
+    local SpeedSlider = MainSection:AddSlider("Speed", {
+        Title = "🏃 Walk Speed",
+        Description = "Adjust your movement speed",
+        Default = 16,
+        Min = 16,
         Max = 100,
         Rounding = 0
     })
+    
+    SpeedSlider:OnChanged(function(value)
+        local player = game:GetService("Players").LocalPlayer
+        if player and player.Character and player.Character:FindFirstChild("Humanoid") then
+            player.Character.Humanoid.WalkSpeed = value
+        end
+    end)
+end
 
-    local ColorPicker2 = ScriptsSection:AddColorpicker("ColorPicker2", {
-        Title = "ColorPicker",
-        Description = "Pick color",
-        Default = Color3.fromRGB(0, 255, 150)
+-- ═══════════════════════════════════════════
+-- PLAYER TAB
+-- ═══════════════════════════════════════════
+do
+    local PlayerSection = Tabs.Player:AddSection("Player Mods")
+    
+    local InfiniteJumpToggle = PlayerSection:AddToggle("InfJump", {
+        Title = "🦘 Infinite Jump",
+        Description = "Jump unlimited times",
+        Default = false
     })
 
-    local SingleDropdown2 = ScriptsSection:AddDropdown("SingleDropdown2", {
-        Title = "Single Dropdown",
-        Description = "Select option",
-        Values = {"Head", "Torso", "Left Arm", "Right Arm", "Left Leg", "Right Leg"},
+    local NoClipToggle = PlayerSection:AddToggle("NoClip", {
+        Title = "👻 NoClip",
+        Description = "Walk through walls",
+        Default = false
+    })
+
+    local JumpPowerSlider = PlayerSection:AddSlider("JumpPower", {
+        Title = "⬆️ Jump Power",
+        Description = "Adjust jump height",
+        Default = 50,
+        Min = 50,
+        Max = 200,
+        Rounding = 0
+    })
+
+    local GravitySlider = PlayerSection:AddSlider("Gravity", {
+        Title = "🌍 Gravity",
+        Description = "Adjust world gravity",
+        Default = 196,
+        Min = 0,
+        Max = 500,
+        Rounding = 0
+    })
+    
+    GravitySlider:OnChanged(function(value)
+        game:GetService("Workspace").Gravity = value
+    end)
+end
+
+-- ═══════════════════════════════════════════
+-- COMBAT TAB
+-- ═══════════════════════════════════════════
+do
+    local CombatSection = Tabs.Combat:AddSection("Combat Features")
+    
+    local AimbotToggle = CombatSection:AddToggle("Aimbot", {
+        Title = "🎯 Aimbot",
+        Description = "Auto aim at enemies",
+        Default = false
+    })
+
+    local AimbotKey = CombatSection:AddKeybind("AimbotKey", {
+        Title = "🔑 Aimbot Key",
+        Description = "Keybind to activate aimbot",
+        Default = "E",
+        Mode = "Hold"
+    })
+
+    local TargetPart = CombatSection:AddDropdown("TargetPart", {
+        Title = "🎯 Target Part",
+        Description = "Which body part to aim at",
+        Values = {"Head", "HumanoidRootPart", "Torso"},
         Default = 1
     })
 
-    local MultiDropdown2 = ScriptsSection:AddDropdown("MultiDropdown2", {
-        Title = "Multi Dropdown",
-        Description = "Select multiple",
-        Values = {"Head", "Torso", "Left Arm", "Right Arm", "Left Leg", "Right Leg"},
-        Multi = true,
-        Default = {1}
+    local FOVSlider = CombatSection:AddSlider("FOV", {
+        Title = "📐 FOV Radius",
+        Description = "Aimbot field of view",
+        Default = 100,
+        Min = 50,
+        Max = 500,
+        Rounding = 0
     })
 
-    ScriptsSection:AddButton({
-        Title = "Button",
-        Description = "Execute action",
-        Callback = function()
-            Fluent:Notify({
-                Title = "CatHub",
-                Content = "Button clicked!",
-                Duration = 2
-            })
-        end
-    })
-    
-    ScriptsSection:AddParagraph({
-        Title = "Paragraph",
-        Content = "Very cool paragraph\nAll elements in this section will not be saved to the config"
+    local ESPToggle = CombatSection:AddToggle("ESP", {
+        Title = "👁️ ESP",
+        Description = "See players through walls",
+        Default = false
     })
 end
 
+-- ═══════════════════════════════════════════
+-- VISUALS TAB
+-- ═══════════════════════════════════════════
+do
+    local VisualsSection = Tabs.Visuals:AddSection("Visual Settings")
+    
+    local FullbrightToggle = VisualsSection:AddToggle("Fullbright", {
+        Title = "☀️ Fullbright",
+        Description = "Remove darkness/shadows",
+        Default = false
+    })
 
+    local NoFogToggle = VisualsSection:AddToggle("NoFog", {
+        Title = "🌫️ Remove Fog",
+        Description = "Disable fog effects",
+        Default = false
+    })
 
+    local ESPColor = VisualsSection:AddColorpicker("ESPColor", {
+        Title = "🎨 ESP Color",
+        Description = "Choose ESP highlight color",
+        Default = Color3.fromRGB(255, 170, 0) -- Orange accent
+    })
 
+    local FOVCircle = VisualsSection:AddToggle("FOVCircle", {
+        Title = "⭕ FOV Circle",
+        Description = "Show FOV circle on screen",
+        Default = false
+    })
+end
 
--- Addons:
--- SaveManager (Allows you to have a configuration system)
--- InterfaceManager (Allows you to have a interface managment system)
+-- ═══════════════════════════════════════════
+-- SETTINGS TAB
+-- ═══════════════════════════════════════════
+do
+    -- Hand over to addon managers
+    SaveManager:SetLibrary(Fluent)
+    InterfaceManager:SetLibrary(Fluent)
 
--- Hand the library over to our managers
-SaveManager:SetLibrary(Fluent)
-InterfaceManager:SetLibrary(Fluent)
+    -- Ignore theme settings in config
+    SaveManager:IgnoreThemeSettings()
+    SaveManager:SetIgnoreIndexes({})
 
--- Ignore keys that are used by ThemeManager.
--- (we dont want configs to save themes, do we?)
-SaveManager:IgnoreThemeSettings()
+    -- CatHub folder for configs
+    InterfaceManager:SetFolder("CatHub")
+    SaveManager:SetFolder("CatHub/configs")
 
--- You can add indexes of elements the save manager should ignore
-SaveManager:SetIgnoreIndexes({})
+    -- Build interface and config sections
+    InterfaceManager:BuildInterfaceSection(Tabs.Settings)
+    SaveManager:BuildConfigSection(Tabs.Settings)
+end
 
--- CatHub Folder Configuration
-InterfaceManager:SetFolder("CatHub")
-SaveManager:SetFolder("CatHub/configs")
-
-InterfaceManager:BuildInterfaceSection(Tabs.Settings)
-SaveManager:BuildConfigSection(Tabs.Settings)
-
-
--- Force apply CatHub theme
+-- Force CatHub theme
 Fluent:SetTheme("CatHub")
 InterfaceManager.Settings.Theme = "CatHub"
 
+-- Select first tab
 Window:SelectTab(1)
 
+-- Final notification
 Fluent:Notify({
     Title = "CatHub 🐱",
-    Content = "Modern Boxy UI Ready!",
-    SubContent = "Orange/Yellow theme active | Press RightControl to toggle",
-    Duration = 5
+    Content = "UI Loaded Successfully!",
+    SubContent = "Compact • Modern • Powerful",
+    Duration = 4
 })
 
--- You can use the SaveManager:LoadAutoloadConfig() to load a config
--- which has been marked to be one that auto loads!
+-- Load auto-saved config
 SaveManager:LoadAutoloadConfig()
