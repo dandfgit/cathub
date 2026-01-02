@@ -6488,7 +6488,20 @@ function Compkiller.new(Config : Window)
 	CompLogo.BorderSizePixel = 0
 	CompLogo.Position = UDim2.new(0, 9, 0, 7)
 	CompLogo.Size = UDim2.new(0, 45, 0, 45)
-	CompLogo.Image = Config.Logo
+	-- Use a lightweight emoji label for the logo (cat) to avoid external asset fetches
+	CompLogo.Image = ""
+	local CompLogoEmoji = Instance.new("TextLabel")
+	CompLogoEmoji.Name = Compkiller:_RandomString()
+	CompLogoEmoji.Parent = CompLogo
+	CompLogoEmoji.BackgroundTransparency = 1
+	CompLogoEmoji.Size = UDim2.fromScale(1,1)
+	CompLogoEmoji.Position = UDim2.fromOffset(0,0)
+	CompLogoEmoji.AnchorPoint = Vector2.new(0.5,0.5)
+	CompLogoEmoji.Font = Enum.Font.GothamBold
+	CompLogoEmoji.Text = "🐱"
+	CompLogoEmoji.TextScaled = true
+	CompLogoEmoji.TextColor3 = Compkiller.Colors.Highlight
+	CompLogoEmoji.ZIndex = CompLogo.ZIndex + 1
 	
 	if Compkiller.CustomHighlightMode then
 		CompLogo.ImageColor3 = Compkiller.Colors.Highlight;
@@ -6614,7 +6627,8 @@ function Compkiller.new(Config : Window)
 	UserProfile.Position = UDim2.new(0, 13, 0, 9)
 	UserProfile.Size = UDim2.new(0, 35, 0, 35)
 	UserProfile.ZIndex = 2
-	UserProfile.Image = Compkiller:CacheImage("rbxassetid://18518299306")
+	-- Skip fetching profile image for performance; leave blank (lightweight)
+	UserProfile.Image = ""
 
 	UICorner_4.CornerRadius = UDim.new(1, 0)
 	UICorner_4.Parent = UserProfile
@@ -9704,7 +9718,22 @@ function Compkiller.new(Config : Window)
 			CompLogo.Size = UDim2.new(0.800000012, 0, 0.800000012, 0)
 			CompLogo.SizeConstraint = Enum.SizeConstraint.RelativeYY
 			CompLogo.ZIndex = 159
-			CompLogo.Image = Config.Logo
+			-- keep top-left logo lightweight (emoji) instead of external image
+			CompLogo.Image = ""
+			if not CompLogo:FindFirstChildWhichIsA('TextLabel') then
+				local _emoji = Instance.new('TextLabel')
+				_emoji.Name = Compkiller:_RandomString()
+				_emoji.Parent = CompLogo
+				_emoji.BackgroundTransparency = 1
+				_emoji.Size = UDim2.fromScale(1,1)
+				_emoji.AnchorPoint = Vector2.new(0.5,0.5)
+				_emoji.Position = UDim2.fromScale(0.5,0.5)
+				_emoji.Font = Enum.Font.GothamBold
+				_emoji.Text = '🐱'
+				_emoji.TextScaled = true
+				_emoji.TextColor3 = Compkiller.Colors.Highlight
+				_emoji.ZIndex = CompLogo.ZIndex + 1
+			end
 			
 			if Compkiller.CustomHighlightMode then
 				CompLogo.ImageColor3 = Compkiller.Colors.Highlight;
@@ -9919,10 +9948,14 @@ function Compkiller.new(Config : Window)
 		end;
 
 		UserText.Text = config.Username;
-		CompLogo.Image = config.Logo;
+		-- do not fetch external profile/logo images for performance; keep lightweight emoji
+		CompLogo.Image = "";
+		local _emoji = CompLogo:FindFirstChildWhichIsA('TextLabel')
+		if _emoji then _emoji.Text = '🐱' end
 		ExpireText.Text = config.ExpireDate;
 		WindowLabel.Text = config.WindowName;
-		UserProfile.Image = config.UserProfile;
+		-- skip setting image to avoid avatar/thumb fetches
+		UserProfile.Image = "";
 		WindowArgs.Username = config.Username;
 
 		Config.Logo = config.Logo or Config.Logo;
@@ -9963,6 +9996,82 @@ function Compkiller.new(Config : Window)
 		MovementFrame.ZIndex = 9
 
 		Compkiller:Drag(MovementFrame,MainFrame,0.1)
+
+		-- Add explicit minimize and close buttons (fallback) to ensure users can minimize/close.
+		local MinimizeBtn = Instance.new('TextButton')
+		MinimizeBtn.Name = Compkiller:_RandomString()
+		MinimizeBtn.Parent = MainFrame
+		MinimizeBtn.BackgroundTransparency = 1
+		MinimizeBtn.BorderSizePixel = 0
+		MinimizeBtn.Text = "–"
+		MinimizeBtn.Font = Enum.Font.GothamBold
+		MinimizeBtn.TextSize = 20
+		MinimizeBtn.Size = UDim2.new(0, 28, 0, 22)
+		MinimizeBtn.Position = UDim2.new(1, -90, 0, 8)
+		MinimizeBtn.ZIndex = MainFrame.ZIndex + 50
+		MinimizeBtn.TextColor3 = Compkiller.Colors.SwitchColor
+
+		MinimizeBtn.MouseButton1Click:Connect(function()
+			-- toggle content visibility (tab content)
+			if TabMainFrame then
+				TabMainFrame.Visible = not TabMainFrame.Visible
+			end
+		end)
+
+		local ForceCloseBtn = Instance.new('TextButton')
+		ForceCloseBtn.Name = Compkiller:_RandomString()
+		ForceCloseBtn.Parent = MainFrame
+		ForceCloseBtn.BackgroundTransparency = 1
+		ForceCloseBtn.BorderSizePixel = 0
+		ForceCloseBtn.Text = "✕"
+		ForceCloseBtn.Font = Enum.Font.GothamBold
+		ForceCloseBtn.TextSize = 18
+		ForceCloseBtn.Size = UDim2.new(0, 28, 0, 22)
+		ForceCloseBtn.Position = UDim2.new(1, -58, 0, 8)
+		ForceCloseBtn.ZIndex = MainFrame.ZIndex + 50
+		ForceCloseBtn.TextColor3 = Color3.fromRGB(200,200,200)
+
+		ForceCloseBtn.MouseButton1Click:Connect(function()
+			-- fully hide the window
+			MainFrame.Visible = false
+			WindowArgs.IsOpen = false
+			WindowOpen:Fire(false)
+		end)
+
+		-- Manual drag fallback for environments where Compkiller:Drag may not work.
+		do
+			local dragging = false
+			local dragStart = Vector2.new(0,0)
+			local startPos = UDim2.new(0,0,0,0)
+
+			MovementFrame.InputBegan:Connect(function(input)
+				if input.UserInputType == Enum.UserInputType.MouseButton1 then
+					dragging = true
+					dragStart = Vector2.new(input.Position.X, input.Position.Y)
+					startPos = MainFrame.Position
+				end
+			end)
+
+			MovementFrame.InputEnded:Connect(function(input)
+				if input.UserInputType == Enum.UserInputType.MouseButton1 then
+					dragging = false
+				end
+			end)
+
+			UserInputService.InputChanged:Connect(function(input)
+				if dragging and input.UserInputType == Enum.UserInputType.MouseMovement then
+					local delta = Vector2.new(input.Position.X, input.Position.Y) - dragStart
+					local winSize = MainFrame.AbsoluteSize
+					local screenSize = CurrentCamera and CurrentCamera.ViewportSize or Vector2.new(1920,1080)
+					-- compute new position in scale + offset preserving startPos.Scale
+					local newX = startPos.X.Scale
+					local newXOff = startPos.X.Offset + delta.X
+					local newY = startPos.Y.Scale
+					local newYOff = startPos.Y.Offset + delta.Y
+					MainFrame.Position = UDim2.new(newX, newXOff, newY, newYOff)
+				end
+			end)
+		end
 
 		SelectionFrame.Position = UDim2.new(1, 5, 0, 28)
 		SelectionFrame.Size = UDim2.new(0, 8, 0, 22)
