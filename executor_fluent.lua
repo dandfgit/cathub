@@ -7,11 +7,41 @@
 ]]
 
 -- ═══════════════════════════════════════════
--- LOAD FLUENT UI
+-- OPTIMIZED LOADING (Parallel HTTP + Deferred UI)
 -- ═══════════════════════════════════════════
-local Fluent = loadstring(game:HttpGet("https://raw.githubusercontent.com/dandfgit/cathub/refs/heads/main/Fluent-master/main.lua"))()
-local SaveManager = loadstring(game:HttpGet("https://raw.githubusercontent.com/dandfgit/cathub/refs/heads/main/Fluent-master/Addons/SaveManager.lua"))()
-local InterfaceManager = loadstring(game:HttpGet("https://raw.githubusercontent.com/dandfgit/cathub/refs/heads/main/Fluent-master/Addons/InterfaceManager.lua"))()
+
+-- Pre-declare variables
+local Fluent, SaveManager, InterfaceManager
+
+-- Parallel HTTP loading (faster than sequential)
+local loadComplete = 0
+local totalLoads = 3
+
+task.spawn(function()
+    Fluent = loadstring(game:HttpGet("https://raw.githubusercontent.com/dandfgit/cathub/refs/heads/main/Fluent-master/main.lua"))()
+    loadComplete = loadComplete + 1
+end)
+
+task.spawn(function()
+    SaveManager = loadstring(game:HttpGet("https://raw.githubusercontent.com/dandfgit/cathub/refs/heads/main/Fluent-master/Addons/SaveManager.lua"))()
+    loadComplete = loadComplete + 1
+end)
+
+task.spawn(function()
+    InterfaceManager = loadstring(game:HttpGet("https://raw.githubusercontent.com/dandfgit/cathub/refs/heads/main/Fluent-master/Addons/InterfaceManager.lua"))()
+    loadComplete = loadComplete + 1
+end)
+
+-- Wait for all loads to complete (with timeout)
+local startTime = tick()
+while loadComplete < totalLoads and (tick() - startTime) < 10 do
+    task.wait(0.05)
+end
+
+if not Fluent then
+    warn("[CatHub] Failed to load Fluent UI")
+    return
+end
 
 print("[CatHub] 🐱 UI Loaded!")
 
@@ -23,12 +53,12 @@ local Window = Fluent:CreateWindow({
     SubTitle = "<font color='rgb(120,120,120)'>•</font> <font color='rgb(255,165,80)'><b>v1.0</b></font>",
     TabWidth = 80,
     Size = UDim2.fromOffset(480, 360),
-    Acrylic = false, -- OFF = Smooth & Light for all devices
+    Acrylic = false,
     Theme = "Darker",
     MinimizeKey = Enum.KeyCode.RightControl
 })
 
--- Navigation Tabs
+-- Create tabs (lightweight operation)
 local Tabs = {
     Main = Window:AddTab({ Title = "Main", Icon = "home" }),
     Player = Window:AddTab({ Title = "Player", Icon = "user" }),
@@ -39,13 +69,14 @@ local Tabs = {
 
 local Options = Fluent.Options
 
--- Welcome Notification
-Fluent:Notify({
-    Title = "CatHub 🐱",
-    Content = "Welcome!",
-    SubContent = "Press RightControl to toggle",
-    Duration = 3
-})
+-- Delayed notification (don't block initial render)
+task.delay(0.5, function()
+    Fluent:Notify({
+        Title = "CatHub 🐱",
+        Content = "Ready!",
+        Duration = 2
+    })
+end)
 
 -- ═══════════════════════════════════════════
 -- MAIN TAB
@@ -235,13 +266,7 @@ end
 -- Select first tab
 Window:SelectTab(1)
 
--- Final notification
-Fluent:Notify({
-    Title = "CatHub 🐱",
-    Content = "Ready!",
-    SubContent = "Compact • Modern • Fast",
-    Duration = 3
-})
-
--- Load auto-saved config
-SaveManager:LoadAutoloadConfig()
+-- Load config in background (non-blocking)
+task.defer(function()
+    SaveManager:LoadAutoloadConfig()
+end)
