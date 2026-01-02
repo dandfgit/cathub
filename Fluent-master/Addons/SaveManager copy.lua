@@ -1,7 +1,7 @@
 local httpService = game:GetService("HttpService")
 
 local SaveManager = {} do
-	SaveManager.Folder = "CatHub"
+	SaveManager.Folder = "FluentSettings"
 	SaveManager.Ignore = {}
 	SaveManager.Parser = {
 		Toggle = {
@@ -83,7 +83,7 @@ local SaveManager = {} do
 			return false, "no config file is selected"
 		end
 
-		local fullPath = self.Folder .. "/configs/" .. name .. ".json"
+		local fullPath = self.Folder .. "/settings/" .. name .. ".json"
 
 		local data = {
 			objects = {}
@@ -110,7 +110,7 @@ local SaveManager = {} do
 			return false, "no config file is selected"
 		end
 		
-		local file = self.Folder .. "/configs/" .. name .. ".json"
+		local file = self.Folder .. "/settings/" .. name .. ".json"
 		if not isfile(file) then return false, "invalid file" end
 
 		local success, decoded = pcall(httpService.JSONDecode, httpService, readfile(file))
@@ -134,7 +134,7 @@ local SaveManager = {} do
 	function SaveManager:BuildFolderTree()
 		local paths = {
 			self.Folder,
-			self.Folder .. "/configs"
+			self.Folder .. "/settings"
 		}
 
 		for i = 1, #paths do
@@ -146,7 +146,7 @@ local SaveManager = {} do
 	end
 
 	function SaveManager:RefreshConfigList()
-		local list = listfiles(self.Folder .. "/configs")
+		local list = listfiles(self.Folder .. "/settings")
 
 		local out = {}
 		for i = 1, #list do
@@ -179,8 +179,8 @@ local SaveManager = {} do
 	end
 
 	function SaveManager:LoadAutoloadConfig()
-		if isfile(self.Folder .. "/configs/autoload.txt") then
-			local name = readfile(self.Folder .. "/configs/autoload.txt")
+		if isfile(self.Folder .. "/settings/autoload.txt") then
+			local name = readfile(self.Folder .. "/settings/autoload.txt")
 
 			local success, err = self:Load(name)
 			if not success then
@@ -295,7 +295,7 @@ local SaveManager = {} do
 		local AutoloadButton
 		AutoloadButton = section:AddButton({Title = "Set as autoload", Description = "Current autoload config: none", Callback = function()
 			local name = SaveManager.Options.SaveManager_ConfigList.Value
-			writefile(self.Folder .. "/configs/autoload.txt", name)
+			writefile(self.Folder .. "/settings/autoload.txt", name)
 			AutoloadButton:SetDesc("Current autoload config: " .. name)
 			self.Library:Notify({
 				Title = "Interface",
@@ -305,8 +305,8 @@ local SaveManager = {} do
 			})
 		end})
 
-		if isfile(self.Folder .. "/configs/autoload.txt") then
-			local name = readfile(self.Folder .. "/configs/autoload.txt")
+		if isfile(self.Folder .. "/settings/autoload.txt") then
+			local name = readfile(self.Folder .. "/settings/autoload.txt")
 			AutoloadButton:SetDesc("Current autoload config: " .. name)
 		end
 

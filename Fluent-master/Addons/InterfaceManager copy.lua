@@ -1,12 +1,12 @@
 local httpService = game:GetService("HttpService")
 
 local InterfaceManager = {} do
-	InterfaceManager.Folder = "CatHub"
+	InterfaceManager.Folder = "FluentSettings"
     InterfaceManager.Settings = {
         Theme = "Dark",
         Acrylic = true,
         Transparency = true,
-        MenuKeybind = "RightControl"
+        MenuKeybind = "LeftControl"
     }
 
     function InterfaceManager:SetFolder(folder)
