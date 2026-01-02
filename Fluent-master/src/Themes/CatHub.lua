@@ -1,51 +1,64 @@
 return {
 	Name = "CatHub",
-	Accent = Color3.fromRGB(0, 200, 255), -- Solid bright cyan accent
+	-- Cat-themed Orange/Yellow Accent Colors (Perfect Harmony)
+	Accent = Color3.fromRGB(255, 165, 0), -- Warm orange like ginger cat (primary accent)
+	
+	-- Modern Dark Background with Warm Tones
+	AcrylicMain = Color3.fromRGB(18, 18, 20), -- Deep dark with slight cool tone
+	AcrylicBorder = Color3.fromRGB(45, 40, 35), -- Warm dark border
+	AcrylicGradient = ColorSequence.new(
+		Color3.fromRGB(20, 18, 16), -- Warm dark
+		Color3.fromRGB(15, 14, 12)  -- Deeper warm dark
+	),
+	AcrylicNoise = 0.88, -- Cleaner look
 
-	AcrylicMain = Color3.fromRGB(20, 20, 20), -- Darker, more solid background
-	AcrylicBorder = Color3.fromRGB(50, 50, 50), -- More visible border
-	AcrylicGradient = ColorSequence.new(Color3.fromRGB(20, 20, 20), Color3.fromRGB(15, 15, 15)),
-	AcrylicNoise = 0.90, -- Less noise for cleaner look
+	TitleBarLine = Color3.fromRGB(60, 50, 40), -- Warm separator
+	Tab = Color3.fromRGB(70, 60, 50), -- Warm tab color
 
-	TitleBarLine = Color3.fromRGB(50, 50, 50), -- Solid line
-	Tab = Color3.fromRGB(80, 80, 80), -- More visible tabs
+	-- Solid Elements with Warm Undertones
+	Element = Color3.fromRGB(32, 28, 24), -- Warm dark element
+	ElementBorder = Color3.fromRGB(55, 45, 35), -- Warm border
+	InElementBorder = Color3.fromRGB(70, 55, 40), -- Warm inner border
+	ElementTransparency = 0.72, -- More solid appearance
 
-	Element = Color3.fromRGB(35, 35, 35), -- More solid, less transparent
-	ElementBorder = Color3.fromRGB(50, 50, 50), -- Stronger border
-	InElementBorder = Color3.fromRGB(60, 60, 60), -- More visible inner border
-	ElementTransparency = 0.75, -- Less transparent, more solid
+	-- Orange/Yellow Toggle (Cat-themed)
+	ToggleSlider = Color3.fromRGB(50, 40, 30), -- Warm toggle base
+	ToggleToggled = Color3.fromRGB(255, 165, 0), -- Bright orange when on
 
-	ToggleSlider = Color3.fromRGB(50, 50, 50), -- Solid toggle
-	ToggleToggled = Color3.fromRGB(0, 200, 255), -- Bright cyan when toggled
+	-- Slider with Orange Accent
+	SliderRail = Color3.fromRGB(38, 32, 26), -- Warm rail
+	SliderFill = Color3.fromRGB(255, 180, 50), -- Bright yellow-orange fill
 
-	SliderRail = Color3.fromRGB(40, 40, 40), -- Solid rail
-	SliderFill = Color3.fromRGB(0, 200, 255), -- Cyan fill
+	-- Dropdown with Warm Tones
+	DropdownFrame = Color3.fromRGB(32, 28, 24), -- Warm dropdown
+	DropdownHolder = Color3.fromRGB(22, 20, 18), -- Dark warm holder
+	DropdownBorder = Color3.fromRGB(55, 45, 35), -- Warm border
+	DropdownOption = Color3.fromRGB(40, 34, 28), -- Warm options
 
-	DropdownFrame = Color3.fromRGB(35, 35, 35), -- Solid dropdown
-	DropdownHolder = Color3.fromRGB(25, 25, 25), -- Dark holder
-	DropdownBorder = Color3.fromRGB(50, 50, 50), -- Strong border
-	DropdownOption = Color3.fromRGB(40, 40, 40), -- Solid options
+	-- Keybind
+	Keybind = Color3.fromRGB(32, 28, 24), -- Warm keybind
+	KeybindBorder = Color3.fromRGB(55, 45, 35), -- Warm border
 
-	Keybind = Color3.fromRGB(35, 35, 35), -- Solid keybind
-	KeybindBorder = Color3.fromRGB(50, 50, 50), -- Visible border
+	-- Input with Orange Indicator
+	Input = Color3.fromRGB(28, 24, 20), -- Warm input
+	InputFocused = Color3.fromRGB(40, 34, 28), -- Warm focused
+	InputIndicator = Color3.fromRGB(255, 165, 0), -- Orange indicator
+	InputBorder = Color3.fromRGB(55, 45, 35), -- Warm border
 
-	Input = Color3.fromRGB(30, 30, 30), -- Solid input
-	InputFocused = Color3.fromRGB(40, 40, 40), -- Focused state
-	InputIndicator = Color3.fromRGB(0, 200, 255), -- Cyan indicator
-	InputBorder = Color3.fromRGB(50, 50, 50), -- Solid border
+	-- Dialog
+	Dialog = Color3.fromRGB(22, 20, 18), -- Warm dialog
+	DialogHolder = Color3.fromRGB(18, 16, 14), -- Dark warm holder
+	DialogHolderLine = Color3.fromRGB(60, 50, 40), -- Warm line
+	DialogButton = Color3.fromRGB(32, 28, 24), -- Warm button
+	DialogButtonBorder = Color3.fromRGB(70, 55, 40), -- Warm border
+	DialogBorder = Color3.fromRGB(55, 45, 35), -- Warm border
+	DialogInput = Color3.fromRGB(28, 24, 20), -- Warm input
+	DialogInputLine = Color3.fromRGB(255, 165, 0), -- Orange line
 
-	Dialog = Color3.fromRGB(25, 25, 25), -- Solid dialog
-	DialogHolder = Color3.fromRGB(20, 20, 20), -- Dark holder
-	DialogHolderLine = Color3.fromRGB(50, 50, 50), -- Visible line
-	DialogButton = Color3.fromRGB(35, 35, 35), -- Solid button
-	DialogButtonBorder = Color3.fromRGB(60, 60, 60), -- Strong border
-	DialogBorder = Color3.fromRGB(50, 50, 50), -- Solid border
-	DialogInput = Color3.fromRGB(30, 30, 30), -- Solid input
-	DialogInputLine = Color3.fromRGB(0, 200, 255), -- Cyan line
-
-	Text = Color3.fromRGB(255, 255, 255), -- Pure white text
-	SubText = Color3.fromRGB(180, 180, 180), -- Light gray subtext
-	Hover = Color3.fromRGB(50, 50, 50), -- Solid hover
-	HoverChange = 0.10, -- More noticeable hover effect
+	-- Text Colors (Perfect Contrast)
+	Text = Color3.fromRGB(255, 250, 245), -- Warm white text
+	SubText = Color3.fromRGB(200, 190, 180), -- Warm light gray
+	Hover = Color3.fromRGB(60, 50, 40), -- Warm hover
+	HoverChange = 0.12, -- Smooth hover effect
 }
 

@@ -81,11 +81,11 @@ do
 
 
 
-    -- Accent Color
+    -- Accent Color (Cat-themed Orange/Yellow)
     local AccentColor = MainSection:AddColorpicker("AccentColor", {
         Title = "Accent Color",
-        Description = "Customize UI accent color",
-        Default = Color3.fromRGB(0, 200, 255) -- Solid cyan
+        Description = "Customize UI accent color (Cat-themed orange/yellow)",
+        Default = Color3.fromRGB(255, 165, 0) -- Warm orange like ginger cat
     })
 
     -- Category Selector
