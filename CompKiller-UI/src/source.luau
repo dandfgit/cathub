@@ -6718,11 +6718,7 @@ function Compkiller.new(Config : Window)
 	MinimizeBtn.ZIndex = MainFrame.ZIndex + 50
 	MinimizeBtn.TextColor3 = Compkiller.Colors.SwitchColor
 
-	MinimizeBtn.MouseButton1Click:Connect(function()
-		if TabMainFrame then
-			TabMainFrame.Visible = not TabMainFrame.Visible
-		end
-	end)
+	-- Minimize will be handled below (use WindowArgs:Toggle to keep state consistent)
 
 	-- Close button
 	local ForceCloseBtn = Instance.new('TextButton')
@@ -6739,9 +6735,7 @@ function Compkiller.new(Config : Window)
 	ForceCloseBtn.TextColor3 = Color3.fromRGB(200,200,200)
 
 	ForceCloseBtn.MouseButton1Click:Connect(function()
-		MainFrame.Visible = false
-		WindowArgs.IsOpen = false
-		WindowOpen:Fire(false)
+		WindowArgs:Toggle(false)
 	end)
 
 	-- Floating minimize ball (appears when window is minimized/closed)
@@ -6763,11 +6757,9 @@ function Compkiller.new(Config : Window)
 	fbCorner.CornerRadius = UDim.new(1,0)
 	fbCorner.Parent = FloatingBall
 
-	-- Click to restore
+	-- Click to restore (use WindowArgs to keep animations/state)
 	FloatingBall.MouseButton1Click:Connect(function()
-		MainFrame.Visible = true
-		WindowArgs.IsOpen = true
-		WindowOpen:Fire(true)
+		WindowArgs:Toggle(true)
 		FloatingBall.Visible = false
 	end)
 
@@ -6799,11 +6791,9 @@ function Compkiller.new(Config : Window)
 		FloatingBall.Visible = not isOpen
 	end)
 
-	-- Adjust Minimize button to use floating ball (minimize entire window)
+	-- Adjust Minimize button to use WindowArgs toggle (minimize entire window)
 	MinimizeBtn.MouseButton1Click:Connect(function()
-		MainFrame.Visible = false
-		WindowArgs.IsOpen = false
-		WindowOpen:Fire(false)
+		WindowArgs:Toggle(false)
 		FloatingBall.Visible = true
 	end)
 
