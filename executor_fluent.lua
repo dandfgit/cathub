@@ -1,224 +1,224 @@
--- CatHub - Modern, Lightweight UI Library
--- Optimized & Redesigned for Performance
-
 local Fluent = loadstring(game:HttpGet("https://raw.githubusercontent.com/dandfgit/cathub/refs/heads/main/Fluent-master/main.lua"))()
 local SaveManager = loadstring(game:HttpGet("https://raw.githubusercontent.com/dandfgit/cathub/refs/heads/main/Fluent-master/Addons/SaveManager.lua"))()
 local InterfaceManager = loadstring(game:HttpGet("https://raw.githubusercontent.com/dandfgit/cathub/refs/heads/main/Fluent-master/Addons/InterfaceManager.lua"))()
 
--- CatHub Window Configuration - Modern Style (Like Image)
 local Window = Fluent:CreateWindow({
-    Title = "CatHub",
-    SubTitle = "🐱 Premium Script Hub",
-    TabWidth = 60, -- Narrow sidebar for icon-only navigation (like image)
-    Size = UDim2.fromOffset(800, 600), -- Larger size for modern two-panel layout
-    Acrylic = true, -- Transparent blur background
-    Theme = "CatHub", -- Custom CatHub theme with Orange/Yellow
-    MinimizeKey = Enum.KeyCode.RightControl
+    Title = "Fluent " .. Fluent.Version,
+    SubTitle = "by dawid",
+    TabWidth = 160,
+    Size = UDim2.fromOffset(580, 460),
+    Acrylic = true, -- The blur may be detectable, setting this to false disables blur entirely
+    Theme = "Dark",
+    MinimizeKey = Enum.KeyCode.LeftControl -- Used when theres no MinimizeKeybind
 })
 
--- CatHub Tabs - Icon-only sidebar navigation (like image 2)
+--Fluent provides Lucide Icons https://lucide.dev/icons/ for the tabs, icons are optional
 local Tabs = {
-    Main = Window:AddTab({ Title = "", Icon = "home" }), -- Icon only, no text
-    Scripts = Window:AddTab({ Title = "", Icon = "code" }),
-    Settings = Window:AddTab({ Title = "", Icon = "settings" }),
-    Config = Window:AddTab({ Title = "", Icon = "folder" }),
-    Info = Window:AddTab({ Title = "", Icon = "info" })
+    Main = Window:AddTab({ Title = "Main", Icon = "" }),
+    Settings = Window:AddTab({ Title = "Settings", Icon = "settings" })
 }
 
 local Options = Fluent.Options
 
--- CatHub Welcome Notification - Fresh New UI!
-Fluent:Notify({
-    Title = "CatHub 🐱",
-    Content = "Fresh New UI Loaded!",
-    SubContent = "Orange/Yellow cat-themed colors activated",
-    Duration = 5
-})
-
--- Force apply CatHub theme immediately
-task.wait(0.2)
-Fluent:SetTheme("CatHub")
-
--- Main Tab Content - Modern Style (Like Image)
 do
-    local MainSection = Tabs.Main:AddSection("Section")
-    
-    -- Modern Paragraph
-    MainSection:AddParagraph({
-        Title = "Very cool paragraph",
-        Content = "All elements in this section will be saved to the config!"
+    Fluent:Notify({
+        Title = "Notification",
+        Content = "This is a notification",
+        SubContent = "SubContent", -- Optional
+        Duration = 5 -- Set to nil to make the notification not disappear
     })
 
-    -- Modern Toggles with Clean Style
-    local Toggle1 = MainSection:AddToggle("Toggle1", {
-        Title = "Toggle",
-        Description = "Toggle with info icon",
-        Default = true
-    })
-    
-    local Toggle2 = MainSection:AddToggle("Toggle2", {
-        Title = "Toggle",
-        Description = "Toggle with gear icon",
-        Default = true
-    })
-    
-    local RiskyToggle = MainSection:AddToggle("RiskyToggle", {
-        Title = "Risky Feature",
-        Description = "Enable risky features",
-        Default = true
-    })
 
-    -- Keybind - Modern Style
-    local Keybind = MainSection:AddKeybind("Keybind", {
-        Title = "Keybind",
-        Description = "Set keybind for quick action",
-        Default = "LAlt",
-        Mode = "Toggle"
-    })
 
-    -- Slider - Modern Style
-    local Slider = MainSection:AddSlider("Slider", {
-        Title = "Slider",
-        Description = "Adjust slider value",
-        Default = 50,
-        Min = 0,
-        Max = 100,
-        Rounding = 0
-    })
-
-    -- ColorPicker - Modern Style
-    local ColorPicker = MainSection:AddColorpicker("ColorPicker", {
-        Title = "ColorPicker",
-        Description = "Pick your favorite color",
-        Default = Color3.fromRGB(0, 255, 150) -- Bright green like image
-    })
-
-    -- Single Dropdown - Modern Style
-    local SingleDropdown = MainSection:AddDropdown("SingleDropdown", {
-        Title = "Single Dropdown",
-        Description = "Select single option",
-        Values = {"Head", "Torso", "Left Arm", "Right Arm", "Left Leg", "Right Leg"},
-        Default = 1
-    })
-
-    -- Multi Dropdown - Modern Style
-    local MultiDropdown = MainSection:AddDropdown("MultiDropdown", {
-        Title = "Multi Dropdown",
-        Description = "Select multiple options",
-        Values = {"Head", "Torso", "Left Arm", "Right Arm", "Left Leg", "Right Leg"},
-        Multi = true,
-        Default = {1}
-    })
-
-    -- Button - Modern Style
-    MainSection:AddButton({
-        Title = "Button",
-        Description = "Click to execute action",
-        Callback = function()
-            Fluent:Notify({
-                Title = "CatHub",
-                Content = "Button clicked!",
-                Duration = 2
-            })
-        end
-    })
-end
-
--- Scripts Tab - Modern Style (Second Panel Like Image)
-do
-    local ScriptsSection = Tabs.Scripts:AddSection("Section")
-    
-    -- Modern Paragraph
-    ScriptsSection:AddParagraph({
-        Title = "Very cool paragraph",
-        Content = "All elements in this section will not be saved to the config"
-    })
-    
-    -- Modern Toggle
-    local Toggle3 = ScriptsSection:AddToggle("Toggle3", {
-        Title = "Toggle",
-        Description = "Toggle with gear icon",
-        Default = true
-    })
-
-    -- Keybind - Modern Style
-    local Keybind2 = ScriptsSection:AddKeybind("Keybind2", {
-        Title = "Keybind",
-        Description = "Set keybind",
-        Default = "LAlt",
-        Mode = "Toggle"
-    })
-
-    -- Slider - Modern Style
-    local Slider2 = ScriptsSection:AddSlider("Slider2", {
-        Title = "Slider",
-        Description = "Adjust value",
-        Default = 50,
-        Min = 0,
-        Max = 100,
-        Rounding = 0
-    })
-
-    -- ColorPicker - Modern Style
-    local ColorPicker2 = ScriptsSection:AddColorpicker("ColorPicker2", {
-        Title = "ColorPicker",
-        Description = "Pick color",
-        Default = Color3.fromRGB(0, 255, 150) -- Bright green
-    })
-
-    -- Single Dropdown - Modern Style
-    local SingleDropdown2 = ScriptsSection:AddDropdown("SingleDropdown2", {
-        Title = "Single Dropdown",
-        Description = "Select option",
-        Values = {"Head", "Torso", "Left Arm", "Right Arm", "Left Leg", "Right Leg"},
-        Default = 1
-    })
-
-    -- Multi Dropdown - Modern Style
-    local MultiDropdown2 = ScriptsSection:AddDropdown("MultiDropdown2", {
-        Title = "Multi Dropdown",
-        Description = "Select multiple",
-        Values = {"Head", "Torso", "Left Arm", "Right Arm", "Left Leg", "Right Leg"},
-        Multi = true,
-        Default = {1}
-    })
-
-    -- Button - Modern Style with Accent
-    ScriptsSection:AddButton({
-        Title = "Button",
-        Description = "Execute action",
-        Callback = function()
-            Fluent:Notify({
-                Title = "CatHub",
-                Content = "Button clicked!",
-                Duration = 2
-            })
-        end
-    })
-    
-    -- Paragraph - Modern Style
-    ScriptsSection:AddParagraph({
+    Tabs.Main:AddParagraph({
         Title = "Paragraph",
-        Content = "Very cool paragraph\nAll elements in this section will not be saved to the config"
+        Content = "This is a paragraph.\nSecond line!"
     })
-end
 
--- Config Tab
-do
-    local ConfigSection = Tabs.Config:AddSection("Configuration")
-    ConfigSection:AddParagraph({
-        Title = "Config Manager",
-        Content = "Manage your configurations here"
-    })
-end
 
--- Info Tab
-do
-    local InfoSection = Tabs.Info:AddSection("Information")
-    InfoSection:AddParagraph({
-        Title = "CatHub",
-        Content = "Premium Script Hub\nModern, lightweight, and optimized 🐱"
+
+    Tabs.Main:AddButton({
+        Title = "Button",
+        Description = "Very important button",
+        Callback = function()
+            Window:Dialog({
+                Title = "Title",
+                Content = "This is a dialog",
+                Buttons = {
+                    {
+                        Title = "Confirm",
+                        Callback = function()
+                            print("Confirmed the dialog.")
+                        end
+                    },
+                    {
+                        Title = "Cancel",
+                        Callback = function()
+                            print("Cancelled the dialog.")
+                        end
+                    }
+                }
+            })
+        end
     })
+
+
+
+    local Toggle = Tabs.Main:AddToggle("MyToggle", {Title = "Toggle", Default = false })
+
+    Toggle:OnChanged(function()
+        print("Toggle changed:", Options.MyToggle.Value)
+    end)
+
+    Options.MyToggle:SetValue(false)
+
+
+    
+    local Slider = Tabs.Main:AddSlider("Slider", {
+        Title = "Slider",
+        Description = "This is a slider",
+        Default = 2,
+        Min = 0,
+        Max = 5,
+        Rounding = 1,
+        Callback = function(Value)
+            print("Slider was changed:", Value)
+        end
+    })
+
+    Slider:OnChanged(function(Value)
+        print("Slider changed:", Value)
+    end)
+
+    Slider:SetValue(3)
+
+
+
+    local Dropdown = Tabs.Main:AddDropdown("Dropdown", {
+        Title = "Dropdown",
+        Values = {"one", "two", "three", "four", "five", "six", "seven", "eight", "nine", "ten", "eleven", "twelve", "thirteen", "fourteen"},
+        Multi = false,
+        Default = 1,
+    })
+
+    Dropdown:SetValue("four")
+
+    Dropdown:OnChanged(function(Value)
+        print("Dropdown changed:", Value)
+    end)
+
+
+    
+    local MultiDropdown = Tabs.Main:AddDropdown("MultiDropdown", {
+        Title = "Dropdown",
+        Description = "You can select multiple values.",
+        Values = {"one", "two", "three", "four", "five", "six", "seven", "eight", "nine", "ten", "eleven", "twelve", "thirteen", "fourteen"},
+        Multi = true,
+        Default = {"seven", "twelve"},
+    })
+
+    MultiDropdown:SetValue({
+        three = true,
+        five = true,
+        seven = false
+    })
+
+    MultiDropdown:OnChanged(function(Value)
+        local Values = {}
+        for Value, State in next, Value do
+            table.insert(Values, Value)
+        end
+        print("Mutlidropdown changed:", table.concat(Values, ", "))
+    end)
+
+
+
+    local Colorpicker = Tabs.Main:AddColorpicker("Colorpicker", {
+        Title = "Colorpicker",
+        Default = Color3.fromRGB(96, 205, 255)
+    })
+
+    Colorpicker:OnChanged(function()
+        print("Colorpicker changed:", Colorpicker.Value)
+    end)
+    
+    Colorpicker:SetValueRGB(Color3.fromRGB(0, 255, 140))
+
+
+
+    local TColorpicker = Tabs.Main:AddColorpicker("TransparencyColorpicker", {
+        Title = "Colorpicker",
+        Description = "but you can change the transparency.",
+        Transparency = 0,
+        Default = Color3.fromRGB(96, 205, 255)
+    })
+
+    TColorpicker:OnChanged(function()
+        print(
+            "TColorpicker changed:", TColorpicker.Value,
+            "Transparency:", TColorpicker.Transparency
+        )
+    end)
+
+
+
+    local Keybind = Tabs.Main:AddKeybind("Keybind", {
+        Title = "KeyBind",
+        Mode = "Toggle", -- Always, Toggle, Hold
+        Default = "LeftControl", -- String as the name of the keybind (MB1, MB2 for mouse buttons)
+
+        -- Occurs when the keybind is clicked, Value is `true`/`false`
+        Callback = function(Value)
+            print("Keybind clicked!", Value)
+        end,
+
+        -- Occurs when the keybind itself is changed, `New` is a KeyCode Enum OR a UserInputType Enum
+        ChangedCallback = function(New)
+            print("Keybind changed!", New)
+        end
+    })
+
+    -- OnClick is only fired when you press the keybind and the mode is Toggle
+    -- Otherwise, you will have to use Keybind:GetState()
+    Keybind:OnClick(function()
+        print("Keybind clicked:", Keybind:GetState())
+    end)
+
+    Keybind:OnChanged(function()
+        print("Keybind changed:", Keybind.Value)
+    end)
+
+    task.spawn(function()
+        while true do
+            wait(1)
+
+            -- example for checking if a keybind is being pressed
+            local state = Keybind:GetState()
+            if state then
+                print("Keybind is being held down")
+            end
+
+            if Fluent.Unloaded then break end
+        end
+    end)
+
+    Keybind:SetValue("MB2", "Toggle") -- Sets keybind to MB2, mode to Hold
+
+
+    local Input = Tabs.Main:AddInput("Input", {
+        Title = "Input",
+        Default = "Default",
+        Placeholder = "Placeholder",
+        Numeric = false, -- Only allows numbers
+        Finished = false, -- Only calls callback when you press enter
+        Callback = function(Value)
+            print("Input changed:", Value)
+        end
+    })
+
+    Input:OnChanged(function()
+        print("Input updated:", Input.Value)
+    end)
 end
 
 
@@ -230,45 +230,30 @@ end
 SaveManager:SetLibrary(Fluent)
 InterfaceManager:SetLibrary(Fluent)
 
--- FORCE CatHub Theme - Fresh New UI with Orange/Yellow Colors
--- Reset and apply CatHub theme
-InterfaceManager.Settings.Theme = "CatHub"
-Fluent:SetTheme("CatHub")
-
 -- Ignore keys that are used by ThemeManager.
+-- (we dont want configs to save themes, do we?)
 SaveManager:IgnoreThemeSettings()
 
 -- You can add indexes of elements the save manager should ignore
 SaveManager:SetIgnoreIndexes({})
 
--- CatHub Folder Configuration
-InterfaceManager:SetFolder("CatHub")
-SaveManager:SetFolder("CatHub/configs")
+-- use case for doing it this way:
+-- a script hub could have themes in a global folder
+-- and game configs in a separate folder per game
+InterfaceManager:SetFolder("FluentScriptHub")
+SaveManager:SetFolder("FluentScriptHub/specific-game")
 
--- Build Interface Section with CatHub theme
 InterfaceManager:BuildInterfaceSection(Tabs.Settings)
 SaveManager:BuildConfigSection(Tabs.Settings)
 
--- Force apply CatHub theme again after sections are built
-task.wait(0.1)
-Fluent:SetTheme("CatHub")
 
-
--- Select Main Tab
 Window:SelectTab(1)
 
--- Final Welcome Notification - Confirm Theme Applied
 Fluent:Notify({
-    Title = "CatHub 🐱",
-    Content = "Fresh UI Ready!",
-    SubContent = "Orange/Yellow theme active | Press RightControl to toggle",
-    Duration = 6
+    Title = "Fluent",
+    Content = "The script has been loaded.",
+    Duration = 8
 })
-
--- Final theme enforcement
-task.wait(0.1)
-Fluent:SetTheme("CatHub")
-print("🎨 CatHub Theme Applied: Orange/Yellow Cat Colors")
 
 -- You can use the SaveManager:LoadAutoloadConfig() to load a config
 -- which has been marked to be one that auto loads!

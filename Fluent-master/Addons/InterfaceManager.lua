@@ -1,12 +1,12 @@
 local httpService = game:GetService("HttpService")
 
 local InterfaceManager = {} do
-	InterfaceManager.Folder = "CatHub"
+	InterfaceManager.Folder = "FluentSettings"
     InterfaceManager.Settings = {
-        Theme = "CatHub", -- Default to CatHub theme (Orange/Yellow)
+        Theme = "Dark",
         Acrylic = true,
         Transparency = true,
-        MenuKeybind = "RightControl"
+        MenuKeybind = "LeftControl"
     }
 
     function InterfaceManager:SetFolder(folder)
@@ -51,28 +51,8 @@ local InterfaceManager = {} do
                 for i, v in next, decoded do
                     InterfaceManager.Settings[i] = v
                 end
-                -- Force CatHub theme if saved theme doesn't exist or is old
-                if not decoded.Theme or decoded.Theme == "Dark" then
-                    InterfaceManager.Settings.Theme = "CatHub"
-                end
             end
         end
-    end
-    
-    function InterfaceManager:ResetSettings()
-        -- Delete settings file to reset to default
-        local path = self.Folder .. "/options.json"
-        if isfile(path) then
-            delfile(path)
-        end
-        -- Reset to default
-        InterfaceManager.Settings = {
-            Theme = "CatHub",
-            Acrylic = true,
-            Transparency = true,
-            MenuKeybind = "RightControl"
-        }
-        InterfaceManager:SaveSettings()
     end
 
     function InterfaceManager:BuildInterfaceSection(tab)
@@ -122,49 +102,12 @@ local InterfaceManager = {} do
 			end
 		})
 	
-		local MenuKeybind = section:AddKeybind("MenuKeybind", { 
-			Title = "Minimize Bind", 
-			Description = "Keybind to toggle UI visibility",
-			Default = Settings.MenuKeybind or "RightControl"
-		})
+		local MenuKeybind = section:AddKeybind("MenuKeybind", { Title = "Minimize Bind", Default = Settings.MenuKeybind })
 		MenuKeybind:OnChanged(function()
 			Settings.MenuKeybind = MenuKeybind.Value
             InterfaceManager:SaveSettings()
 		end)
 		Library.MinimizeKeybind = MenuKeybind
-		
-		-- Reset Settings Button
-		section:AddButton({
-			Title = "Reset to Default",
-			Description = "Reset all interface settings to default (CatHub theme)",
-			Callback = function()
-				Window:Dialog({
-					Title = "Reset Settings",
-					Content = "Are you sure you want to reset all interface settings to default?\nThis will apply CatHub theme (Orange/Yellow colors).",
-					Buttons = {
-						{
-							Title = "Reset",
-							Callback = function()
-								InterfaceManager:ResetSettings()
-								Library:SetTheme("CatHub")
-								InterfaceTheme:SetValue("CatHub")
-								MenuKeybind:SetValue("RightControl", "Toggle")
-								
-								Library:Notify({
-									Title = "CatHub",
-									Content = "Settings reset! CatHub theme (Orange/Yellow) applied",
-									Duration = 4
-								})
-							end
-						},
-						{
-							Title = "Cancel",
-							Callback = function() end
-						}
-					}
-				})
-			end
-		})
     end
 end
 
