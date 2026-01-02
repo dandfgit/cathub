@@ -90,7 +90,7 @@ print("[CatHub] Available themes: " .. table.concat(Fluent.Themes or {}, ", "))
 local Window = Fluent:CreateWindow({
     Title = "CatHub",
     SubTitle = "v1.0",
-    TabWidth = 78,
+    TabWidth = 80,
     Size = UDim2.fromOffset(480, 360),
     Acrylic = true,
     Theme = "Darker", -- Use Darker as base (CatHub theme may not be fully injected)
