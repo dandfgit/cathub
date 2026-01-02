@@ -8,14 +8,14 @@ local Fluent = loadstring(game:HttpGet("https://raw.githubusercontent.com/dandfg
 local SaveManager = loadstring(game:HttpGet("https://raw.githubusercontent.com/dandfgit/cathub/refs/heads/main/Fluent-master/Addons/SaveManager.lua"))()
 local InterfaceManager = loadstring(game:HttpGet("https://raw.githubusercontent.com/dandfgit/cathub/refs/heads/main/Fluent-master/Addons/InterfaceManager.lua"))()
 
--- CatHub - Modern Compact UI
+-- CatHub - Modern Compact UI (using Darker theme as base)
 local Window = Fluent:CreateWindow({
     Title = "CatHub",
     SubTitle = "🐱 v1.0",
     TabWidth = 70, -- Compact sidebar
     Size = UDim2.fromOffset(520, 420), -- Smaller, more compact size
     Acrylic = true, -- Transparent blur background
-    Theme = "CatHub", -- Custom CatHub theme (black + orange)
+    Theme = "Darker", -- Use Darker as base (black theme)
     MinimizeKey = Enum.KeyCode.RightControl
 })
 
@@ -227,9 +227,9 @@ do
     SaveManager:BuildConfigSection(Tabs.Settings)
 end
 
--- Force CatHub theme
-Fluent:SetTheme("CatHub")
-InterfaceManager.Settings.Theme = "CatHub"
+-- Apply Darker theme (dark black base)
+Fluent:SetTheme("Darker")
+InterfaceManager.Settings.Theme = "Darker"
 
 -- Select first tab
 Window:SelectTab(1)
