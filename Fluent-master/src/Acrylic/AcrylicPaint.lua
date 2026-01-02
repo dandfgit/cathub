@@ -32,7 +32,7 @@ return function(props)
 
 		-- Main dark background - more transparent
 		New("Frame", {
-			BackgroundTransparency = 0.25,
+			BackgroundTransparency = 0.35, -- More transparent to see game behind
 			Size = UDim2.fromScale(1, 1),
 			Name = "Background",
 			ThemeTag = {

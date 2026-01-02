@@ -4,6 +4,14 @@
     Design: Ultra Compact, Clean, Professional
     
     🚀 OPTIMIZED FOR SMOOTH PERFORMANCE
+    
+    ═══════════════════════════════════════════
+    UI CUSTOMIZATIONS (applied to Fluent library):
+    - Background Transparency: 0.88 (more see-through)
+    - Sidebar Background: Fully transparent (no dark bg)
+    - Section Headers: Hidden (saves vertical space)
+    - Tab Display Header: Hidden (cleaner look)
+    ═══════════════════════════════════════════
 ]]
 
 -- ═══════════════════════════════════════════

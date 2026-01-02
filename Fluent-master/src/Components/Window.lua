@@ -94,11 +94,11 @@ return function(Config)
 		}),
 	})
 
-	-- Sidebar with decorative elements
+	-- Sidebar with decorative elements (transparent for cleaner look)
 	local TabFrame = New("Frame", {
 		Size = UDim2.new(0, Window.TabWidth, 1, -38),
 		Position = UDim2.new(0, 0, 0, 38),
-		BackgroundTransparency = 0.3,
+		BackgroundTransparency = 1, -- Fully transparent sidebar
 		ClipsDescendants = true,
 		ThemeTag = {
 			BackgroundColor3 = "AcrylicMain",
@@ -123,17 +123,19 @@ return function(Config)
 		Selector,
 	})
 
+	-- TabDisplay hidden to save space
 	Window.TabDisplay = New("TextLabel", {
 		RichText = true,
 		Text = "Tab",
-		TextTransparency = 0,
+		TextTransparency = 1, -- Hidden
 		FontFace = Font.new("rbxassetid://12187365364", Enum.FontWeight.SemiBold, Enum.FontStyle.Normal),
 		TextSize = 18,
 		TextXAlignment = "Left",
 		TextYAlignment = "Center",
-		Size = UDim2.new(1, -16, 0, 22),
+		Size = UDim2.new(0, 0, 0, 0), -- Zero size
 		Position = UDim2.fromOffset(Window.TabWidth + 14, 44),
 		BackgroundTransparency = 1,
+		Visible = false, -- Hidden
 		ThemeTag = {
 			TextColor3 = "Text",
 		},
