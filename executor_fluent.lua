@@ -5,22 +5,24 @@ local Fluent = loadstring(game:HttpGet("https://raw.githubusercontent.com/dandfg
 local SaveManager = loadstring(game:HttpGet("https://raw.githubusercontent.com/dandfgit/cathub/refs/heads/main/Fluent-master/Addons/SaveManager.lua"))()
 local InterfaceManager = loadstring(game:HttpGet("https://raw.githubusercontent.com/dandfgit/cathub/refs/heads/main/Fluent-master/Addons/InterfaceManager.lua"))()
 
--- CatHub Window Configuration - Compact & Modern Design
+-- CatHub Window Configuration - Modern Sidebar Design (Like Image 2)
 local Window = Fluent:CreateWindow({
     Title = "CatHub",
     SubTitle = "🐱 Premium Script Hub",
-    TabWidth = 140, -- More compact tab width
-    Size = UDim2.fromOffset(520, 420), -- Smaller, more compact size
+    TabWidth = 80, -- Narrow sidebar width for icon-only navigation
+    Size = UDim2.fromOffset(700, 500), -- Larger size for better layout
     Acrylic = true, -- Transparent blur background
-    Theme = "Dark",
-    MinimizeKey = Enum.KeyCode.RightControl -- Changed to RightControl for better UX
+    Theme = "CatHub", -- Custom CatHub theme with cyan accent
+    MinimizeKey = Enum.KeyCode.RightControl
 })
 
--- CatHub Tabs - Using cat-themed icons
+-- CatHub Tabs - Icon-only sidebar navigation (like image 2)
 local Tabs = {
-    Main = Window:AddTab({ Title = "Home", Icon = "home" }), -- Home icon for main
-    Scripts = Window:AddTab({ Title = "Scripts", Icon = "code" }), -- Code icon for scripts
-    Settings = Window:AddTab({ Title = "Settings", Icon = "settings" })
+    Main = Window:AddTab({ Title = "", Icon = "home" }), -- Icon only, no text
+    Scripts = Window:AddTab({ Title = "", Icon = "code" }),
+    Settings = Window:AddTab({ Title = "", Icon = "settings" }),
+    Config = Window:AddTab({ Title = "", Icon = "folder" }),
+    Info = Window:AddTab({ Title = "", Icon = "info" })
 }
 
 local Options = Fluent.Options
@@ -35,127 +37,164 @@ Fluent:Notify({
 
 -- Main Tab Content
 do
-    -- Welcome Section
-    Tabs.Main:AddParagraph({
-        Title = "Welcome to CatHub",
-        Content = "Your premium script hub with modern design and optimized performance.\nCompact, lightweight, and purrfect! 🐾"
+    -- Section with collapsible header
+    local MainSection = Tabs.Main:AddSection("Section")
+    
+    -- Welcome Paragraph
+    MainSection:AddParagraph({
+        Title = "Very cool paragraph",
+        Content = "All elements in this section will be saved to the config!"
     })
 
 
 
-    -- Quick Actions Section
-    Tabs.Main:AddButton({
-        Title = "Execute Script",
-        Description = "Run your selected script",
+    -- Toggle with info icon
+    local Toggle1 = MainSection:AddToggle("Toggle1", {
+        Title = "Toggle",
+        Description = "Toggle with info icon",
+        Default = true
+    })
+    
+    -- Toggle with gear icon
+    local Toggle2 = MainSection:AddToggle("Toggle2", {
+        Title = "Toggle",
+        Description = "Toggle with gear icon",
+        Default = true
+    })
+
+
+
+    -- Keybind
+    local Keybind = MainSection:AddKeybind("Keybind", {
+        Title = "Keybind",
+        Default = "LAlt",
+        Mode = "Toggle"
+    })
+
+    -- Slider
+    local Slider = MainSection:AddSlider("Slider", {
+        Title = "Slider",
+        Default = 50,
+        Min = 0,
+        Max = 100,
+        Rounding = 0
+    })
+
+
+
+    -- ColorPicker (Cyan/Green like image)
+    local ColorPicker = MainSection:AddColorpicker("ColorPicker", {
+        Title = "ColorPicker",
+        Default = Color3.fromRGB(0, 255, 150) -- Bright cyan/green
+    })
+
+    -- Single Dropdown
+    local SingleDropdown = MainSection:AddDropdown("SingleDropdown", {
+        Title = "Single Dropdown",
+        Values = {"Head", "Torso", "Left Arm", "Right Arm", "Left Leg", "Right Leg"},
+        Default = 1
+    })
+
+    -- Multi Dropdown
+    local MultiDropdown = MainSection:AddDropdown("MultiDropdown", {
+        Title = "Multi Dropdown",
+        Values = {"Head", "Torso", "Left Arm", "Right Arm", "Left Leg", "Right Leg"},
+        Multi = true,
+        Default = {1}
+    })
+
+    -- Button (Cyan accent)
+    MainSection:AddButton({
+        Title = "Button",
+        Description = "Cyan accent button",
         Callback = function()
-            Window:Dialog({
+            Fluent:Notify({
                 Title = "CatHub",
-                Content = "Script execution dialog",
-                Buttons = {
-                    {
-                        Title = "Execute",
-                        Callback = function()
-                            Fluent:Notify({
-                                Title = "CatHub",
-                                Content = "Script executed successfully!",
-                                Duration = 3
-                            })
-                        end
-                    },
-                    {
-                        Title = "Cancel",
-                        Callback = function()
-                            -- Cancel action
-                        end
-                    }
-                }
+                Content = "Button clicked!",
+                Duration = 2
             })
-        end
-    })
-
-
-
-    -- Feature Toggles
-    local AutoExecute = Tabs.Main:AddToggle("AutoExecute", {
-        Title = "Auto Execute",
-        Description = "Automatically execute scripts on load",
-        Default = false
-    })
-
-    AutoExecute:OnChanged(function()
-        -- Auto execute logic here
-    end)
-
-
-    -- Performance Settings
-    local PerformanceSlider = Tabs.Main:AddSlider("Performance", {
-        Title = "Performance Level",
-        Description = "Adjust script performance",
-        Default = 5,
-        Min = 1,
-        Max = 10,
-        Rounding = 0,
-        Callback = function(Value)
-            -- Performance adjustment logic
-        end
-    })
-
-
-    -- Script Category Selector
-    local CategoryDropdown = Tabs.Main:AddDropdown("Category", {
-        Title = "Script Category",
-        Values = {"Combat", "Utility", "ESP", "Auto Farm", "Teleport", "Other"},
-        Multi = false,
-        Default = 1,
-    })
-
-    CategoryDropdown:OnChanged(function(Value)
-        -- Category filter logic
-    end)
-
-
-
-    -- Cat-themed Color Picker (Orange/Amber like a ginger cat)
-    local AccentColor = Tabs.Main:AddColorpicker("AccentColor", {
-        Title = "Accent Color",
-        Description = "Customize your UI accent color",
-        Default = Color3.fromRGB(255, 165, 0) -- Orange/Amber cat color
-    })
-
-    AccentColor:OnChanged(function()
-        -- Color change logic
-    end)
-
-
-    -- Quick Toggle Keybind
-    local QuickToggle = Tabs.Main:AddKeybind("QuickToggle", {
-        Title = "Quick Toggle",
-        Description = "Toggle UI visibility quickly",
-        Mode = "Toggle",
-        Default = "RightControl",
-        Callback = function(Value)
-            -- Toggle logic
         end
     })
 end
 
--- Scripts Tab Content
+-- Scripts Tab Content (Second Section - Not Saved to Config)
 do
-    Tabs.Scripts:AddParagraph({
-        Title = "Script Library",
-        Content = "Browse and manage your scripts here"
+    local ScriptsSection = Tabs.Scripts:AddSection("Section")
+    
+    ScriptsSection:AddParagraph({
+        Title = "Very cool paragraph",
+        Content = "All elements in this section will not be saved to the config"
     })
-
-    -- Script Search
-    local ScriptSearch = Tabs.Scripts:AddInput("ScriptSearch", {
-        Title = "Search Scripts",
-        Default = "",
-        Placeholder = "Type to search...",
-        Numeric = false,
-        Finished = false,
-        Callback = function(Value)
-            -- Search logic
+    
+    -- Duplicate elements for second panel
+    local Toggle3 = ScriptsSection:AddToggle("Toggle3", {
+        Title = "Toggle",
+        Default = true
+    })
+    
+    local Toggle4 = ScriptsSection:AddToggle("Toggle4", {
+        Title = "Toggle",
+        Default = true
+    })
+    
+    local Keybind2 = ScriptsSection:AddKeybind("Keybind2", {
+        Title = "Keybind",
+        Default = "LAlt"
+    })
+    
+    local Slider2 = ScriptsSection:AddSlider("Slider2", {
+        Title = "Slider",
+        Default = 50,
+        Min = 0,
+        Max = 100,
+        Rounding = 0
+    })
+    
+    local ColorPicker2 = ScriptsSection:AddColorpicker("ColorPicker2", {
+        Title = "ColorPicker",
+        Default = Color3.fromRGB(0, 255, 150)
+    })
+    
+    local SingleDropdown2 = ScriptsSection:AddDropdown("SingleDropdown2", {
+        Title = "Single Dropdown",
+        Values = {"Head", "Torso", "Left Arm", "Right Arm", "Left Leg", "Right Leg"},
+        Default = 1
+    })
+    
+    local MultiDropdown2 = ScriptsSection:AddDropdown("MultiDropdown2", {
+        Title = "Multi Dropdown",
+        Values = {"Head", "Torso", "Left Arm", "Right Arm", "Left Leg", "Right Leg"},
+        Multi = true,
+        Default = {1}
+    })
+    
+    ScriptsSection:AddButton({
+        Title = "Button",
+        Callback = function()
+            Fluent:Notify({
+                Title = "CatHub",
+                Content = "Button clicked!",
+                Duration = 2
+            })
         end
+    })
+end
+
+-- Config Tab
+do
+    local ConfigSection = Tabs.Config:AddSection("Configuration")
+    ConfigSection:AddParagraph({
+        Title = "Config Manager",
+        Content = "Manage your configurations here"
+    })
+end
+
+-- Info Tab
+do
+    local InfoSection = Tabs.Info:AddSection("Information")
+    InfoSection:AddParagraph({
+        Title = "CatHub",
+        Content = "Premium Script Hub\nModern, lightweight, and optimized 🐱"
     })
 end
 
