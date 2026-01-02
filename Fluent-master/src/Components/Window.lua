@@ -197,7 +197,7 @@ return function(Config)
 	Window.SelectorPosMotor = Flipper.SingleMotor.new(17)
 	Window.SelectorSizeMotor = Flipper.SingleMotor.new(0)
 	Window.ContainerBackMotor = Flipper.SingleMotor.new(0)
-	Window.ContainerPosMotor = Flipper.SingleMotor.new(94)
+	Window.ContainerPosMotor = Flipper.SingleMotor.new(0)
 
 	SizeMotor:onStep(function(values)
 		Window.Root.Size = UDim2.new(0, values.X, 0, values.Y)
