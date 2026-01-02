@@ -365,12 +365,24 @@ local Compkiller = {
 		TabOpen = 185,
 		TabClose = 85,
 	},
-	PerformanceMode = false,
+	PerformanceMode = true,
 	WindowsNil = {},
 	NilFolder = Instance.new('Folder'),
 	ArcylicParent = CurrentCamera,
 	ProtectGui = protect_gui or protectgui or (syn and syn.protect_gui) or function(s) return s; end,
 };
+
+-- When PerformanceMode is enabled, avoid spawning background threads for animations/updates.
+do
+	local _orig_task_spawn = task.spawn;
+	task.spawn = function(fn, ...)
+		if Compkiller and Compkiller.PerformanceMode then
+			return nil
+		end
+
+		return _orig_task_spawn(fn, ...)
+	end
+end
 
 Compkiller.Colors = {
 	Highlight = Color3.fromRGB(17, 238, 253),
@@ -1512,6 +1524,17 @@ function Compkiller:_Rounding(num: number, numDecimalPlaces: number) : number
 end;
 
 function Compkiller:_Animation(Self: Instance , Info: TweenInfo , Property :{[K] : V})
+	-- Performance mode: apply properties instantly to avoid Tween overhead
+	if Compkiller and Compkiller.PerformanceMode then
+		for k,v in pairs(Property or {}) do
+			pcall(function()
+				Self[k] = v
+			end)
+		end
+
+		return nil
+	end
+
 	local Tween = TweenService:Create(Self , Info or TweenInfo.new(0.25) , Property);
 
 	Tween:Play();
@@ -1549,6 +1572,28 @@ end;
 function Compkiller:_Blur(element : Frame , WindowRemote) : RBXScriptSignal
 	if Compkiller.SecureMode and not Compkiller.SecurityConfig.BlurEnabled then
 		return game.Changed:Connect(function() end);
+	end;
+
+	if Compkiller.PerformanceMode then
+		-- Lightweight overlay substitute for world-space blur
+		local overlay = Instance.new('Frame')
+		overlay.Name = Compkiller:_RandomString()
+		overlay.AnchorPoint = Vector2.new(0, 0)
+		overlay.BackgroundColor3 = Color3.fromRGB(0, 0, 0)
+		overlay.BackgroundTransparency = 0.85
+		overlay.BorderSizePixel = 0
+		overlay.Size = UDim2.fromScale(1, 1)
+		overlay.Position = UDim2.new(0, 0, 0, 0)
+		overlay.ZIndex = (element.ZIndex or 1) - 1
+		overlay.Parent = element
+
+		element.Destroying:Connect(function()
+			if overlay and overlay.Parent then
+				overlay:Destroy()
+			end
+		end)
+
+		return nil
 	end;
 
 	local Part = Instance.new('Part',Compkiller.ArcylicParent);
@@ -2570,6 +2615,9 @@ function Compkiller:CacheImage(id: string) : string
 end;
 
 function Compkiller:PreloadIcons()
+	if Compkiller.PerformanceMode then
+		return
+	end
 	local RequiredAssets = {
 		"http://www.roblox.com/asset/?id=112554223509763",
 		"rbxassetid://4805639000",
@@ -2586,7 +2634,7 @@ function Compkiller:PreloadIcons()
 	};
 
 	if Compkiller.SecureMode then
-		for i,v in next , RequiredAssets do task.wait()
+		for i,v in next , RequiredAssets do
 			pcall(function()
 				Compkiller:CacheImage(v);
 			end);
@@ -6329,7 +6377,7 @@ function Compkiller.new(Config : Window)
 		IsOpen = true,
 		AlwayShowTab = false,
 		THREADS = {},
-		PerformanceMode = false,
+		PerformanceMode = true,
 		Notify = Compkiller.newNotify()
 	};
 
